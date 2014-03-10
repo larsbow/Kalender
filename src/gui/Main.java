@@ -17,5 +17,3 @@ public class Main extends JFrame {
 		setResizable(true);
 	}
 }
-
-lololol

@@ -1,9 +1,6 @@
 package gui;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-public class Hovedside extends JFrame {
+public class Hovedside {
 	
 	public Hovedside() {
 		new Login();

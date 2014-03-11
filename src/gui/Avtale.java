@@ -7,11 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
 public class Avtale extends JFrame implements ActionListener {
@@ -21,11 +19,17 @@ public class Avtale extends JFrame implements ActionListener {
 	private JTextField textField3;
 	private JTextField textField4;
 
-	public Avtale() {
+	public Avtale(String bruker) {
 		String[] labels = {"Dato: ", "Starttid: ", "Sluttid: ", "Beskrivelse: "};
 
 		JPanel p = new JPanel(new SpringLayout());
-
+		
+		// Bruker som oppretter
+		JLabel l0 = new JLabel("Bruker: ");
+		p.add(l0);
+		JLabel l00 = new JLabel(bruker);
+		p.add(l00);
+		
 		// Dato
 		JLabel l1 = new JLabel(labels[0], JLabel.TRAILING);
 		p.add(l1);
@@ -66,7 +70,7 @@ public class Avtale extends JFrame implements ActionListener {
 		b1.addActionListener(this);
 
 		SpringUtilities.makeCompactGrid(p,
-				5, 2, 		 //rows, cols
+				6, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 

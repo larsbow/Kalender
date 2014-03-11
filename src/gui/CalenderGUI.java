@@ -15,6 +15,7 @@ public class CalenderGUI extends GraphicsProgram{
 	public void init() {
 		addKeyListeners();
 		addMouseListeners();
+		setSize(400, 350);
 
 		// blankArea.addMouseListener(this)
 		

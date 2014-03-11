@@ -11,12 +11,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
 public class Login extends JFrame implements ActionListener {
 	
 	private JTextField textField1;
 	private JPasswordField textField2;
+	private LoginLogic ll;
 
 	public Login() {
 	String[] labels = {"Brukernavn: ", "Passord: "};
@@ -69,5 +71,7 @@ public class Login extends JFrame implements ActionListener {
 	    for(char str: arr)
 	        output=output+str;
 		System.out.println(output);
+		ll.setPw(output);
+		boolean rettpassord = ll.isTrue();
 	}
 }

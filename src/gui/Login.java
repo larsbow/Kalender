@@ -55,7 +55,6 @@ public class Login extends JFrame implements ActionListener {
 		frame.setContentPane(p);
 		frame.pack();
 		frame.setVisible(true);
-
 	}
 
 	public String getBruker() {
@@ -82,7 +81,8 @@ public class Login extends JFrame implements ActionListener {
 					System.out.println("Ja");
 					bruker = textField1.getText();
 					frame.dispose();
-					new Avtale(getBruker());
+					new CalenderGUI();
+					//new Avtale(getBruker());
 				} else {
 					System.out.println("Nei");
 				}

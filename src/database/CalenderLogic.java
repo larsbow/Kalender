@@ -1,7 +1,5 @@
 package database;
 
-
-
 public class CalenderLogic {
 	int startDay;
 

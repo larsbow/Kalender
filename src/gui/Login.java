@@ -64,14 +64,18 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(textField1.getText());
+		ll = new LoginLogic(textField1.getText());
 		
 		char[] arr = textField2.getPassword();
 	    String output ="";
 	    for(char str: arr)
 	        output=output+str;
-		System.out.println(output);
-		ll.setPw(output);
-		boolean rettpassord = ll.isTrue();
+
+	    
+		if (ll.isTrue(output) == true){
+			System.out.println("Ja");
+		} else {
+			System.out.println("Nei");
+		}
 	}
 }

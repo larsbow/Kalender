@@ -18,7 +18,7 @@ public class LoginLogic {
 	}
 	
 	public boolean isTrue(String pw){
-		if (pw == this.pw){
+		if (pw.equals(this.pw)){
 			return true;
 		} else {
 			return false;
@@ -28,7 +28,7 @@ public class LoginLogic {
 	public void setUser(String username){
 		ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt WHERE (brukernavn = '"+username+"')");
 		try {
-			if (rs.getRow() == 1){
+			if (rs.next()){
 				this.user = username;
 			}
 		} catch (SQLException e) {
@@ -43,8 +43,8 @@ public class LoginLogic {
 	public void setPw(){
 		try {
 			ResultSet rs = db.readQuery("SELECT passord FROM ansatt WHERE (brukernavn = '"+this.user+"')");
-			if ( rs.getRow() > 0){
-			this.pw = rs.getString("passord");
+			if ( rs.next()){
+				this.pw = rs.getString(1);
 			} else {
 				this.pw = "";
 			}

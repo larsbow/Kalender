@@ -70,7 +70,8 @@ public class Login extends JFrame implements ActionListener {
 	    String output ="";
 	    for(char str: arr)
 	        output=output+str;
-
+	    
+	    System.out.println(output);
 	    
 		if (ll.isTrue(output) == true){
 			System.out.println("Ja");

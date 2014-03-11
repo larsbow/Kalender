@@ -4,6 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.29-bin.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Odd/Documents/acm.jar"/>
+	<classpathentry kind="lib" path="lib/acm.jar"/>
 	<classpathentry kind="src" path="dfsd"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

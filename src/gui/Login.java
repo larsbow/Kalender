@@ -1,17 +1,8 @@
 package gui;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
-
+import javax.swing.*;
 import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
@@ -22,6 +13,7 @@ public class Login extends JFrame implements ActionListener {
 	private LoginLogic ll;
 	private JFrame frame;
 	public String bruker;
+	JButton b2;
 
 	public Login() {
 		String[] labels = {"Brukernavn: ", "Passord: "};
@@ -46,10 +38,11 @@ public class Login extends JFrame implements ActionListener {
 
 		//Logg-inn knapp
 		JButton b1 = new JButton("Log inn");
-		JLabel l = new JLabel(" ");
+		b2 = new JButton("Registrer bruker");
 		p.add(b1);
-		p.add(l);
+		p.add(b2);
 		b1.addActionListener(this);
+		b2.addActionListener(this);
 
 		SpringUtilities.makeCompactGrid(p,
 				3, 2, 		 //rows, cols
@@ -71,13 +64,17 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		ll = new LoginLogic(textField1.getText());
-
+		
 		char[] arr = textField2.getPassword();
 		String output ="";
 		for(char str: arr)
 			output=output+str;
-		
+			
+		if(e.getSource() == b2) {
+			ll.registrer(textField1.getText(),output);
+		}
 		
 		if(output != "") {
 			if (ll.isTrue(output) == true){

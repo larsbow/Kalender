@@ -12,6 +12,8 @@ public class LoginLogic {
 	private String user;
 	Database db = new Database();
 	
+	
+	
 	public LoginLogic(String username){
 		setUser(username);
 		setPw();
@@ -55,5 +57,9 @@ public class LoginLogic {
 	
 	public String getPw(){
 		return this.pw;
+	}
+
+	public void registrer(String bruker, String passord) {
+		db.updateQuery("INSERT INTO ansatt VALUES ('" + bruker + "','" + passord + "')");
 	}
 }

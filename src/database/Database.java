@@ -5,7 +5,7 @@ import java.sql.*;
 public class Database {
 	private static Connection conn = null;
 	private static String url = "jdbc:mysql://localhost:3306/";
-	private static String dbName = "kalender";
+	private static String dbName = "prosjekt";
 	private static String driver = "com.mysql.jdbc.Driver";
 	private static String userName = "root";
 	private static String password = "passord";

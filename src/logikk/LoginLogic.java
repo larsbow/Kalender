@@ -59,7 +59,16 @@ public class LoginLogic {
 		return this.pw;
 	}
 
-	public void registrer(String bruker, String passord) {
+	public boolean registrer(String bruker, String passord) {
+		try {
+			ResultSet test = db.readQuery("SELECT brukernavn FROM ansatt WHERE (brukernavn = '"+bruker+"')");
+			if (test.next()){
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		db.updateQuery("INSERT INTO ansatt VALUES ('" + bruker + "','" + passord + "')");
+		return true;
 	}
 }

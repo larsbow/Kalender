@@ -67,7 +67,7 @@ public class InboxLogic {
 
 		if (aar < (tidno.getYear()-100)){
 			return true;
-		} else if (aar == tidno.getYear()){
+		} else if (aar == tidno.getYear() -100){
 			if (maaned < tidno.getMonth()) {
 				return true;
 			} else if (maaned == tidno.getMonth()) {

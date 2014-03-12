@@ -19,6 +19,8 @@ public class Hovedside extends JFrame implements ActionListener{
 	
 	
 	public Hovedside(String bruker) {
+		setSize(500,250);
+		setTitle("Kalender");
 		menu = new Menu();
 		add(menu, BorderLayout.WEST);
 		menu.lagavtale.addActionListener(this);
@@ -28,10 +30,10 @@ public class Hovedside extends JFrame implements ActionListener{
 		menu.loggut.addActionListener(this);
 		this.bruker = bruker;
 		
-		avtale = new Avtale(bruker);
-		add(avtale, BorderLayout.CENTER);
+		//avtale = new Avtale(bruker);
+		//add(avtale, BorderLayout.CENTER);
 		setVisible(true);
-		setResizable(true);	
+		setResizable(false);	
 	}
 
 	@Override
@@ -50,8 +52,10 @@ public class Hovedside extends JFrame implements ActionListener{
 	}
 	
 public void changeToAvtale(){
-		clearFrame();
-		add(avtale);
+		//clearFrame();
+		avtale = new Avtale(this.bruker);
+		add(avtale, BorderLayout.CENTER);
+		setVisible(true);
 	}
 
 	private void changeToLoggut() {

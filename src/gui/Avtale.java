@@ -1,15 +1,19 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import logikk.AvtaleLogic;
+import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
 public class Avtale extends JPanel implements ActionListener {
@@ -18,22 +22,29 @@ public class Avtale extends JPanel implements ActionListener {
 	private JTextField textField2;
 	private JTextField textField3;
 	private JTextField textField4;
+	private JTextField textField5;
+	private JTextField textField6;
+	private JTextField textField7;
+	private AvtaleLogic al;
+	private String bruker;
+
+
 
 	public Avtale(String bruker) {
-		String[] labels = {"Dato: ", "Starttid: ", "Sluttid: ", "Beskrivelse: "};
-
+		String[] labels = {"Dato: ", "Starttid: ", "Sluttid: ", "Beskrivelse: ", "RomID: ", "Sted: "};
+		setBruker(bruker);
 		//JPanel p = new JPanel(new SpringLayout());
-		
+
 		setLayout(new SpringLayout());
 		setSize(400,400);
-		
-		
+
+
 		// Bruker som oppretter
 		JLabel l0 = new JLabel("Bruker: ");
 		add(l0);
 		JLabel l00 = new JLabel(bruker);
 		add(l00);
-		
+
 		// Dato
 		JLabel l1 = new JLabel(labels[0], JLabel.TRAILING);
 		add(l1);
@@ -66,33 +77,64 @@ public class Avtale extends JPanel implements ActionListener {
 		add(textField4);
 		textField4.addActionListener(this); 
 
+		// RomID
+		JLabel l5 = new JLabel(labels[4], JLabel.TRAILING);
+		add(l5);
+		textField5 = new JTextField(10);
+		l5.setLabelFor(textField5);
+		add(textField5);
+		textField5.addActionListener(this); 
+
+		// Sted
+		JLabel l6 = new JLabel(labels[5], JLabel.TRAILING);
+		add(l6);
+		textField6 = new JTextField(10);
+		l6.setLabelFor(textField6);
+		add(textField6);
+		textField6.addActionListener(this); 
+
+
 		//Lag-avtale knapp
-		JButton b1 = new JButton("Lag avtale");
+		JButton b1 = new JButton("Opprett Avtale");
 		JLabel l = new JLabel(" ");
 		add(b1);
 		add(l);
 		b1.addActionListener(this);
 
 		SpringUtilities.makeCompactGrid(this,
-				6, 2, 		 //rows, cols
+				8, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 
-		//JFrame frame = new JFrame("Lag Avtale");
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setOpaque(true); 
-		//frame.setContentPane(p);
-		//frame.pack();
-		//frame.setVisible(true);
 	}
 
+
+	public void setBruker(String bruker) {
+		this.bruker = bruker;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
+		al = new AvtaleLogic();
+
+		String dato = textField1.getText();
+		String starttid = textField2.getText();
+		String sluttid = textField3.getText();
+		String beskrivelse = textField4.getText();
+		Object romid;
+		if (textField5.getText().equals("")) {
+			romid = null;
+		} else {
+			romid = Integer.parseInt(textField5.getText());
+		}
+		String sted = textField6.getText();
+
+		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
+		al.printAvtale(success);
+		
 	}
-
-
-
 }
+
+
+

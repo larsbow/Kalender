@@ -7,9 +7,9 @@ import javax.swing.JOptionPane;
 import database.Database;
 
 public class AvtaleLogic {
-	
+
 	Database db = new Database();
-	
+
 	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String ansatt) {
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");
@@ -29,6 +29,4 @@ public class AvtaleLogic {
 			JOptionPane.showMessageDialog(frame,"Avtale ikke opprettet!","Feil",JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
-	
 }

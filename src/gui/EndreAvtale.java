@@ -22,9 +22,10 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private JTextField textField4;
 	private JTextField textField5;
 	private JTextField textField6;
+	private JButton b2;
 	private EndreAvtaleLogic eal;
 	private String bruker;
-	
+
 	public EndreAvtale(String bruker) {
 		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: "};
 		setBruker(bruker);
@@ -40,7 +41,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		l0.setLabelFor(textField0);
 		add(textField0);
 		textField0.addActionListener(this); 
-		
+
 		// Dato
 		JLabel l1 = new JLabel(labels[1], JLabel.TRAILING);
 		add(l1);
@@ -92,10 +93,12 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 		//Lag-avtale knapp
 		JButton b1 = new JButton("Lagre endringer");
-		JLabel l = new JLabel(" ");
+		b2 = new JButton("Slett Avtale");
 		add(b1);
-		add(l);
+		add(b2);
 		b1.addActionListener(this);
+		b2.addActionListener(this);
+
 
 		SpringUtilities.makeCompactGrid(this,
 				8, 2, 		 //rows, cols
@@ -109,24 +112,29 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		eal = new EndreAvtaleLogic();
-		
-		int avtaleid = Integer.parseInt(textField0.getText());
-		String dato = textField1.getText();
-		String starttid = textField2.getText();
-		String sluttid = textField3.getText();
-		String beskrivelse = textField4.getText();
-		Object romid;
-		if (textField5.getText().equals("")) {
-			romid = null;
-		} else {
-			romid = Integer.parseInt(textField5.getText());
-		}
-		String sted = textField6.getText();
 
-		boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
-		eal.printAvtale(success);
+		eal = new EndreAvtaleLogic();
+
+		if(e.getSource() == b2) {
+			int avtaleid = Integer.parseInt(textField0.getText());
+			eal.slettAvtale(avtaleid, bruker);
+		} else {
+			int avtaleid = Integer.parseInt(textField0.getText());
+			String dato = textField1.getText();
+			String starttid = textField2.getText();
+			String sluttid = textField3.getText();
+			String beskrivelse = textField4.getText();
+			Object romid;
+			if (textField5.getText().equals("")) {
+				romid = null;
+			} else {
+				romid = Integer.parseInt(textField5.getText());
+			}
+			String sted = textField6.getText();
+
+			boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
+			eal.printAvtale(success);
+		}
 	}
-	
+
 }

@@ -7,8 +7,8 @@ import javax.swing.*;
 
 import database.CalenderLogic;
 
-public class CalenderGUI extends JFrame{
-	JPanel panel = new JPanel();
+public class CalenderGUI extends JPanel{
+	//JPanel panel = new JPanel();
 	// JButton btnAddFlight = new JButton(new ImageIcon("dfsd/04.png")); // må inn i for løkken
 
 	int year; int month;
@@ -27,8 +27,8 @@ public class CalenderGUI extends JFrame{
 
 
 	public void printDays(int[][] days) {
-		panel.setBounds(10, 10, 300, 300);
-		panel.setLayout(null); // kanskje inne i for løkke, for hver gang vi adder
+		setBounds(10, 10, 300, 300);
+		setLayout(null); // kanskje inne i for løkke, for hver gang vi adder
 
 		int y = 0;
 		for (int i = 0; i < 6; i++) {
@@ -38,173 +38,173 @@ public class CalenderGUI extends JFrame{
 				case 1:
 					JButton date1 = new JButton(new ImageIcon("dfsd/01.png"));
 					date1.setBounds(x, y, 50, 50);
-					panel.add(date1);
+					add(date1);
 					break;
 				case 2:
 					JButton date2 = new JButton(new ImageIcon("dfsd/02.png"));
 					date2.setBounds(x, y, 50, 50);
-					panel.add(date2);
+					add(date2);
 					break;
 				case 3:
 					JButton date3 = new JButton(new ImageIcon("dfsd/03.png"));
 					date3.setBounds(x, y, 50, 50);
-					panel.add(date3);
+					add(date3);
 					break;
 				case 4:
 					JButton date4 = new JButton(new ImageIcon("dfsd/04.png"));
 					date4.setBounds(x, y, 50, 50);
-					panel.add(date4);
+					add(date4);
 					break;
 				case 5:
 					JButton date5 = new JButton(new ImageIcon("dfsd/05.png"));
 					date5.setBounds(x, y, 50, 50);
-					panel.add(date5);
+					add(date5);
 					break;
 				case 6:
 					JButton date6 = new JButton(new ImageIcon("dfsd/06.png"));
 					date6.setBounds(x, y, 50, 50);
-					panel.add(date6);
+					add(date6);
 					break;
 				case 7:
 					JButton date7 = new JButton(new ImageIcon("dfsd/07.png"));
 					date7.setBounds(x, y, 50, 50);
-					panel.add(date7);
+					add(date7);
 					break;
 				case 8:
 					JButton date8 = new JButton(new ImageIcon("dfsd/08.png"));
 					date8.setBounds(x, y, 50, 50);
-					panel.add(date8);
+					add(date8);
 					break;
 				case 9:
 					JButton date9 = new JButton(new ImageIcon("dfsd/09.png"));
 					date9.setBounds(x, y, 50, 50);
-					panel.add(date9);
+					add(date9);
 					break;
 				case 10:
 					JButton date10 = new JButton(new ImageIcon("dfsd/10.png"));
 					date10.setBounds(x, y, 50, 50);
-					panel.add(date10);
+					add(date10);
 					break;
 				case 11:
 					JButton date11 = new JButton(new ImageIcon("dfsd/11.png"));
 					date11.setBounds(x, y, 50, 50);
-					panel.add(date11);
+					add(date11);
 					break;
 				case 12:
 					JButton date12 = new JButton(new ImageIcon("dfsd/12.png"));
 					date12.setBounds(x, y, 50, 50);
-					panel.add(date12);
+					add(date12);
 					break;
 				case 13:
 					JButton date13 = new JButton(new ImageIcon("dfsd/13.png"));
 					date13.setBounds(x, y, 50, 50);
-					panel.add(date13);
+					add(date13);
 					break;
 				case 14:
 					JButton date14 = new JButton(new ImageIcon("dfsd/14.png"));
 					date14.setBounds(x, y, 50, 50);
-					panel.add(date14);
+					add(date14);
 					break;
 				case 15:
 					JButton date15 = new JButton(new ImageIcon("dfsd/15.png"));
 					date15.setBounds(x, y, 50, 50);
-					panel.add(date15);
+					add(date15);
 					break;
 				case 16:
 					JButton date16 = new JButton(new ImageIcon("dfsd/16.png"));
 					date16.setBounds(x, y, 50, 50);
-					panel.add(date16);
+					add(date16);
 					break;
 				case 17:
 					JButton date17 = new JButton(new ImageIcon("dfsd/17.png"));
 					date17.setBounds(x, y, 50, 50);
-					panel.add(date17);
+					add(date17);
 					break;
 				case 18:
 					JButton date18 = new JButton(new ImageIcon("dfsd/18.png"));
 					date18.setBounds(x, y, 50, 50);
-					panel.add(date18);
+					add(date18);
 					break;
 				case 19:
 					JButton date19 = new JButton(new ImageIcon("dfsd/19.png"));
 					date19.setBounds(x, y, 50, 50);
-					panel.add(date19);
+					add(date19);
 					break;
 				case 20:
 					JButton date20 = new JButton(new ImageIcon("dfsd/20.png"));
 					date20.setBounds(x, y, 50, 50);
-					panel.add(date20);
+					add(date20);
 					break;
 				case 21:
 					JButton date21 = new JButton(new ImageIcon("dfsd/21.png"));
 					date21.setBounds(x, y, 50, 50);
-					panel.add(date21);
+					add(date21);
 					break;
 				case 22:
 					JButton date22 = new JButton(new ImageIcon("dfsd/22.png"));
 					date22.setBounds(x, y, 50, 50);
-					panel.add(date22);
+					add(date22);
 					break;
 				case 23:
 					JButton date23 = new JButton(new ImageIcon("dfsd/23.png"));
 					date23.setBounds(x, y, 50, 50);
-					panel.add(date23);
+					add(date23);
 					break;
 				case 24:
 					JButton date24 = new JButton(new ImageIcon("dfsd/24.png"));
 					date24.setBounds(x, y, 50, 50);
-					panel.add(date24);
+					add(date24);
 					break;
 				case 25:
 					JButton date25 = new JButton(new ImageIcon("dfsd/25.png"));
 					date25.setBounds(x, y, 50, 50);
-					panel.add(date25);
+					add(date25);
 					break;
 				case 26:
 					JButton date26 = new JButton(new ImageIcon("dfsd/26.png"));
 					date26.setBounds(x, y, 50, 50);
-					panel.add(date26);
+					add(date26);
 					break;
 				case 27:
 					JButton date27 = new JButton(new ImageIcon("dfsd/27.png"));
 					date27.setBounds(x, y, 50, 50);
-					panel.add(date27);
+					add(date27);
 					break;
 				case 28:
 					JButton date28 = new JButton(new ImageIcon("dfsd/28.png"));
 					date28.setBounds(x, y, 50, 50);
-					panel.add(date28);
+					add(date28);
 					break;
 				case 29:
 					JButton date29 = new JButton(new ImageIcon("dfsd/29.png"));
 					date29.setBounds(x, y, 50, 50);
-					panel.add(date29);
+					add(date29);
 					break;
 				case 30:
 					JButton date30 = new JButton(new ImageIcon("dfsd/30.png"));
 					date30.setBounds(x, y, 50, 50);
-					panel.add(date30);
+					add(date30);
 					break;
 				case 31:
 					JButton date31 = new JButton(new ImageIcon("dfsd/31.png"));
 					date31.setBounds(x, y, 50, 50);
-					panel.add(date31);
+					add(date31);
 					break;
 				
 			//	default:	//trenger ikke defualt		
 				//	JButton date = new JButton(new ImageIcon("dfsd/00.png"));
 				//	date.setBounds(x, y, 50, 50);
-				//	panel.add(date);
+				//	add(date);
 				//	break;
 				}
 				x += 55;
 			}
 			y += 55;
 			
-			add(panel);	
-			setSize(400, 400);
-			setTitle("Kalender");
-			setLocationRelativeTo(null);
+			//add(panel);	
+			//setSize(400, 400);
+			//setTitle("Kalender");
+			//setLocationRelativeTo(null);
 			//			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setVisible(true);
 		}

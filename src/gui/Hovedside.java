@@ -17,6 +17,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	Avtale avtale;
 	Inbox inbox;
 	EndreAvtale endreAvtale;
+	CalenderGUI kalender;
 	String bruker;
 	
 	
@@ -84,7 +85,10 @@ public void changeToAvtale(){
 
 	private void changeToKalender() {
 		clearFrame();
-		add(Kalender);
+		kalender = new CalenderGUI();
+		add(kalender, BorderLayout.CENTER);
+		setSize(550, 390);
+		setVisible(true);
 	}	
 	
 	public void clearFrame(){

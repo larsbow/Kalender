@@ -38,13 +38,6 @@ public class Avtale extends JPanel implements ActionListener {
 		setLayout(new SpringLayout());
 		setSize(400,400);
 
-
-		// Bruker som oppretter
-		JLabel l0 = new JLabel("Bruker: ");
-		add(l0);
-		JLabel l00 = new JLabel(bruker);
-		add(l00);
-
 		// Dato
 		JLabel l1 = new JLabel(labels[0], JLabel.TRAILING);
 		add(l1);
@@ -102,7 +95,7 @@ public class Avtale extends JPanel implements ActionListener {
 		b1.addActionListener(this);
 
 		SpringUtilities.makeCompactGrid(this,
-				8, 2, 		 //rows, cols
+				7, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
@@ -16,12 +17,16 @@ public class Menu extends JPanel{
 	protected JButton inbox;
 	protected JButton endreavtale;
 	protected JButton loggut;
+	protected JLabel bruker;
 	
-	public Menu(){
+	public Menu(String bruker2){
 		setSize(100, 400);
 		setLayout(new SpringLayout());
 		
 		String[] labels = {"Lag Avtale", "Kalender", "Inbox", "Endre Avtale", "Logg ut"};
+		
+		bruker = new JLabel(bruker2);
+		add(bruker);
 		
 		lagavtale = new JButton(labels[0]);
 		add(lagavtale);
@@ -38,7 +43,7 @@ public class Menu extends JPanel{
 		loggut = new JButton(labels[4]);
 		add(loggut);
 		
-		SpringUtilities.makeCompactGrid(this, 5, 1, 6, 6, 6, 6);
+		SpringUtilities.makeCompactGrid(this, 6, 1, 6, 6, 6, 6);
 	}
 		
 }

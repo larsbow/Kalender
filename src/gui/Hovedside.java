@@ -14,6 +14,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	
 	Menu menu;
 	Avtale avtale;
+	EndreAvtale endreAvtale;
 	Inbox inbox;
 	String bruker;
 	
@@ -21,7 +22,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	public Hovedside(String bruker) {
 		setSize(500,250);
 		setTitle("Kalender");
-		menu = new Menu();
+		menu = new Menu(bruker);
 		add(menu, BorderLayout.WEST);
 		menu.lagavtale.addActionListener(this);
 		menu.kalender.addActionListener(this);
@@ -64,7 +65,7 @@ public void changeToAvtale(){
 	}
 
 	private void changeToEndreavtale() {
-		clearFrame();
+		//clearFrame();
 		add(endreavtale);
 	}
 

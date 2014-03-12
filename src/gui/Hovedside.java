@@ -94,7 +94,7 @@ public void changeToAvtale(){
 	public void clearFrame(){
 		Component[] comp = this.getContentPane().getComponents();
 		for (int i=0; i<comp.length; i++){
-			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox) || (comp[i] instanceof EndreAvtale)){
+			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox) || (comp[i] instanceof EndreAvtale) || (comp[i] instanceof CalenderGUI)){
 				this.remove(comp[i]);
 			}
 		}

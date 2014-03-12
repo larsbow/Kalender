@@ -13,6 +13,12 @@ public class AvtaleLogic {
 	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String ansatt) {
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");
+			int varseltid = Integer.parseInt(start) -100;
+			String varselstring = Integer.toString(varseltid);
+			while (varselstring.length() < 4){
+				varselstring = "0" + varselstring;
+			}
+			db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
 		} catch (Exception e) {
 			return false;
 		}

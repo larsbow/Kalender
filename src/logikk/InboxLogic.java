@@ -3,23 +3,25 @@ package logikk;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import database.Database;
 
 public class InboxLogic {
-	
+
 	private String bruker;
 	private ArrayList<String> varsel = new ArrayList<String>();
 	private ArrayList<String> alarm = new ArrayList<String>();
 	Database db;
-	
+
 	public InboxLogic(String bruker){
 		this.bruker = bruker;
 		db = new Database();
 		findVarsel();
 		findAlarm();
 	}
-	
+
 	public void findVarsel(){
 		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato, haravtale.brukernavn FROM ansatt, haravtale, varsel WHERE haravtale.brukernavn = '"+this.bruker+"'");
 		try {
@@ -30,21 +32,23 @@ public class InboxLogic {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<String> getVarsel(){
 		return this.varsel;
 	}
-	
+
 	public void findAlarm(){
-		ResultSet rs = db.readQuery("SELECT avtale.avtaleid, tidspunkt, varsel.dato, sted, romid, haravtale.brukernavn FROM haravtale, varsel, avtale WHERE haravtale.brukernavn = '"+this.bruker+"'");
+		ResultSet rs = db.readQuery("SELECT avtale.avtaleid, avtale.starttid, avtale.dato, sted, romid, haravtale.brukernavn, varsel.dato, varsel.tidspunkt FROM haravtale, varsel, avtale WHERE haravtale.brukernavn = '"+this.bruker+"' AND haravtale.avtaleid = avtale.avtaleid");
 		try {
 			int count = 0;
 			while (rs.next()){
-				alarm.add("ALARM: AvtaleID"+ rs.getString(1) + " starter "+Integer.toString(rs.getInt(2))+" "+Integer.toString(rs.getInt(3))+" ");
-				if (rs.getObject(5) == null){
-					alarm.set(count, alarm.get(count)+" i "+rs.getString(4)+"\n");
-				} else {
-					alarm.set(count,  alarm.get(count)+"i rom nr "+rs.getInt(5) + "\n");
+				if (hasBeen(rs.getString(8), rs.getString(7))){
+					alarm.add("ALARM: AvtaleID "+ rs.getString(1) + " starter klokken "+Integer.toString(rs.getInt(2))+" ved (DDMMYY) "+Integer.toString(rs.getInt(3))+" ");
+					if (rs.getObject(5) == null){
+						alarm.set(count, alarm.get(count)+" i "+rs.getString(4)+"\n");
+					} else {
+						alarm.set(count,  alarm.get(count)+"i rom nr "+rs.getInt(5) + "\n");
+					}
 				}
 				count++;
 			}
@@ -52,7 +56,37 @@ public class InboxLogic {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private boolean hasBeen(String tidspunkt, String dato) {
+		Date tidno = new Date();
+		int time = Integer.parseInt(tidspunkt.substring(0, 2));
+		int minutt = Integer.parseInt(tidspunkt.substring(2, 4));
+		int dag = Integer.parseInt(dato.substring(0, 2));
+		int maaned = Integer.parseInt(dato.substring(2, 4));
+		int aar = Integer.parseInt(dato.substring(4, 6));
+
+		if (aar < (tidno.getYear()-100)){
+			return true;
+		} else if (aar == tidno.getYear()){
+			if (maaned < tidno.getMonth()) {
+				return true;
+			} else if (maaned == tidno.getMonth()) {
+				if (dag < tidno.getDate()) {
+					return true;
+				} else if (dag == tidno.getDate()){
+					if (time < tidno.getHours()) {
+						return true;
+					} else if (time == tidno.getHours()) {
+						if (minutt <= tidno.getMinutes()){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public ArrayList<String> getAlarm(){
 		return this.alarm;
 	}

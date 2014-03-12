@@ -67,7 +67,9 @@ public void changeToAvtale(){
 
 	private void changeToEndreavtale() {
 		clearFrame();
-		add(endreavtale);
+		endreAvtale = new EndreAvtale(bruker);
+		add(endreAvtale,  BorderLayout.CENTER);
+		setVisible(true);
 	}
 
 	private void changeToInbox() {

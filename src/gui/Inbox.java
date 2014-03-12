@@ -1,7 +1,9 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -9,13 +11,15 @@ import logikk.InboxLogic;
 
 public class Inbox extends JPanel {
 	
-	JTable varsel;
-	JTable alarm;
+	ArrayList<String> varsel = new ArrayList<String>();
+	ArrayList<String> alarm = new ArrayList<String>();
 	InboxLogic il;
+	JList varselvis;
+	JList alarmvis;
 	
 	public Inbox(String bruker){
 		il = new InboxLogic(bruker);
-		String[] header1 = {"Avtale", "Endring", "Sendt"};
-		varsel = new JTable(il.getVarsel(), header1);
+		varsel = il.getVarsel();
+		alarm = il.getAlarm();
 	}
 }

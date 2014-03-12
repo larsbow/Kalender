@@ -1,8 +1,81 @@
 package gui;
 
-public class Hovedside {
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import logikk.LoginLogic;
+
+public class Hovedside extends JFrame implements ActionListener{
 	
-	public Hovedside() {
-		Login log = new Login();
+	Menu menu;
+	Avtale avtale;
+	Inbox inbox;
+	String bruker;
+	
+	
+	public Hovedside(String bruker) {
+		menu = new Menu();
+		add(menu, BorderLayout.WEST);
+		menu.lagavtale.addActionListener(this);
+		menu.kalender.addActionListener(this);
+		menu.inbox.addActionListener(this);
+		menu.endreavtale.addActionListener(this);
+		menu.loggut.addActionListener(this);
+		this.bruker = bruker;
+		
+		avtale = new Avtale(bruker);
+		add(avtale, BorderLayout.CENTER);
+		setVisible(true);
+		setResizable(true);	
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == menu.lagavtale){
+			changeToAvtale();
+		} else if (arg0.getSource() == menu.kalender) {
+			changeToKalender();
+		} else if (arg0.getSource() == menu.inbox) {
+			changeToInbox();
+		} else if (arg0.getSource() == menu.endreavtale) {
+			changeToEndreavtale();
+		} else if (arg0.getSource() == menu.loggut) {
+			changeToLoggut();
+		}
+	}
+	
+public void changeToAvtale(){
+		clearFrame();
+		add(avtale);
+	}
+
+	private void changeToLoggut() {
+		this.dispose();
+		new Login();
+	}
+
+	private void changeToEndreavtale() {
+		clearFrame();
+		add(endreavtale);
+	}
+
+	private void changeToInbox() {
+		clearFrame();
+		inbox = new Inbox(this.bruker);
+		add(inbox, BorderLayout.CENTER);
+	}
+
+	private void changeToKalender() {
+		clearFrame();
+		add(Kalender);
+	}	
+	
+	public void clearFrame(){
+		remove(avtale);
 	}
 }

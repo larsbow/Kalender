@@ -81,8 +81,9 @@ public class Login extends JFrame implements ActionListener {
 					System.out.println("Ja");
 					bruker = textField1.getText();
 					frame.dispose();
-					new CalenderGUI();
+					//new CalenderGUI();
 					//new Avtale(getBruker());
+					new Hovedside(getBruker());
 				} else {
 					System.out.println("Nei");
 				}

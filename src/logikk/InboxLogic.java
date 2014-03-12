@@ -21,11 +21,10 @@ public class InboxLogic {
 	}
 	
 	public void findVarsel(){
-		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato FROM ansatt, haravtale, varsel WHERE ansatt.brukernavn = '"+this.bruker+"'");
+		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato, haravtale.brukernavn FROM ansatt, haravtale, varsel WHERE haravtale.brukernavn = '"+this.bruker+"'");
 		try {
 			while (rs.next()){
-				rs.next();
-				varsel.add("Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + "skjedde" + Integer.toString(rs.getInt(3))+" "+Integer.toString(rs.getInt(4)));
+				varsel.add("Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " skjedde " + Integer.toString(rs.getInt(3))+" "+Integer.toString(rs.getInt(4)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,15 +36,15 @@ public class InboxLogic {
 	}
 	
 	public void findAlarm(){
-		ResultSet rs = db.readQuery("SELECT avtale.avtaleid, tidspunkt, varsel.dato, sted, romid FROM ansatt, haravtale, varsel, avtale WHERE ansatt.brukernavn = '"+this.bruker+"'");
+		ResultSet rs = db.readQuery("SELECT avtale.avtaleid, tidspunkt, varsel.dato, sted, romid, haravtale.brukernavn FROM haravtale, varsel, avtale WHERE haravtale.brukernavn = '"+this.bruker+"'");
 		try {
 			int count = 0;
 			while (rs.next()){
-				alarm.add("ALARM: AvtaleID"+ rs.getString(1) + " starter "+Integer.toString(rs.getInt(2))+" "+Integer.toString(rs.getInt(3)));
+				alarm.add("ALARM: AvtaleID"+ rs.getString(1) + " starter "+Integer.toString(rs.getInt(2))+" "+Integer.toString(rs.getInt(3))+" ");
 				if (rs.getObject(5) == null){
-					alarm.set(count, alarm.get(count)+rs.getString(4));
+					alarm.set(count, alarm.get(count)+" i "+rs.getString(4)+"\n");
 				} else {
-					alarm.set(count,  alarm.get(count)+rs.getInt(5));
+					alarm.set(count,  alarm.get(count)+"i rom nr "+rs.getInt(5) + "\n");
 				}
 				count++;
 			}

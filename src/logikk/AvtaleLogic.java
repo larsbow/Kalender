@@ -22,7 +22,7 @@ public class AvtaleLogic {
 	public void printAvtale(boolean success) {
 		if (success) {
 			Component frame = null;
-			JOptionPane.showMessageDialog(frame,"Avtale opprettet!");
+			JOptionPane.showMessageDialog(frame,"Avtale opprettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
 			Component frame = null;

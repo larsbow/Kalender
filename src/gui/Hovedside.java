@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,8 +15,8 @@ public class Hovedside extends JFrame implements ActionListener{
 	
 	Menu menu;
 	Avtale avtale;
-	EndreAvtale endreAvtale;
 	Inbox inbox;
+	EndreAvtale endreAvtale;
 	String bruker;
 	
 	
@@ -34,7 +35,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
 		setVisible(true);
-		setResizable(false);	
+		setResizable(true);	
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	}
 	
 public void changeToAvtale(){
-		//clearFrame();
+		clearFrame();
 		avtale = new Avtale(this.bruker);
 		add(avtale, BorderLayout.CENTER);
 		setVisible(true);
@@ -65,7 +66,7 @@ public void changeToAvtale(){
 	}
 
 	private void changeToEndreavtale() {
-		//clearFrame();
+		clearFrame();
 		add(endreavtale);
 	}
 
@@ -73,6 +74,7 @@ public void changeToAvtale(){
 		clearFrame();
 		inbox = new Inbox(this.bruker);
 		add(inbox, BorderLayout.CENTER);
+		setVisible(true);
 	}
 
 	private void changeToKalender() {
@@ -81,6 +83,14 @@ public void changeToAvtale(){
 	}	
 	
 	public void clearFrame(){
-		remove(avtale);
+		Component[] comp = this.getContentPane().getComponents();
+		for (int i=0; i<comp.length; i++){
+			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox)){
+				this.remove(comp[i]);
+			}
+		}
+
+		
+		setVisible(true);
 	}
 }

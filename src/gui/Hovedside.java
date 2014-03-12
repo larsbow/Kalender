@@ -57,6 +57,7 @@ public void changeToAvtale(){
 		clearFrame();
 		avtale = new Avtale(this.bruker);
 		add(avtale, BorderLayout.CENTER);
+		setSize(500,250);
 		setVisible(true);
 	}
 
@@ -69,6 +70,7 @@ public void changeToAvtale(){
 		clearFrame();
 		endreAvtale = new EndreAvtale(bruker);
 		add(endreAvtale,  BorderLayout.CENTER);
+		setSize(500,270);
 		setVisible(true);
 	}
 
@@ -76,6 +78,7 @@ public void changeToAvtale(){
 		clearFrame();
 		inbox = new Inbox(this.bruker);
 		add(inbox, BorderLayout.CENTER);
+		setSize(500,300);
 		setVisible(true);
 	}
 
@@ -87,7 +90,7 @@ public void changeToAvtale(){
 	public void clearFrame(){
 		Component[] comp = this.getContentPane().getComponents();
 		for (int i=0; i<comp.length; i++){
-			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox)){
+			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox) || (comp[i] instanceof EndreAvtale)){
 				this.remove(comp[i]);
 			}
 		}

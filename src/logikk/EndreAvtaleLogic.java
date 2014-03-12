@@ -1,5 +1,9 @@
 package logikk;
 
+import java.awt.Component;
+
+import javax.swing.JOptionPane;
+
 import database.Database;
 
 public class EndreAvtaleLogic {
@@ -12,7 +16,7 @@ public class EndreAvtaleLogic {
 		try {
 			db.updateQuery("UPDATE avtale "
 						 + "SET dato = '" + dato + "', starttid = '" + start + "', sluttid = '" 
-						 + beskrivelse + "', romid = " + romid + ", sted = '" + sted + "'"
+						 + slutt + "', beskrivelse = '" + beskrivelse + "', romid = " + romid + ", sted = '" + sted + "'"
 						 + "WHERE avtaleid =" + avtaleid);
 		} catch (Exception e) {
 			return false;
@@ -21,10 +25,14 @@ public class EndreAvtaleLogic {
 	}
 
 	public void printAvtale(boolean success) {
-		// TODO Auto-generated method stub
-		
+		if (success) {
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Avtale endret!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Avtale ikke endret!","Feil",JOptionPane.WARNING_MESSAGE);
+		}
 	}
-	
-	
 	
 }

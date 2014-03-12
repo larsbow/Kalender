@@ -26,7 +26,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private String bruker;
 	
 	public EndreAvtale(String bruker) {
-		String[] labels = {"AvtaleID: ", "Dato: ", "Starttid: ", "Sluttid: ", "Beskrivelse: ", "RomID: ", "Sted: "};
+		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: "};
 		setBruker(bruker);
 		//JPanel p = new JPanel(new SpringLayout());
 

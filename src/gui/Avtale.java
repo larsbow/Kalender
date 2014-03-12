@@ -31,7 +31,7 @@ public class Avtale extends JPanel implements ActionListener {
 
 
 	public Avtale(String bruker) {
-		String[] labels = {"Dato: ", "Starttid: ", "Sluttid: ", "Beskrivelse: ", "RomID: ", "Sted: "};
+		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: "};
 		setBruker(bruker);
 		//JPanel p = new JPanel(new SpringLayout());
 

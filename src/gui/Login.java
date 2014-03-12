@@ -1,8 +1,11 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
 import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
@@ -72,8 +75,20 @@ public class Login extends JFrame implements ActionListener {
 			output=output+str;
 
 		if(e.getSource() == b2) {
-			boolean check = ll.registrer(textField1.getText(),output);
-			if (check == false) System.out.println("failed"); else System.out.println("Sucess");
+			if (textField1.getText().equals("") || output.equals("")){
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Ett eller flere felter var tomme!","Feil",JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				boolean check = ll.registrer(textField1.getText(),output);
+				if (check == false) {
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Brukernavn er opptatt!","Feil",JOptionPane.WARNING_MESSAGE);
+				} else {
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Bruker er registrert!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
 		} else {
 
 			if(output != "") {

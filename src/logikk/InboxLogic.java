@@ -38,8 +38,10 @@ public class InboxLogic {
 		}
 	}
 
-	public ArrayList<String> getVarsel(){
-		return this.varsel;
+	public String[] getVarsel(){
+		String[] varselstring = new String[this.varsel.size()];
+		
+		return this.varsel.toArray(varselstring);
 	}
 
 	public void findAlarm() {
@@ -81,7 +83,6 @@ public class InboxLogic {
 
 		
 		if (aar < (tidno.year().get())){
-			System.out.println("HER SKAL JEG VÆRE");
 			return true;
 		} else if (aar == (tidno.year().get())){
 			if (maaned < tidno.monthOfYear().get()) {
@@ -103,7 +104,8 @@ public class InboxLogic {
 		return false;
 	}
 
-	public ArrayList<String> getAlarm(){
-		return this.alarm;
+	public String[] getAlarm(){
+		String[] alarmstring = new String[this.alarm.size()];
+		return this.alarm.toArray(alarmstring);
 	}
 }

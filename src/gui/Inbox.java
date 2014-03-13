@@ -1,12 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
@@ -19,8 +21,8 @@ public class Inbox extends JPanel {
 	ArrayList<String> varsel = new ArrayList<String>();
 	ArrayList<String> alarm = new ArrayList<String>();
 	InboxLogic il;
-	JTextArea varselvis;
-	JTextArea alarmvis;
+	JList varselvis;
+	JList alarmvis;
 	JLabel alarmlabe;
 	JLabel varsellabe;
 	JPanel buts;
@@ -32,20 +34,28 @@ public class Inbox extends JPanel {
 		setSize(400,400);
 		
 		il = new InboxLogic(bruker);
-		varsel = il.getVarsel();
-		alarm = il.getAlarm();
+//		varsel = il.getVarsel();
+//		alarm = il.getAlarm();
 		
 		varsellabe = new JLabel("Varsel");
 		this.add(varsellabe);
 		
-		varselvis = new JTextArea(20, varsel.size());
-		this.add(varselvis);
+		String[] alarmlist = il.getAlarm();
+		String[] varsellist = il.getVarsel();
+		
+		varselvis = new JList(varsellist);
+		JScrollPane scrollvarsel = new JScrollPane(varselvis);
+		scrollvarsel.setPreferredSize(new Dimension(400,100));
+		this.add(scrollvarsel);
 		
 		alarmlabe = new JLabel("Alarmer");
 		this.add(alarmlabe);
 		
-		alarmvis = new JTextArea(20, alarm.size());
-		this.add(alarmvis);
+		System.out.println(alarmlist);
+		alarmvis = new JList(alarmlist);
+		JScrollPane scrollalarm = new JScrollPane(alarmvis);
+		scrollalarm.setPreferredSize(new Dimension(400,100));
+		this.add(scrollalarm);
 		
 		buts = new JPanel(new SpringLayout());
 		buts.setSize(400, 100);
@@ -64,12 +74,13 @@ public class Inbox extends JPanel {
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 		
-		for (int i = 0; i<varsel.size();i++){
-			varselvis.append(varsel.get(i));
-		}
-		for (int i = 0; i<alarm.size();i++){
-			alarmvis.append(alarm.get(i));
-		}
+		
+//		for (int i = 0; i<varsel.size();i++){
+//			varselvis.append(varsel.get(i));
+//		}
+//		for (int i = 0; i<alarm.size();i++){
+//			alarmvis.append(alarm.get(i));
+//		}
 		SpringUtilities.makeCompactGrid(this,
 				5, 1, 		 //rows, cols
 				6, 6,        //initX, initY

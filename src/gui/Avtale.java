@@ -3,8 +3,10 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -178,8 +180,9 @@ public class Avtale extends JPanel implements ActionListener {
 			romid = Integer.parseInt(textField5.getText());
 		}
 		String sted = textField6.getText();
+		String[] deltakere = al.extractDeltakere(textField7.getText());
 
-		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
+		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
 		al.printAvtale(success);
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,12 +15,13 @@ public class AvtaleLogic {
 
 	Database db = new Database();
 
-	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String ansatt) {
+	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String[] deltakere, String ansatt) {
 		if (dato.length() != 8 || start.length() != 4){
 			return false;
 		}
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");
+		 
 			int varseltid = Integer.parseInt(start) +1990;
 			String varselstring = Integer.toString(varseltid);
 			while (varselstring.length() < 4){
@@ -33,6 +36,9 @@ public class AvtaleLogic {
 			rs2.next();
 			int varselid = rs2.getInt(1);
 			
+			for(int i = 0; i < deltakere.length; i++) {
+				db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '" + deltakere[i] + "', null, true)");
+			}
 			db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ansatt+"', "+varselid+")");
 		} catch (Exception e) {
 			return false;
@@ -59,7 +65,12 @@ public class AvtaleLogic {
 		}
 
 	}
-
+	
+	public String[] extractDeltakere (String deltakere) {
+		String[] ansatte = deltakere.split(", ");
+		return ansatte;
+	}
+ 
 	public void printAvtale(boolean success) {
 		if (success) {
 			Component frame = null;

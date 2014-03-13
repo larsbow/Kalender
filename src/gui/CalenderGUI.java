@@ -1,6 +1,7 @@
 package gui;
 
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -80,188 +81,219 @@ public class CalenderGUI extends JPanel implements ActionListener{
 			for (int j = 0; j < 7; j++) {
 				switch (days[i][j]) {
 				case 1:
-					date1 = new JButton(new ImageIcon("dfsd/01.png"));
+					date1 = new JButton("01");
 					date1.setBounds(x, y, 50, 50);
+					date1.setBackground(Color.white);
 					add(date1);
 					date1.addActionListener(this);
 					break;
 				case 2:
-					date2 = new JButton(new ImageIcon("dfsd/02.png"));
+					date2 = new JButton("02");
 					date2.setBounds(x, y, 50, 50);
+					date2.setBackground(Color.white);
 					add(date2);
 					date2.addActionListener(this);
 					break;
 				case 3:
-					date3 = new JButton(new ImageIcon("dfsd/03.png"));
+					date3 = new JButton("03");
 					date3.setBounds(x, y, 50, 50);
+					date3.setBackground(Color.white);
 					add(date3);
 					date3.addActionListener(this);
 					break;
 				case 4:
-					date4 = new JButton(new ImageIcon("dfsd/04.png"));
+					date4 = new JButton("04");
 					date4.setBounds(x, y, 50, 50);
+					date4.setBackground(Color.white);
 					add(date4);
 					date4.addActionListener(this);
 					break;
 				case 5:
-					date5 = new JButton(new ImageIcon("dfsd/05.png"));
+					date5 = new JButton("05");
 					date5.setBounds(x, y, 50, 50);
+					date5.setBackground(Color.white);
 					add(date5);
 					date5.addActionListener(this);
 					break;
 				case 6:
-					date6 = new JButton(new ImageIcon("dfsd/06.png"));
+					date6 = new JButton("06");
 					date6.setBounds(x, y, 50, 50);
+					date6.setBackground(Color.white);
 					add(date6);
 					date6.addActionListener(this);
 					break;
 				case 7:
-					date7 = new JButton(new ImageIcon("dfsd/07.png"));
+					date7 = new JButton("06");
 					date7.setBounds(x, y, 50, 50);
+					date7.setBackground(Color.white);
 					add(date7);
 					date7.addActionListener(this);
 					break;
 				case 8:
-					date8 = new JButton(new ImageIcon("dfsd/08.png"));
+					date8 = new JButton("08");
 					date8.setBounds(x, y, 50, 50);
+					date8.setBackground(Color.white);
 					add(date8);
 					date8.addActionListener(this);
 					break;
 				case 9:
-					date9 = new JButton(new ImageIcon("dfsd/09.png"));
+					date9 = new JButton("09");
 					date9.setBounds(x, y, 50, 50);
+					date9.setBackground(Color.white);
 					add(date9);
 					date9.addActionListener(this);
 					break;
 				case 10:
-					date10 = new JButton(new ImageIcon("dfsd/10.png"));
+					date10 = new JButton("10");
 					date10.setBounds(x, y, 50, 50);
+					date10.setBackground(Color.white);
 					add(date10);
 					date10.addActionListener(this);
 					break;
 				case 11:
-					date11 = new JButton(new ImageIcon("dfsd/11.png"));
+					date11 = new JButton("11");
 					date11.setBounds(x, y, 50, 50);
+					date11.setBackground(Color.white);
 					add(date11);
 					date11.addActionListener(this);
 					break;
 				case 12:
-					date12 = new JButton(new ImageIcon("dfsd/12.png"));
+					date12 = new JButton("12");
 					date12.setBounds(x, y, 50, 50);
+					date12.setBackground(Color.white);
 					add(date12);
 					date12.addActionListener(this);
 					break;
 				case 13:
-					date13 = new JButton(new ImageIcon("dfsd/13.png"));
+					date13 = new JButton("13");
 					date13.setBounds(x, y, 50, 50);
+					date13.setBackground(Color.white);
 					add(date13);
 					date13.addActionListener(this);
 					break;
 				case 14:
-					date14 = new JButton(new ImageIcon("dfsd/14.png"));
+					date14 = new JButton("14");
 					date14.setBounds(x, y, 50, 50);
+					date14.setBackground(Color.white);
 					add(date14);
 					date14.addActionListener(this);
 					break;
 				case 15:
-					date15 = new JButton(new ImageIcon("dfsd/15.png"));
+					date15 = new JButton("15");
 					date15.setBounds(x, y, 50, 50);
+					date15.setBackground(Color.white);
 					add(date15);
 					date15.addActionListener(this);
 					break;
 				case 16:
-					date16 = new JButton(new ImageIcon("dfsd/16.png"));
+					date16 = new JButton("16");
 					date16.setBounds(x, y, 50, 50);
+					date16.setBackground(Color.white);
 					add(date16);
 					date16.addActionListener(this);
 					break;
 				case 17:
-					date17 = new JButton(new ImageIcon("dfsd/17.png"));
+					date17 = new JButton("17");
 					date17.setBounds(x, y, 50, 50);
+					date17.setBackground(Color.white);
 					add(date17);
 					date17.addActionListener(this);
 					break;
 				case 18:
-					date18 = new JButton(new ImageIcon("dfsd/18.png"));
+					date18 = new JButton("18");
 					date18.setBounds(x, y, 50, 50);
+					date18.setBackground(Color.white);
 					add(date18);
 					date18.addActionListener(this);
 					break;
 				case 19:
-					date19 = new JButton(new ImageIcon("dfsd/19.png"));
+					date19 = new JButton("19");
 					date19.setBounds(x, y, 50, 50);
+					date19.setBackground(Color.white);
 					add(date19);
 					date19.addActionListener(this);
 					break;
 				case 20:
-					date20 = new JButton(new ImageIcon("dfsd/20.png"));
+					date20 = new JButton("20");
 					date20.setBounds(x, y, 50, 50);
+					date20.setBackground(Color.white);
 					add(date20);
 					date20.addActionListener(this);
 					break;
 				case 21:
-					date21 = new JButton(new ImageIcon("dfsd/21.png"));
+					date21 = new JButton("21");
 					date21.setBounds(x, y, 50, 50);
+					date21.setBackground(Color.white);
 					add(date21);
 					date21.addActionListener(this);
 					break;
 				case 22:
-					date22 = new JButton(new ImageIcon("dfsd/22.png"));
+					date22 = new JButton("22");
 					date22.setBounds(x, y, 50, 50);
+					date22.setBackground(Color.white);
 					add(date22);
 					date22.addActionListener(this);
 					break;
 				case 23:
-					date23 = new JButton(new ImageIcon("dfsd/23.png"));
+					date23 = new JButton("23");
 					date23.setBounds(x, y, 50, 50);
+					date23.setBackground(Color.white);
 					add(date23);
 					date23.addActionListener(this);
 					break;
 				case 24:
-					date24 = new JButton(new ImageIcon("dfsd/24.png"));
+					date24 = new JButton("24");
 					date24.setBounds(x, y, 50, 50);
+					date24.setBackground(Color.white);
 					add(date24);
 					date24.addActionListener(this);
 					break;
 				case 25:
-					date25 = new JButton(new ImageIcon("dfsd/25.png"));
+					date25 = new JButton("25");
 					date25.setBounds(x, y, 50, 50);
+					date25.setBackground(Color.white);
 					add(date25);
 					date25.addActionListener(this);
 					break;
 				case 26:
-					date26 = new JButton(new ImageIcon("dfsd/26.png"));
+					date26 = new JButton("26");
 					date26.setBounds(x, y, 50, 50);
+					date26.setBackground(Color.white);
 					add(date26);
 					date26.addActionListener(this);
 					break;
 				case 27:
-					date27 = new JButton(new ImageIcon("dfsd/27.png"));
+					date27 = new JButton("27");
 					date27.setBounds(x, y, 50, 50);
+					date27.setBackground(Color.white);
 					add(date27);
 					date27.addActionListener(this);
 					break;
 				case 28:
-					date28 = new JButton(new ImageIcon("dfsd/28.png"));
+					date28 = new JButton("28");
 					date28.setBounds(x, y, 50, 50);
+					date28.setBackground(Color.white);
 					add(date28);
 					date28.addActionListener(this);
 					break;
 				case 29:
-					date29 = new JButton(new ImageIcon("dfsd/29.png"));
+					date29 = new JButton("29");
 					date29.setBounds(x, y, 50, 50);
+					date29.setBackground(Color.white);
 					add(date29);
 					date29.addActionListener(this);
 					break;
 				case 30:
-					date30 = new JButton(new ImageIcon("dfsd/30.png"));
+					date30 = new JButton("30");
 					date30.setBounds(x, y, 50, 50);
+					date30.setBackground(Color.white);
 					add(date30);
 					date30.addActionListener(this);
 					break;
 				case 31:
-					date31 = new JButton(new ImageIcon("dfsd/31.png"));
+					date31 = new JButton("31");
 					date31.setBounds(x, y, 50, 50);
+					date31.setBackground(Color.white);
 					add(date31);
 					date31.addActionListener(this);
 					break;
@@ -332,6 +364,7 @@ public class CalenderGUI extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == date1)
       //  	getAvtaler(String "" + 01 + month + year);
+			System.out.println("det fungerer");
         if(event.getSource() == date2)
         	System.out.println("det fungerer");
         if(event.getSource() == date3)

@@ -81,4 +81,29 @@ public class AvtaleLogic {
 			JOptionPane.showMessageDialog(frame,"Avtale ikke opprettet!","Feil",JOptionPane.WARNING_MESSAGE);
 		}
 	}
+	
+	private String bruker;
+	private ArrayList<String> avtaler = new ArrayList<String>();
+	Database db2;
+
+
+	public void getAvtaler(String bruker, String dato){
+		this.bruker = bruker;
+		db2 = new Database();
+		
+		ResultSet rs = db2.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, haravtale WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
+		try {
+			while (rs.next()){
+					avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1) + " skjedde ");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String[] getVarsel(){
+		String[] avtalestring = new String[this.avtaler.size()];
+		
+		return this.avtaler.toArray(avtalestring);
+	}
 }

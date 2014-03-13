@@ -93,18 +93,18 @@ public class Login extends JFrame implements ActionListener {
 
 			if(output != "") {
 				if (ll.isTrue(output) == true){
-					System.out.println("Ja");
 					bruker = textField1.getText();
 					frame.dispose();
 					//new CalenderGUI();
 					//new Avtale(getBruker());
 					new Hovedside(getBruker());
 				} else {
-					System.out.println("Nei");
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Feil brukernavn/passord!","Feil",JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				System.out.println("Nei");
-			}
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Feil brukernavn/passord!","Feil",JOptionPane.WARNING_MESSAGE);			}
 		}
 	}
 }

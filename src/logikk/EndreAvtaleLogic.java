@@ -43,9 +43,15 @@ public class EndreAvtaleLogic {
 
 			if(bruker2.equals(bruker)){ 
 				db.updateQuery("DELETE FROM avtale WHERE avtaleid = " + avtaleid);
-			} 
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Avtale ikke slettet! Avtalen ble opprettet av noen andre.","Feil",JOptionPane.WARNING_MESSAGE);
+			}
 		}catch (Exception e) {
-
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Avtale ikke slettet! Feil avtaleid.","Feil",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

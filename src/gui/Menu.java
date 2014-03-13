@@ -1,13 +1,9 @@
 package gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-
 import logikk.SpringUtilities;
 
 public class Menu extends JPanel{
@@ -25,20 +21,20 @@ public class Menu extends JPanel{
 		
 		String[] labels = {"Lag Avtale", "Kalender", "Inbox", "Endre Avtale", "Logg ut"};
 		
-		bruker = new JLabel(bruker2);
+		bruker = new JLabel(bruker2 + "'s Kalender");
 		add(bruker);
 		
 		lagavtale = new JButton(labels[0]);
 		add(lagavtale);
+		
+		endreavtale = new JButton(labels[3]);
+		add(endreavtale);
 		
 		kalender = new JButton(labels[1]);
 		add(kalender);
 		
 		inbox = new JButton(labels[2]);
 		add(inbox);
-		
-		endreavtale = new JButton(labels[3]);
-		add(endreavtale);
 		
 		loggut = new JButton(labels[4]);
 		add(loggut);

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -28,9 +30,14 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private JTextField textField4;
 	private JTextField textField5;
 	private JTextField textField6;
-	private JButton b2;
+	private JList alist;
+	private JLabel alisthead;
+	JButton b2;
 	private EndreAvtaleLogic eal;
 	private String bruker;
+	private JButton b1;
+	JPanel avtaleliste;
+	String[] avtaler;
 
 	public EndreAvtale(String bruker) {
 		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: "};
@@ -38,22 +45,22 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		//JPanel p = new JPanel(new SpringLayout());
 
 		eal = new EndreAvtaleLogic();
-		
+
 		setLayout(new SpringLayout());
 		setSize(400,400);
 
 		// AvtaleID
-//		JLabel l0 = new JLabel(labels[0], JLabel.TRAILING);
-//		add(l0);
-//		textField0 = new JTextField(15);
-//		l0.setLabelFor(textField0);
-//		add(textField0);
-//		textField0.addActionListener(this); 
-		
+		//		JLabel l0 = new JLabel(labels[0], JLabel.TRAILING);
+		//		add(l0);
+		//		textField0 = new JTextField(15);
+		//		l0.setLabelFor(textField0);
+		//		add(textField0);
+		//		textField0.addActionListener(this); 
+
 		JPanel tekstbokser = new JPanel(new SpringLayout());
 		this.add(tekstbokser, SpringLayout.NORTH);
-		
-		JPanel avtaleliste = new JPanel(new SpringLayout());
+
+		avtaleliste = new JPanel(new SpringLayout());
 		this.add(avtaleliste, SpringLayout.SOUTH);
 
 		// Dato
@@ -106,18 +113,39 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 
 		//Lag-avtale knapp
-		JButton b1 = new JButton("Lagre endringer");
+		b1 = new JButton("Lagre endringer");
 		b2 = new JButton("Slett Avtale");
 		tekstbokser.add(b1);
 		tekstbokser.add(b2);
 		b1.addActionListener(this);
-		b2.addActionListener(this);
-		
-		String[] avtaler = eal.getAvtaler(bruker);
-		
-		final JList alist = new JList(avtaler);
+
+		alisthead = new JLabel("Dine Avtaler");
+		avtaleliste.add(alisthead);
+
+		createAlist(false);
+
+		SpringUtilities.makeCompactGrid(tekstbokser,
+				7, 2, 		 //rows, cols
+				6, 6,        //initX, initY
+				6, 6);       //xPad, yPad
+
+		SpringUtilities.makeCompactGrid(avtaleliste,
+				2, 1, 		 //rows, cols
+				6, 6,        //initX, initY
+				6, 6);       //xPad, yPad
+
+		SpringUtilities.makeCompactGrid(this,
+				2, 1, 		 //rows, cols
+				6, 6,        //initX, initY
+				6, 6);       //xPad, yPad
+	}
+
+	private void createAlist(boolean refresh) {
+		avtaler = eal.getAvtaler(bruker);
+
+		alist = new JList(avtaler);
 		JScrollPane listScroller = new JScrollPane(alist);
-		listScroller.setPreferredSize(new Dimension(300, 80));
+		listScroller.setPreferredSize(new Dimension(300, 100));
 		avtaleliste.add(listScroller);
 		alist.addListSelectionListener(new ListSelectionListener() {
 
@@ -135,23 +163,9 @@ public class EndreAvtale extends JPanel implements ActionListener{
 					textField6.setText(info.get(5));
 				}
 			}
-			
+
 		});
 
-		SpringUtilities.makeCompactGrid(tekstbokser,
-				7, 2, 		 //rows, cols
-				6, 6,        //initX, initY
-				6, 6);       //xPad, yPad
-		
-		SpringUtilities.makeCompactGrid(avtaleliste,
-				1, 1, 		 //rows, cols
-				6, 6,        //initX, initY
-				6, 6);       //xPad, yPad
-		
-		SpringUtilities.makeCompactGrid(this,
-				2, 1, 		 //rows, cols
-				6, 6,        //initX, initY
-				6, 6);       //xPad, yPad
 	}
 
 	public void setBruker(String bruker) {
@@ -163,11 +177,13 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 		eal = new EndreAvtaleLogic();
 
-		if(e.getSource() == b2) {
-			int avtaleid = Integer.parseInt(textField0.getText());
-			eal.slettAvtale(avtaleid, bruker);
-		} else {
-			int avtaleid = Integer.parseInt(textField0.getText());
+		if(e.getSource() == b1){
+			if (alist.getSelectedValue() == null){
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Ingen endring gjort!\nDu MÂ velge avtale.","Feil",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			int avtaleid = Integer.parseInt(alist.getSelectedValue().toString().substring(3, 7));
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
@@ -183,6 +199,11 @@ public class EndreAvtale extends JPanel implements ActionListener{
 			boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
 			eal.printAvtale(success);
 		}
+	}
+
+	public void slettAvtale() {
+		int avtaleid = Integer.parseInt(alist.getSelectedValue().toString().substring(3, 7));
+		eal.slettAvtale(avtaleid, this.bruker);
 	}
 
 }

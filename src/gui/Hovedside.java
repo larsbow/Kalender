@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import logikk.EndreAvtaleLogic;
 import logikk.LoginLogic;
 
 public class Hovedside extends JFrame implements ActionListener{
@@ -18,6 +19,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	Inbox inbox;
 	EndreAvtale endreAvtale;
 	CalenderGUI kalender;
+	EndreAvtaleLogic eal;
 	String bruker;
 	
 	
@@ -51,6 +53,9 @@ public class Hovedside extends JFrame implements ActionListener{
 			changeToEndreavtale();
 		} else if (arg0.getSource() == menu.loggut) {
 			changeToLoggut();
+		} else if (arg0.getSource() == endreAvtale.b2){
+			endreAvtale.slettAvtale();
+			changeToEndreavtale();
 		}
 	}
 	
@@ -71,7 +76,8 @@ public void changeToAvtale(){
 		clearFrame();
 		endreAvtale = new EndreAvtale(bruker);
 		add(endreAvtale,  BorderLayout.CENTER);
-		setSize(500,270);
+		endreAvtale.b2.addActionListener(this);
+		setSize(500,370);
 		setVisible(true);
 	}
 
@@ -79,7 +85,7 @@ public void changeToAvtale(){
 		clearFrame();
 		inbox = new Inbox(this.bruker);
 		add(inbox, BorderLayout.CENTER);
-		setSize(500,300);
+		setSize(800,300);
 		setVisible(true);
 	}
 

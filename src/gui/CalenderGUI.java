@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.*;
 
@@ -46,7 +48,13 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	JButton date30;
 	JButton date31;
 	
-	int year; int month;
+	Date date;
+    Calendar calend = Calendar.getInstance();
+    int year = calend.get(Calendar.YEAR);
+    int month = calend.get(Calendar.MONTH);
+  
+   
+
 	CalenderLogic cal = new CalenderLogic();
 
 
@@ -56,8 +64,8 @@ public class CalenderGUI extends JPanel implements ActionListener{
 		//setSize(400, 350);
 
 		// blankArea.addMouseListener(this)
-
-		printCalender(2014,3);
+		
+		printCalender(year,month+1);
 		
 	}
 
@@ -322,8 +330,8 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	}
 	@Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == date1)
-        	System.out.println("det fungerer");
+		if(event.getSource() == date1)
+      //  	getAvtaler(String "" + 01 + month + year);
         if(event.getSource() == date2)
         	System.out.println("det fungerer");
         if(event.getSource() == date3)

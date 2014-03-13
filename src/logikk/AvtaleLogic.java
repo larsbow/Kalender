@@ -2,6 +2,8 @@ package logikk;
 
 import java.awt.Component;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -38,6 +40,29 @@ public class AvtaleLogic {
 			return false;
 		}
 		return true;		
+	}
+	
+	public String[] getAnsatte() {
+		try {
+			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt");
+			ArrayList<String> ar = new ArrayList<String>();
+			int counter = 0;
+			
+			while (rs.next()) {
+				
+				counter++;
+				ar.add(rs.getString(1));
+			}
+
+			String[] stockArr = new String[ar.size()];
+			stockArr = ar.toArray(stockArr);
+			
+			return stockArr;
+			
+		} catch (SQLException e) {
+			return null;
+		}
+		
 	}
 
 	public void printAvtale(boolean success) {

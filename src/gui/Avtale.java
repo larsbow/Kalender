@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,7 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 import logikk.AvtaleLogic;
@@ -26,12 +29,14 @@ public class Avtale extends JPanel implements ActionListener {
 	private JTextField textField4;
 	private JTextField textField5;
 	private JTextField textField6;
+	private JTextField textField7;
 	private JButton b2;
+	private JList j;
 	private AvtaleLogic al;
 	private String bruker;
 
 	public Avtale(String bruker) {
-		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: "};
+		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
 		
 		JPanel p = new JPanel(new SpringLayout());
@@ -87,29 +92,54 @@ public class Avtale extends JPanel implements ActionListener {
 		l6.setLabelFor(textField6);
 		p.add(textField6);
 		textField6.addActionListener(this); 
-
-		//Lag-avtale knapp
-		JButton b1 = new JButton("Opprett Avtale");
-		b2 = new JButton("Legg til deltakere");
-		p.add(b1);
-		p.add(b2);
-		b1.addActionListener(this);
-		b2.addActionListener(this);
 		
-	
+		// Deltakere
+		JLabel l7 = new JLabel(labels[6], JLabel.TRAILING);
+		p.add(l7);
+		textField7 = new JTextField(10);
+		l7.setLabelFor(textField7);
+		p.add(textField7);
+		textField7.addActionListener(this);
+		
+		//Lag ¯verste rutenett
 		SpringUtilities.makeCompactGrid(p,
 				7, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 		
-		JPanel list = new JPanel(new SpringLayout());
-		this.add(list,SpringLayout.SOUTH);
-		list.setVisible(true);
 		
-		String[] s = {"aaasdasdasd", "basdasd", "casdasd"};
-		JList j = new JList(s);
-		list.add(j);
+		//Nytt panel for liste og knapper
+		JPanel p2 = new JPanel(new SpringLayout());
+		this.add(p2,SpringLayout.SOUTH);
+		p2.setVisible(true);
+		JLabel j7 = new JLabel("Deltakere: ");
+		p2.add(j7);
 		
+		//Liste med ansatte
+		al = new AvtaleLogic();
+		
+		String[] s = al.getAnsatte();
+		
+		j = new JList(s);	
+		JScrollPane listScroller = new JScrollPane(j);
+		listScroller.setPreferredSize(new Dimension(300, 80));
+		p2.add(listScroller);
+		
+		//Lag-avtale knapp
+		JButton b1 = new JButton("Opprett Avtale");
+		b2 = new JButton("Legg til deltakere");
+		p2.add(b1);
+		p2.add(b2);
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		
+		//Sett sammen liste og label
+		SpringUtilities.makeCompactGrid(p2,
+				2, 2, 		 //rows, cols
+				6, 6,        //initX, initY
+				6, 6);       //xPad, yPad
+		
+		//Sett sammen alt
 		SpringUtilities.makeCompactGrid(this,
 				2, 1, 		 //rows, cols
 				6, 6,        //initX, initY

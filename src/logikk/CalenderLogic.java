@@ -1,4 +1,4 @@
-package database;
+package logikk;
 
 public class CalenderLogic {
 	int startDay;

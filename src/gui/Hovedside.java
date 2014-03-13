@@ -58,7 +58,7 @@ public void changeToAvtale(){
 		clearFrame();
 		avtale = new Avtale(this.bruker);
 		add(avtale, BorderLayout.CENTER);
-		setSize(500,250);
+		setSize(500,400);
 		setVisible(true);
 	}
 

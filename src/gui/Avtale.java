@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import logikk.AvtaleLogic;
 import logikk.LoginLogic;
@@ -112,7 +114,7 @@ public class Avtale extends JPanel implements ActionListener {
 		JPanel p2 = new JPanel(new SpringLayout());
 		this.add(p2,SpringLayout.SOUTH);
 		p2.setVisible(true);
-		JLabel j7 = new JLabel("Deltakere: ");
+		final JLabel j7 = new JLabel("Deltakere: ");
 		p2.add(j7);
 		
 		//Liste med ansatte
@@ -124,14 +126,23 @@ public class Avtale extends JPanel implements ActionListener {
 		JScrollPane listScroller = new JScrollPane(j);
 		listScroller.setPreferredSize(new Dimension(300, 80));
 		p2.add(listScroller);
+		j.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting() && !textField7.getText().contains(j.getSelectedValue().toString())) {
+					textField7.setText(textField7.getText() + j.getSelectedValue().toString() + ", ");
+				}
+			}
+			
+		});
 		
-		//Lag-avtale knapp
+		//Lag-avtale knapp	
+		JLabel l8 = new JLabel(" ");
 		JButton b1 = new JButton("Opprett Avtale");
-		b2 = new JButton("Legg til deltakere");
+		p2.add(l8);
 		p2.add(b1);
-		p2.add(b2);
 		b1.addActionListener(this);
-		b2.addActionListener(this);
 		
 		//Sett sammen liste og label
 		SpringUtilities.makeCompactGrid(p2,
@@ -154,27 +165,21 @@ public class Avtale extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		al = new AvtaleLogic();
 
-		if(e.getSource() == b2) {
-			textField4.setText(textField4.getText() + "Test ");
+		String dato = textField1.getText();
+		String starttid = textField2.getText();
+		String sluttid = textField3.getText();
+		String beskrivelse = textField4.getText();
+		Object romid;
+		if (textField5.getText().equals("")) {
+			romid = null;
+		} else {
+			romid = Integer.parseInt(textField5.getText());
 		}
-		else {
-			al = new AvtaleLogic();
+		String sted = textField6.getText();
 
-			String dato = textField1.getText();
-			String starttid = textField2.getText();
-			String sluttid = textField3.getText();
-			String beskrivelse = textField4.getText();
-			Object romid;
-			if (textField5.getText().equals("")) {
-				romid = null;
-			} else {
-				romid = Integer.parseInt(textField5.getText());
-			}
-			String sted = textField6.getText();
-
-			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
-			al.printAvtale(success);
-		}
+		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, bruker);
+		al.printAvtale(success);
 	}
 }

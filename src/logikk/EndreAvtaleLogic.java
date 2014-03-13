@@ -3,6 +3,7 @@ package logikk;
 import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -64,6 +65,48 @@ public class EndreAvtaleLogic {
 			Component frame = null;
 			JOptionPane.showMessageDialog(frame,"Avtale ikke endret!","Feil",JOptionPane.WARNING_MESSAGE);
 		}
+	}
+
+	public String[] getAvtaler(String bruker) {
+		ResultSet rs = db.readQuery("SELECT * FROM avtale WHERE opprettetav = '"+bruker+"'");
+		ArrayList<String> tempd = new ArrayList<String>();
+		try {
+			while (rs.next()){
+				String ID = Integer.toString(rs.getInt(1));
+				while (ID.length()<4){
+					ID = "0"+ID;
+				} 
+				tempd.add("ID:"+ID+" dato:"+rs.getString(2)+" tid:"+rs.getString(3)+" beskrivelse: '"+rs.getString(5)+"'\n");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] avtaler = new String[tempd.size()];
+		return tempd.toArray(avtaler);
+	}
+
+	public ArrayList<String> getInfo(String id) {
+		ResultSet rs = db.readQuery("SELECT * FROM avtale WHERE avtaleid = "+id);
+		ArrayList<String> info = new ArrayList<String>();
+		try {
+			rs.next();
+			for (int i = 2; i<8; i++){
+				if (i==6){
+					if (rs.getObject(i) == null){
+						info.add(null);
+					} else {
+						info.add(Integer.toString(rs.getInt(i)));
+					}
+				} else {
+					info.add(rs.getString(i));
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return info;
 	}
 
 

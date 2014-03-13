@@ -77,7 +77,7 @@ public void changeToAvtale(){
 		endreAvtale = new EndreAvtale(bruker);
 		add(endreAvtale,  BorderLayout.CENTER);
 		endreAvtale.b2.addActionListener(this);
-		setSize(500,370);
+		setSize(500,600);
 		setVisible(true);
 	}
 

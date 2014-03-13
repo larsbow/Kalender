@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
-import database.CalenderLogic;
+import logikk.CalenderLogic;
 
 public class CalenderGUI extends JPanel{
 	//JPanel panel = new JPanel();
@@ -23,6 +23,7 @@ public class CalenderGUI extends JPanel{
 		// blankArea.addMouseListener(this)
 
 		printCalender(2014,3);
+		
 	}
 
 
@@ -30,7 +31,7 @@ public class CalenderGUI extends JPanel{
 		setBounds(10, 10, 300, 300);
 		setLayout(null); // kanskje inne i for løkke, for hver gang vi adder
 
-		int y = 0;
+		int y = 70;
 		for (int i = 0; i < 6; i++) {
 			int x = 0;
 			for (int j = 0; j < 7; j++) {
@@ -209,28 +210,11 @@ public class CalenderGUI extends JPanel{
 			setVisible(true);
 		}
 
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 7; j++) {
-				if (days[i][j] == 0)
-					System.out.print("    ");
-				else {
-
-					if (days[i][j] < 10) {
-						System.out.print("   ");
-						System.out.print(days[i][j]);
-					}
-					else {
-						System.out.print("  ");
-						System.out.print(days[i][j]);
-					}
-				}
-			}
-			System.out.println(" ");
-		}
 	}
 
 	public void keyPressed(KeyEvent event) {
 		int key;
+		
 
 		if (Character.isLetter(event.getKeyChar()))
 			key = event.getKeyChar();
@@ -250,13 +234,24 @@ public class CalenderGUI extends JPanel{
 	}
 
 
-	public void printCalender(int year, int month) {
-		int[][] sek = cal.getCalender(year, month);
-		//fprintf ('        %s %d\n' ,getMonthName(number), year);
-		//fprintf ('  ma  ti  on  to  fr  lø  sø  \n');
-		//printDays(getCalendar(year,number));
-		System.out.println(cal.getMonthName(month) + year);
-		System.out.println("ma ti on to fr lø sø " + "\n");
+	public void printCalender(int year, int month) {		
+		int[][] sek = cal.getCalender(year, month);		
 		printDays(sek);
+		
+		setBounds(10, 10, 300, 300);
+		setLayout(null);
+		JButton currentMonth = new JButton(cal.getMonthName(month));
+		JButton currentYear = new JButton("" + year);
+		JLabel dager = new JLabel("     MA              TI             ON            TO              FR             LØ            SØ  ");
+		
+		currentMonth.setBounds(0, 0, 100, 30);
+		currentYear.setBounds(280, 0, 100, 30);
+		dager.setBounds(0, 35, 380, 30);
+		
+		
+		add(currentMonth);
+		add(currentYear);
+		add(dager);
+		
 	}
 }

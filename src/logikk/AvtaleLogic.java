@@ -25,44 +25,39 @@ public class AvtaleLogic {
 				varselstring = "0" + varselstring;
 			}
 			db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
-			
+
 			ResultSet rs = db.readQuery("SELECT avtaleid FROM avtale ORDER BY avtaleid DESC");
 			rs.next();
 			int avtaleid = rs.getInt(1);
 			ResultSet rs2 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
 			rs2.next();
 			int varselid = rs2.getInt(1);
-			System.out.println(varselid+" og "+avtaleid+" og "+ansatt);		
-			System.out.println("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ansatt+"', "+varselid+")");
-
+			
 			db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ansatt+"', "+varselid+")");
 		} catch (Exception e) {
 			return false;
 		}
 		return true;		
 	}
-	
+
 	public String[] getAnsatte() {
 		try {
 			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt");
 			ArrayList<String> ar = new ArrayList<String>();
 			int counter = 0;
-			
+
 			while (rs.next()) {
-				
 				counter++;
 				ar.add(rs.getString(1));
 			}
 
-			String[] stockArr = new String[ar.size()];
-			stockArr = ar.toArray(stockArr);
-			
-			return stockArr;
-			
+			String[] sa = new String[ar.size()];
+			return ar.toArray(sa);
+
 		} catch (SQLException e) {
 			return null;
 		}
-		
+
 	}
 
 	public void printAvtale(boolean success) {

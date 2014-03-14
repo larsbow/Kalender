@@ -43,7 +43,7 @@ public class Avtale extends JPanel implements ActionListener {
 	public Avtale(String bruker) {
 		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
-		
+
 		JPanel p = new JPanel(new SpringLayout());
 		this.add(p,SpringLayout.NORTH);
 
@@ -97,7 +97,7 @@ public class Avtale extends JPanel implements ActionListener {
 		l6.setLabelFor(textField6);
 		p.add(textField6);
 		textField6.addActionListener(this); 
-		
+
 		// Deltakere
 		JLabel l7 = new JLabel(labels[6], JLabel.TRAILING);
 		p.add(l7);
@@ -105,26 +105,26 @@ public class Avtale extends JPanel implements ActionListener {
 		l7.setLabelFor(textField7);
 		p.add(textField7);
 		textField7.addActionListener(this);
-		
+
 		//Lag ¯verste rutenett
 		SpringUtilities.makeCompactGrid(p,
 				7, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
-		
-		
+
+
 		//Nytt panel for liste og knapper
 		JPanel p2 = new JPanel(new SpringLayout());
 		this.add(p2,SpringLayout.SOUTH);
 		p2.setVisible(true);
 		final JLabel j7 = new JLabel("Deltakere: ");
 		p2.add(j7);
-		
+
 		//Liste med ansatte
 		al = new AvtaleLogic();
-		
+
 		String[] s = al.getAnsatte();
-		
+
 		j = new JList(s);	
 		JScrollPane listScroller = new JScrollPane(j);
 		listScroller.setPreferredSize(new Dimension(300, 80));
@@ -137,9 +137,9 @@ public class Avtale extends JPanel implements ActionListener {
 					textField7.setText(textField7.getText() + j.getSelectedValue().toString() + ", ");
 				}
 			}
-			
+
 		});
-		
+
 		//Lag-avtale knapp	
 		b2 = new JButton("Finn Rom");
 		JButton b1 = new JButton("Opprett Avtale");
@@ -147,19 +147,19 @@ public class Avtale extends JPanel implements ActionListener {
 		p2.add(b1);
 		b1.addActionListener(this);
 		b2.addActionListener(this);
-		
+
 		//Sett sammen liste og label
 		SpringUtilities.makeCompactGrid(p2,
 				2, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
-		
+
 		//Sett sammen alt
 		SpringUtilities.makeCompactGrid(this,
 				2, 1, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
-		
+
 	}
 
 
@@ -173,32 +173,38 @@ public class Avtale extends JPanel implements ActionListener {
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
-			r = new Rom(dato, starttid, sluttid);
+			int deltakere = textField7.getText().split(", ").length;
+			r = new Rom(dato, starttid, sluttid, deltakere);
 			r.b1.addActionListener(this);
 		} else if (e.getSource() == r.b1 ) {
-			String s = (String) r.j.getSelectedValue();
-			textField5.setText(s.substring(4,5));
-		} else {
 			
-		al = new AvtaleLogic();
+			String s = (String) r.j.getSelectedValue();
+			if(!(s == null)) {
+				textField5.setText(s.substring(4,8).replaceAll("\\D+",""));
+				r.frame.setVisible(false);
+			}
 
-		String dato = textField1.getText();
-		String starttid = textField2.getText();
-		String sluttid = textField3.getText();
-		String beskrivelse = textField4.getText();
-		Object romid;
-		if (textField5.getText().equals("")) {
-			romid = null;
 		} else {
-			romid = Integer.parseInt(textField5.getText());
-		}
-		String sted = textField6.getText();
-		String[] deltakere; 
-		deltakere = al.extractDeltakere(bruker, textField7.getText());
-		
 
-		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
-		al.printAvtale(success);
+			al = new AvtaleLogic();
+
+			String dato = textField1.getText();
+			String starttid = textField2.getText();
+			String sluttid = textField3.getText();
+			String beskrivelse = textField4.getText();
+			Object romid;
+			if (textField5.getText().equals("")) {
+				romid = null;
+			} else {
+				romid = Integer.parseInt(textField5.getText());
+			}
+			String sted = textField6.getText();
+			String[] deltakere; 
+			deltakere = al.extractDeltakere(bruker, textField7.getText());
+
+
+			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
+			al.printAvtale(success);
 		}
 	}
 }

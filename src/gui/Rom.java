@@ -21,17 +21,17 @@ import logikk.SpringUtilities;
 public class Rom extends JFrame {
 
 	protected JList j;
-	private JFrame frame;
+	protected JFrame frame;
 	RomLogikk rl;
 	JButton b1;
 
-	public Rom(String dato, String starttid, String sluttid) {
+	public Rom(String dato, String starttid, String sluttid, int deltakere) {
 
 		JPanel p = new JPanel(new SpringLayout());
 
 		rl = new RomLogikk();
 
-		String[] ledige = rl.finnLedige(dato, starttid, sluttid);
+		String[] ledige = rl.finnLedige(dato, starttid, sluttid, deltakere);
 
 		j = new JList(ledige);	
 		JScrollPane listScroller = new JScrollPane(j);

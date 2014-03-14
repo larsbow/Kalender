@@ -13,7 +13,10 @@ import java.util.Date;
 
 import javax.swing.*;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import logikk.AvtaleLogic;
+import logikk.AvtaleOversikt;
 import logikk.CalenderLogic;
 
 public class CalenderGUI extends JPanel implements ActionListener{
@@ -60,6 +63,7 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	int month = calend.get(Calendar.MONTH) + 1;
 	String bruker;
 	HentAvtaleGUI avt;
+	AvtaleOversikt oversikt;
 
 
 	CalenderLogic cal = new CalenderLogic();
@@ -75,7 +79,15 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	public void printDays(int[][] days) {
 		setBounds(10, 10, 300, 300);
 		setLayout(null); // kanskje inne i for løkke, for hver gang vi adder
+		
+		
+		String måned = "" + month;
 
+		if (month < 10) {
+			måned = "0" + month;
+		}
+		
+		
 		int y = 70;
 		for (int i = 0; i < 6; i++) {
 			int x = 0;
@@ -87,6 +99,13 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date1.setBackground(Color.white);
 					add(date1);
 					date1.addActionListener(this);
+					oversikt = new AvtaleOversikt(bruker, "01" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date1.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date1.setBackground(Color.blue);
+					else if (oversikt.user)
+						date1.setBackground(Color.green);
 					break;
 				case 2:
 					date2 = new JButton("02");

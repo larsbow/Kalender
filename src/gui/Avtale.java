@@ -180,7 +180,13 @@ public class Avtale extends JPanel implements ActionListener {
 			romid = Integer.parseInt(textField5.getText());
 		}
 		String sted = textField6.getText();
-		String[] deltakere = al.extractDeltakere(textField7.getText());
+		String[] deltakere; 
+		if (!textField7.getText().contains(bruker)) {
+			deltakere = al.extractDeltakere(bruker + ", " + textField7.getText());
+		} else {
+			deltakere = al.extractDeltakere(textField7.getText());
+		}
+		
 
 		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
 		al.printAvtale(success);

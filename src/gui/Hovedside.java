@@ -7,9 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import logikk.EndreAvtaleLogic;
+import logikk.InboxLogic;
 import logikk.LoginLogic;
 
 public class Hovedside extends JFrame implements ActionListener{
@@ -20,6 +22,8 @@ public class Hovedside extends JFrame implements ActionListener{
 	EndreAvtale endreAvtale;
 	CalenderGUI kalender;
 	EndreAvtaleLogic eal;
+	InboxLogic il;
+	EndreAlarm endrealarmbox;
 	String bruker;
 	
 	
@@ -34,6 +38,9 @@ public class Hovedside extends JFrame implements ActionListener{
 		menu.endreavtale.addActionListener(this);
 		menu.loggut.addActionListener(this);
 		this.bruker = bruker;
+		endreAvtale = new EndreAvtale(bruker);
+		il = new InboxLogic(this.bruker);
+		inbox = new Inbox(this.bruker);
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
@@ -54,8 +61,25 @@ public class Hovedside extends JFrame implements ActionListener{
 		} else if (arg0.getSource() == menu.loggut) {
 			changeToLoggut();
 		} else if (arg0.getSource() == endreAvtale.b2){
+			if (endreAvtale.alist.getSelectedValue() == null){
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Kunne ikke slette!!\nDu må velge avtale.","Feil",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			endreAvtale.slettAvtale();
 			changeToEndreavtale();
+		} else if (arg0.getSource() == inbox.slettvarsel){
+			if (!(inbox.varselvis.getSelectedValue() == null)){
+				il.slettVarsel(inbox.varselvis.getSelectedValue().toString().substring(0, 4));
+			} else if (!(inbox.alarmvis.getSelectedValue() == null)){
+				il.slettVarsel(inbox.alarmvis.getSelectedValue().toString().substring(0, 4));
+			}
+		changeToInbox();
+		} else if (arg0.getSource() == inbox.endrealarm){
+			il.endreAlarm();
+			endrealarmbox.but.addActionListener(this);
+		} else if (arg0.getSource() == endrealarmbox.but){
+			
 		}
 	}
 	
@@ -74,7 +98,6 @@ public void changeToAvtale(){
 
 	private void changeToEndreavtale() {
 		clearFrame();
-		endreAvtale = new EndreAvtale(bruker);
 		add(endreAvtale,  BorderLayout.CENTER);
 		endreAvtale.b2.addActionListener(this);
 		setSize(500,600);
@@ -83,8 +106,9 @@ public void changeToAvtale(){
 
 	private void changeToInbox() {
 		clearFrame();
-		inbox = new Inbox(this.bruker);
 		add(inbox, BorderLayout.CENTER);
+		inbox.slettvarsel.addActionListener(this);
+		inbox.endrealarm.addActionListener(this);
 		setSize(800,300);
 		setVisible(true);
 	}

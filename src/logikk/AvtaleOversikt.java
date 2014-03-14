@@ -22,10 +22,8 @@ public class AvtaleOversikt {
 	
 	public boolean brukerHarAvtale() {
 		hentAvt1 = new HentAvtaler(bruker, dato);
-		
-		
-		System.out.println("printer getavtalebruker" + hentAvt1.getAvtaleBruker());
-		if (hentAvt1.getAvtaleBruker() == null)
+				
+		if (hentAvt1.getAvtaleBruker().length == 0)
 			return false;
 		else 
 			return true;
@@ -33,10 +31,8 @@ public class AvtaleOversikt {
 	
 	public boolean kollegaHarAvtale() {
 		hentAvt2 = new HentAvtaler(bruker, dato);
-		
-		
-		System.out.println("printer getavtalekollega" + hentAvt2.getAvtaleBruker());
-		if (hentAvt2.getAvtaleKollega() == null)
+				
+		if (hentAvt2.getAvtaleKollega().length == 0)
 			return false;
 		else 
 			return true;

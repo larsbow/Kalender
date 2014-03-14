@@ -11,24 +11,30 @@ public class HentAvtaler {
 
 	private String bruker;
 	private String dato;
-	private ArrayList<String> avtaler = new ArrayList<String>();
+
+	private ArrayList<String> brukerAvtaler = new ArrayList<String>();
+	private ArrayList<String> kolleagaAvtaler = new ArrayList<String>();
+
+	Database db;
 	Database db2;
-	Database db3;
 
 		
 	public HentAvtaler(String bruker, String dato){
+		db = new Database();
+		db2 = new Database();
 		this.bruker = bruker;
 		this.dato = dato;
+		AvtalerKollega(bruker, dato);
+		AvtalerBruker(bruker, dato);
 	}
 	
 	public void AvtalerKollega(String bruker, String dato){
 		this.bruker = bruker;
-		db2 = new Database();
-		
-		ResultSet rs = db2.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, erinviterttil WHERE erinviterttil.brukernavn != '"+this.bruker+"' and dato = '" + dato + "'" );
+		System.out.println("kollega dato: " + dato);
+		ResultSet rs = db.readQuery("SELECT distinct beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale natural join erinviterttil WHERE erinviterttil.brukernavn != '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {
 			while (rs.next()){
-					avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1));
+				kolleagaAvtaler.add("Avtaler for: " +rs.getString(4) + "    Tid: " + rs.getString(2) + "     Sted: " + rs.getString(3) + "    Beskrivelse: " + rs.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -36,19 +42,19 @@ public class HentAvtaler {
 	}
 
 	public String[] getAvtaleKollega(){
-		String[] avtaleString = new String[this.avtaler.size()];
+		String[] avtaleString = new String[this.kolleagaAvtaler.size()];
 		
-		return this.avtaler.toArray(avtaleString);
+		return this.kolleagaAvtaler.toArray(avtaleString);
 	}
 	
-	public void AvtalerBruker(String bruker, String dato){
+	public void AvtalerBruker(String bruker, String dato){ // find funksjonen
 		this.bruker = bruker;
-		db3 = new Database();
+		System.out.println("bruker dato" + dato);
 		
-		ResultSet rs = db3.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, erinviterttil WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
+		ResultSet rs2 = db2.readQuery("SELECT distinct beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale natural join erinviterttil WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {
-			while (rs.next()){
-					avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1));
+			while (rs2.next()){
+					brukerAvtaler.add("Avtaler for:  " +rs2.getString(4) + "    Tid: " + rs2.getString(2) + "   Sted: " + rs2.getString(3) + "   Beskrivelse: " + rs2.getString(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,9 +62,9 @@ public class HentAvtaler {
 	}
 
 	public String[] getAvtaleBruker(){
-		String[] avtaleString = new String[this.avtaler.size()];
+		String[] avtaleString = new String[this.brukerAvtaler.size()];
 		
-		return this.avtaler.toArray(avtaleString);
+		return this.brukerAvtaler.toArray(avtaleString);
 	}
 
 	

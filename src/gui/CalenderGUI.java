@@ -1,7 +1,9 @@
 package gui;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -49,27 +51,22 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	JButton date29;
 	JButton date30;
 	JButton date31;
-	
+
 	Date date;
-    Calendar calend = Calendar.getInstance();
-    int year = calend.get(Calendar.YEAR);
-    int month = calend.get(Calendar.MONTH);
-    String bruker;
-    HentAvtaleGUI avt;
-   
+	Calendar calend = Calendar.getInstance();
+	int year = calend.get(Calendar.YEAR);
+	int month = calend.get(Calendar.MONTH) + 1;
+	String bruker;
+	HentAvtaleGUI avt;
+
 
 	CalenderLogic cal = new CalenderLogic();
 
 
 	public CalenderGUI(String bruker) {
-		//addKeyListeners();
-		//addMouseListeners();
-		//setSize(400, 350);
-
-		// blankArea.addMouseListener(this)
 		this.bruker= bruker;
-		printCalender(year,month+1);
-		
+		printCalender(year,month);
+
 	}
 
 
@@ -299,17 +296,17 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					add(date31);
 					date31.addActionListener(this);
 					break;
-				
-			//	default:	//trenger ikke defualt		
-				//	JButton date = new JButton(new ImageIcon("dfsd/00.png"));
-				//	date.setBounds(x, y, 50, 50);
-				//	add(date);
-				//	break;
+
+					//	default:	//trenger ikke defualt		
+					//	JButton date = new JButton(new ImageIcon("dfsd/00.png"));
+					//	date.setBounds(x, y, 50, 50);
+					//	add(date);
+					//	break;
 				}
 				x += 55;
 			}
 			y += 55;
-			
+
 			//add(panel);	
 			//setSize(400, 400);
 			//setTitle("Kalender");
@@ -320,112 +317,116 @@ public class CalenderGUI extends JPanel implements ActionListener{
 
 	}
 
-	public void keyPressed(KeyEvent event) {
-		int key;
-		
 
-		if (Character.isLetter(event.getKeyChar()))
-			key = event.getKeyChar();
-		else
-			key = event.getKeyCode();
-
-		switch (key) {
-		case KeyEvent.VK_UP:
-		case 'w':
-
-		}
-	}
-
-	public void mouseClicked(MouseEvent event) {
-		if (event.getClickCount() > 10);
-		System.out.println("det fungerer");
-	}
-
-
-	public void printCalender(int year, int month) {		
+	public void printCalender(int year, int month) {
 		int[][] sek = cal.getCalender(year, month);		
 		printDays(sek);
-		
+
 		setBounds(10, 10, 300, 300);
 		setLayout(null);
 		JButton currentMonth = new JButton(cal.getMonthName(month));
 		JButton currentYear = new JButton("" + year);
 		JLabel dager = new JLabel("     MA              TI             ON            TO              FR             LØ            SØ  ");
-		
+
 		currentMonth.setBounds(0, 0, 100, 30);
 		currentYear.setBounds(280, 0, 100, 30);
 		dager.setBounds(0, 35, 380, 30);
-		
-		
+
+
 		add(currentMonth);
 		add(currentYear);
 		add(dager);
-		
+
 	}
 	@Override
-    public void actionPerformed(ActionEvent event) {
+	
+	
+	public void actionPerformed(ActionEvent event) {
+		String måned = "" + month;
+		
+		if (month < 10) {
+			måned = "0" + month;
+		}
+		
 		if(event.getSource() == date1)
-			avt = new HentAvtaleGUI(bruker,  "" + 01 + month + year);
-			System.out.println("det fungerer");
-        if(event.getSource() == date2)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date3)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date4)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date5)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date6)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date7)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date8)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date9)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date10)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date11)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date12)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date13)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date14)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date15)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date16)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date17)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date18)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date19)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date20)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date21)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date22)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date23)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date24)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date25)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date26)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date27)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date28)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date29)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date30)
-        	System.out.println("det fungerer");
-        if(event.getSource() == date31)
-        	System.out.println("det fungerer");
-   }
+			changeToDato("01" + måned + year);
+		
+		if(event.getSource() == date2)
+			changeToDato("02" + måned + year);
+		
+		if(event.getSource() == date3)
+			changeToDato("03" + måned + year);
+		
+		if(event.getSource() == date4)
+			changeToDato("04" + måned + year);
+		
+		if(event.getSource() == date5)
+			changeToDato("05" + måned + year);
+		
+		if(event.getSource() == date6)
+			changeToDato("06" + måned + year);
+		
+		if(event.getSource() == date7)
+			changeToDato("07" + måned + year);
+		
+		if(event.getSource() == date8)
+			changeToDato("08" + måned + year);
+		
+		if(event.getSource() == date9)
+			changeToDato("09" + måned + year);
+		
+		if(event.getSource() == date10)
+			changeToDato("10" + month + year);
+		
+		if(event.getSource() == date11)
+			changeToDato("" + 11 + month + year);
+		if(event.getSource() == date12)
+			changeToDato("" + 12 + month + year);
+		if(event.getSource() == date13)
+			changeToDato("" + 13 + month + year);
+		if(event.getSource() == date14)
+			changeToDato("" + 14 + month + year);
+		if(event.getSource() == date15)
+			changeToDato("" + 15 + month + year);
+		if(event.getSource() == date16)
+			changeToDato("" + 16 + month + year);
+		if(event.getSource() == date17)
+			changeToDato("" + 17 + month + year);
+		if(event.getSource() == date18)
+			changeToDato("" + 18 + month + year);
+		if(event.getSource() == date19)
+			changeToDato("" + 19 + month + year);
+		if(event.getSource() == date20)
+			changeToDato("" + 20 + month + year);
+		if(event.getSource() == date21)
+			changeToDato("" + 21 + month + year);
+		if(event.getSource() == date22)
+			changeToDato("" + 22 + month + year);
+		if(event.getSource() == date23)
+			changeToDato("" + 23 + month + year);
+		if(event.getSource() == date24)
+			changeToDato("" + 24 + month + year);
+		if(event.getSource() == date25)
+			changeToDato("" + 25 + month + year);
+		if(event.getSource() == date26)
+			changeToDato("" + 26 + month + year);
+		if(event.getSource() == date27)
+			changeToDato("" + 27 + month + year);
+		if(event.getSource() == date28)
+			changeToDato("" + 28 + month + year);
+		if(event.getSource() == date29)
+			changeToDato("" + 29 + month + year);
+		if(event.getSource() == date30)
+			changeToDato("" + 30 + month + year);
+		if(event.getSource() == date31)
+			changeToDato("" + 31 + month + year);
+	}
+
+	private void changeToDato(String dato) {
+		this.removeAll();
+		avt = new HentAvtaleGUI(this.bruker, dato);
+		add(avt, BorderLayout.CENTER);
+		setSize(800,300);
+		setVisible(true);
+	}
 }

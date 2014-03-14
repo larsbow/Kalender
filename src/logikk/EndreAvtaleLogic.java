@@ -7,11 +7,14 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import org.joda.time.DateTime;
+
 import database.Database;
 
 public class EndreAvtaleLogic {
 
 	Database db = new Database();
+	AvtaleLogic al = new AvtaleLogic();
 
 	public boolean endreAvtale(int avtaleid, String dato, String start,
 			String slutt, String beskrivelse, Object romid, String sted,
@@ -21,33 +24,64 @@ public class EndreAvtaleLogic {
 			ResultSet rs = db.readQuery("SELECT opprettetav FROM avtale WHERE avtaleid =" + avtaleid);
 			rs.next();
 			String bruker = rs.getString(1);
-
-			int varseltid = Integer.parseInt(start)-100;
-			String varselstring = Integer.toString(varseltid);
-			while (varselstring.length() < 4){
+			
+			String[] tid = al.datoklokke();
+			
+			String varseldato = tid[1];
+			String varselstring = tid[0];
+			int alarmtid = Integer.parseInt(start)-100;
+			String alarmstring = Integer.toString(alarmtid);
+			while (alarmstring.length() < 4){
+				alarmstring = "0" + alarmstring;
+			}
+			while (varselstring.length() < 4) {
 				varselstring = "0" + varselstring;
 			}
 			
 			if(bruker.equals(ansatt)){ 
-
+// oppdaterer avtalen i databasen dersom bruker har lov. Sletter derette midlertidig alle inviterte fra erinviterttil.
 				db.updateQuery("UPDATE avtale "
 						+ "SET dato = '" + dato + "', starttid = '" + start + "', sluttid = '" 
 						+ slutt + "', beskrivelse = '" + beskrivelse + "', romid = " + romid + ", sted = '" + sted + "'"
 						+ " WHERE avtaleid =" + avtaleid );
 				db.updateQuery("DELETE FROM erinviterttil WHERE avtaleid = "+avtaleid);
+				
+// finner alle alarm-varsel-ideer for å kunne fjerne varsel og ansatt fra varsel- og haravtale-tabellene.
 				ResultSet rs2 = db.readQuery("SELECT varselid, brukernavn, avtaleid "
-						+ "FROM haravtale NATURAL JOIN varsel WHERE avtaleid = "+avtaleid);
+						+ "FROM haravtale NATURAL JOIN varsel WHERE avtaleid = "+avtaleid+" AND beskjed = 'alarm'");
+				
+// alle varsler som slettes vil også slette sin rad i haravtale pga on delete cascade. Tar vare på id'ene som slettes for å
+//	bruke de igjen.
+				ArrayList<Integer> alarmid = new ArrayList<Integer>();
 				while(rs2.next()){
 					db.updateQuery("DELETE FROM varsel WHERE varselid = "+rs2.getInt(1));
+					alarmid.add(rs2.getInt(1));
 				}
 				for (int i= 0; i < deltakere.length; i++){
 					db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '"+deltakere[i]+"', null, true)");
+					if (alarmid.size() > 0){
+						db.updateQuery("INSERT INTO varsel VALUES ("+alarmid.get(0)+", 'alarm', '"+alarmstring+"', '"+dato+"')");
+						db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+alarmid.get(0)+")");
+						alarmid.remove(0);
+					} else {
+						db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+alarmstring+"', '"+dato+"')");
+						ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+						rs3.next();
+						int varselid = rs3.getInt(1);
+						db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+					}
 					
-					db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
-					ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
-					rs3.next();
-					int varselid = rs3.getInt(1);
-					db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+					if (alarmid.size() > 0){
+						db.updateQuery("INSERT INTO varsel VALUES ("+alarmid.get(0)+", 'Ending i avtaleID "+avtaleid+"', '"+varselstring+"', '"+varseldato+"')");
+						db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+alarmid.get(0)+")");
+						alarmid.remove(0);
+					} else {
+						db.updateQuery("INSERT INTO varsel VALUES (null, 'Ending i avtaleID "+avtaleid+"', '"+varselstring+"', '"+varseldato+"')");
+						ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+						rs3.next();
+						int varselid = rs3.getInt(1);
+						db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+					}
 				}
 				return true;
 			}	

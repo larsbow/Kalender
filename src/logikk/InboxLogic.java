@@ -37,8 +37,11 @@ public class InboxLogic {
 					while (varselid.length() < 4){
 						varselid = "0"+varselid;
 					}
-					varsel.add(varselid+": Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " Endringen skjedde " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
-
+					if (rs.getString(1).contains("Du ble invitert til ny avtale")){
+						varsel.add(varselid+": Du ble invitert til avtale " +rs.getString(2) + ": Invitasjonen kom " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
+					} else {
+						varsel.add(varselid+": Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " Endringen skjedde " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
+					}
 				}
 			}
 		} catch (SQLException e) {

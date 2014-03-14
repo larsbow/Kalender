@@ -22,7 +22,7 @@ public class AvtaleLogic {
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");
 		 
-			int varseltid = Integer.parseInt(start) +1990;
+			int varseltid = Integer.parseInt(start)-100;
 			String varselstring = Integer.toString(varseltid);
 			while (varselstring.length() < 4){
 				varselstring = "0" + varselstring;

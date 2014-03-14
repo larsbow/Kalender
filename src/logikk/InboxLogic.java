@@ -55,7 +55,6 @@ public class InboxLogic {
 				ResultSet rsavtale = db.readQuery("SELECT * FROM avtale WHERE avtaleid = "+avtaleid);
 				rsvarsel.next();
 				rsavtale.next();
-				System.out.println(rsvarsel.getString(3)+"tidpunkt");
 				if (hasBeen(rsvarsel.getString(3), rsvarsel.getString(4)) && (rsvarsel.getString(2).equals("alarm"))){
 					
 					alarm.add("ALARM: AvtaleID "+avtaleid+" starter klokken "+rsavtale.getString(3)+" ved dato(DDMMYYYY) "+rsavtale.getString(2));
@@ -81,7 +80,6 @@ public class InboxLogic {
 		int maaned = Integer.parseInt(dato.substring(2, 4));
 		int aar = Integer.parseInt(dato.substring(4, 8));
 
-		
 		if (aar < (tidno.year().get())){
 			return true;
 		} else if (aar == (tidno.year().get())){

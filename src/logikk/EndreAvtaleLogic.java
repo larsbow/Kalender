@@ -15,7 +15,7 @@ public class EndreAvtaleLogic {
 
 	public boolean endreAvtale(int avtaleid, String dato, String start,
 			String slutt, String beskrivelse, Object romid, String sted,
-			String ansatt){
+			String ansatt, String[] deltakere){
 
 		try {
 			ResultSet rs = db.readQuery("SELECT opprettetav FROM avtale WHERE avtaleid =" + avtaleid);
@@ -27,7 +27,11 @@ public class EndreAvtaleLogic {
 				db.updateQuery("UPDATE avtale "
 						+ "SET dato = '" + dato + "', starttid = '" + start + "', sluttid = '" 
 						+ slutt + "', beskrivelse = '" + beskrivelse + "', romid = " + romid + ", sted = '" + sted + "'"
-						+ " WHERE avtaleid =" + avtaleid ); 
+						+ " WHERE avtaleid =" + avtaleid );
+				db.updateQuery("DELETE FROM erinviterttil WHERE avtaleid = "+avtaleid);
+				for (int i= 0; i < deltakere.length; i++){
+					db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '"+deltakere[i]+"', null, true)");
+				}
 				return true;
 			}	
 		} catch (Exception e) {
@@ -86,7 +90,7 @@ public class EndreAvtaleLogic {
 	}
 
 	public ArrayList<String> getInfo(String id) {
-		ResultSet rs = db.readQuery("SELECT * FROM avtale WHERE avtaleid = "+id);
+		ResultSet rs = db.readQuery("SELECT * FROM avtale NATURAL JOIN erinviterttil WHERE avtaleid = "+id);
 		ArrayList<String> info = new ArrayList<String>();
 		try {
 			rs.next();
@@ -100,6 +104,10 @@ public class EndreAvtaleLogic {
 				} else {
 					info.add(rs.getString(i));
 				}
+			}
+			info.add(rs.getString(9));
+			while (rs.next()){
+				info.set(6, info.get(6)+", "+rs.getString(9));
 			}
 			
 		} catch (SQLException e) {

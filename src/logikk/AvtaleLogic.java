@@ -170,4 +170,14 @@ public class AvtaleLogic {
 		
 		return this.avtaler.toArray(avtalestring);
 	}
+
+	public boolean textContains(String deltakere, String nybruker) {
+		String[] deltakerliste = deltakere.split(", ");
+		for (int i = 0; i < deltakerliste.length; i++){
+			if(deltakerliste[i].equals(nybruker)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

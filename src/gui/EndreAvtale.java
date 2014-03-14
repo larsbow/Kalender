@@ -160,7 +160,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting() && !textField7.getText().contains(dlist.getSelectedValue().toString())) {
+				if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), dlist.getSelectedValue().toString())) {
 					textField7.setText(textField7.getText() + dlist.getSelectedValue().toString() + ", ");
 				}
 			}

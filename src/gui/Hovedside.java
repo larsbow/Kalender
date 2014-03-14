@@ -98,6 +98,7 @@ public void changeToAvtale(){
 
 	private void changeToEndreavtale() {
 		clearFrame();
+		endreAvtale = new EndreAvtale(bruker);
 		add(endreAvtale,  BorderLayout.CENTER);
 		endreAvtale.b2.addActionListener(this);
 		setSize(500,600);

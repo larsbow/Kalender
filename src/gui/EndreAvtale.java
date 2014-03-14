@@ -31,7 +31,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private JTextField textField5;
 	private JTextField textField6;
 	private JTextField textField7;
-	private JList alist;
+	JList alist;
 	private JList dlist;
 	private JLabel alisthead;
 	private JLabel dlisthead;

@@ -88,15 +88,4 @@ public class Inbox extends JPanel {
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 	}
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == slettvarsel){
-//			if (!(varselvis.getSelectedValue() == null)){
-//				il.slettVarsel(varselvis.getSelectedValue().toString().substring(0, 4));
-//			} else if (!(alarmvis.getSelectedValue() == null)){
-//				il.slettVarsel(alarmvis.getSelectedValue().toString().substring(0, 4));
-//			}
-//	}
-//}
 }

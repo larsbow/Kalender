@@ -34,6 +34,7 @@ public class Avtale extends JPanel implements ActionListener {
 	private JTextField textField5;
 	private JTextField textField6;
 	private JTextField textField7;
+	private JButton b1;
 	private JButton b2;
 	private JList j;
 	private AvtaleLogic al;
@@ -142,7 +143,7 @@ public class Avtale extends JPanel implements ActionListener {
 
 		//Lag-avtale knapp	
 		b2 = new JButton("Finn Rom");
-		JButton b1 = new JButton("Opprett Avtale");
+		b1 = new JButton("Opprett Avtale");
 		p2.add(b2);
 		p2.add(b1);
 		b1.addActionListener(this);
@@ -176,15 +177,9 @@ public class Avtale extends JPanel implements ActionListener {
 			int deltakere = textField7.getText().split(", ").length;
 			r = new Rom(dato, starttid, sluttid, deltakere);
 			r.b1.addActionListener(this);
-		} else if (e.getSource() == r.b1 ) {
-			
-			String s = (String) r.j.getSelectedValue();
-			if(!(s == null)) {
-				textField5.setText(s.substring(4,8).replaceAll("\\D+",""));
-				r.frame.setVisible(false);
-			}
 
-		} else {
+
+		} else if (e.getSource() == b1){
 
 			al = new AvtaleLogic();
 
@@ -205,6 +200,13 @@ public class Avtale extends JPanel implements ActionListener {
 
 			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
 			al.printAvtale(success);
+		} else if (e.getSource() == r.b1 ) {
+
+			String s = (String) r.j.getSelectedValue();
+			if(!(s == null)) {
+				textField5.setText(s.substring(4,8).replaceAll("\\D+",""));
+				r.frame.setVisible(false);
+			}
 		}
 	}
 }

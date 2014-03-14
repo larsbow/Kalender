@@ -27,19 +27,19 @@ public class AvtaleLogic {
 			while (varselstring.length() < 4){
 				varselstring = "0" + varselstring;
 			}
-			db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
 
 			ResultSet rs = db.readQuery("SELECT avtaleid FROM avtale ORDER BY avtaleid DESC");
 			rs.next();
 			int avtaleid = rs.getInt(1);
-			ResultSet rs2 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
-			rs2.next();
-			int varselid = rs2.getInt(1);
 			
 			for(int i = 0; i < deltakere.length; i++) {
+				db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
+				ResultSet rs2 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+				rs2.next();
+				int varselid = rs2.getInt(1);
 				db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '" + deltakere[i] + "', null, true)");
+				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
-			db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ansatt+"', "+varselid+")");
 		} catch (Exception e) {
 			return false;
 		}
@@ -66,9 +66,21 @@ public class AvtaleLogic {
 
 	}
 	
-	public String[] extractDeltakere (String deltakere) {
-		String[] ansatte = deltakere.split(", ");
-		return ansatte;
+	public String[] extractDeltakere (String bruker, String deltakere) {
+		String[] temp = deltakere.split(", ");
+		int count = 0;
+		for (int i = 0; i<temp.length; i++){
+			if (temp[i].equals(bruker)){
+				count++;
+			}
+		}
+		if (count == 0){
+			deltakere = deltakere + bruker;
+			String[] ansatte = deltakere.split(", ");
+			return ansatte;
+		} else{
+			return temp;
+		}
 	}
  
 	public void printAvtale(boolean success) {

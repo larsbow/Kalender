@@ -39,7 +39,10 @@ public class InboxLogic {
 					}
 					if (rs.getString(1).contains("Du ble invitert til ny avtale")){
 						varsel.add(varselid+": Du ble invitert til avtale " +rs.getString(2) + ": Invitasjonen kom " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
-					} else {
+					} else if (rs.getString(1).contains("er slettet.")) {
+						varsel.add(varselid+": "+rs.getString(1));
+					}
+					else {
 						varsel.add(varselid+": Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " Endringen skjedde " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
 					}
 				}

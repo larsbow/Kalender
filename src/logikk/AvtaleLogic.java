@@ -42,8 +42,8 @@ public class AvtaleLogic {
 				db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '" + deltakere[i] + "', null, true)");
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 				
+				
 				String[] datoklokke = datoklokke();
-
 				String endring = "Du ble invitert til ny avtale av "+ansatt+".";
 				db.updateQuery("INSERT INTO varsel VALUES (null, '"+endring+"', '"+datoklokke[0]+"', '"+datoklokke[1]+"')");
 				ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
@@ -52,6 +52,7 @@ public class AvtaleLogic {
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;		
@@ -62,16 +63,10 @@ public class AvtaleLogic {
 		String time = Integer.toString(dtg.getHourOfDay());
 		if (dtg.getHourOfDay()<10){
 			time = "0"+time;
-			if (dtg.getHourOfDay() == 0){
-				time = "0"+time;
-			}
 		}
 		String minutt = Integer.toString(dtg.getMinuteOfHour());
 		if (dtg.getMinuteOfHour() < 10){
 			minutt = "0"+minutt;
-			if (dtg.getMinuteOfHour() == 0){
-				minutt = "0"+minutt;
-			}
 		}
 		String dag = Integer.toString(dtg.getDayOfMonth());
 		if (dtg.getDayOfMonth()<10){
@@ -88,9 +83,6 @@ public class AvtaleLogic {
 				aar = "0"+aar;
 				if (dtg.getYear() < 10){
 					aar = "0"+aar;
-					if (dtg.getYear() == 0){
-						aar = "0"+aar;
-					}
 				}
 			}
 		}

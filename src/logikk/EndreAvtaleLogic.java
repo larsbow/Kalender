@@ -91,21 +91,33 @@ public class EndreAvtaleLogic {
 		return false;
 	}
 
-	public void slettAvtale(int avtaleid, String bruker) {
+	public void slettAvtale(int avtaleid, String bruker, String[] deltakere) {
 		try {
-			ResultSet rs = db.readQuery("SELECT opprettetav FROM avtale WHERE avtaleid =" + avtaleid);
+			ResultSet rs = db.readQuery("SELECT opprettetav, dato, starttid, beskrivelse FROM avtale WHERE avtaleid =" + avtaleid);
 			rs.next();
 			String bruker2 = rs.getString(1);
+			String dato = rs.getString(2).substring(0, 2) + "." + rs.getString(2).substring(2, 4)+"."+rs.getString(2).substring(4);
+			
 
 			if(bruker2.equals(bruker)){ 
 				db.updateQuery("DELETE FROM avtale WHERE avtaleid = " + avtaleid);
-				Component frame = null;
-				JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+				try{
+					db.updateQuery("INSERT INTO varsel VALUES (1, 'AvtaleID "+avtaleid+" "+rs.getString(4)+", som skulle"
+							+ " være "+dato+" klokken "+rs.getString(3)+" er slettet.', '"+al.datoklokke()[0]+"',"
+							+ " '"+al.datoklokke()[1]+"')");
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Avtalen ble slettet, \n men varsel kom ikke fra til alle deltakere.","Feil",JOptionPane.INFORMATION_MESSAGE);
+				}
 			} else {
 				Component frame = null;
 			JOptionPane.showMessageDialog(frame,"Avtale ikke slettet! Avtalen ble opprettet av noen andre.","Feil",JOptionPane.WARNING_MESSAGE);
 			}
 		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HEI");
 			Component frame = null;
 			JOptionPane.showMessageDialog(frame,"Avtale ikke slettet! Feil avtaleid.","Feil",JOptionPane.WARNING_MESSAGE);
 		}
@@ -123,7 +135,7 @@ public class EndreAvtaleLogic {
 	}
 
 	public String[] getAvtaler(String bruker) {
-		ResultSet rs = db.readQuery("SELECT * FROM avtale WHERE opprettetav = '"+bruker+"'");
+		ResultSet rs = db.readQuery("SELECT * FROM avtale WHERE opprettetav = '"+bruker+"' AND avtaleid != 1");
 		ArrayList<String> tempd = new ArrayList<String>();
 		try {
 			while (rs.next()){
@@ -143,28 +155,31 @@ public class EndreAvtaleLogic {
 	public ArrayList<String> getInfo(String id) {
 		ResultSet rs = db.readQuery("SELECT * FROM avtale NATURAL JOIN erinviterttil WHERE avtaleid = "+id);
 		ArrayList<String> info = new ArrayList<String>();
-		try {
-			rs.next();
-			for (int i = 2; i<8; i++){
-				if (i==6){
-					if (rs.getObject(i) == null){
-						info.add(null);
-					} else {
-						info.add(Integer.toString(rs.getInt(i)));
-					}
-				} else {
-					info.add(rs.getString(i));
-				}
-			}
-			info.add(rs.getString(9));
-			while (rs.next()){
-				info.set(6, info.get(6)+", "+rs.getString(9));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
+		if (id != "1"){
+			try {
+				rs.next();
+				for (int i = 2; i<8; i++){
+					if (i==6){
+						if (rs.getObject(i) == null){
+							info.add(null);
+						} else {
+							info.add(Integer.toString(rs.getInt(i)));
+						}
+					} else {
+						info.add(rs.getString(i));
+					}
+				}
+				info.add(rs.getString(9));
+				while (rs.next()){
+					info.set(6, info.get(6)+", "+rs.getString(9));
+				}
+
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return info;
 	}
 

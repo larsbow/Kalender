@@ -97,6 +97,7 @@ public class Login extends JFrame implements ActionListener {
 					frame.dispose();
 					//new CalenderGUI();
 					//new Avtale(getBruker());
+					ll.createNullAvtale();
 					new Hovedside(getBruker());
 				} else {
 					Component frame = null;

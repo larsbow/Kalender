@@ -71,4 +71,18 @@ public class LoginLogic {
 		db.updateQuery("INSERT INTO ansatt VALUES ('" + bruker + "','" + passord + "')");
 		return true;
 	}
+
+	public void createNullAvtale() {
+		ResultSet rs = db.readQuery("SELECT avtaleid FROM avtale WHERE avtaleid = 1");
+		try {
+			if (rs != null){
+				rs.next();
+				if (rs.getInt(1) != 1){
+					db.updateQuery("INSERT INTO avtale VALUES (1, '11111111', '1111', '2222', 'Tom avtale for å binde slettevarsel', null, 'a', '"+this.user+"')");	
+				}
+			}
+		} catch (SQLException e) {
+			db.updateQuery("INSERT INTO avtale VALUES (1, '11111111', '1111', '2222', 'Tom avtale for å binde slettevarsel', null, 'a', '"+this.user+"')");
+		}
+	}
 }

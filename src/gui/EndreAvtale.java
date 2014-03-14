@@ -256,7 +256,8 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 	public void slettAvtale() {
 		int avtaleid = Integer.parseInt(alist.getSelectedValue().toString().substring(3, 7));
-		eal.slettAvtale(avtaleid, this.bruker);
+		String[] deltakere = textField7.getText().split(", ");
+		eal.slettAvtale(avtaleid, this.bruker, deltakere);
 	}
 
 }

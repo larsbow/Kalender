@@ -30,7 +30,6 @@ public class HentAvtaler {
 	
 	public void AvtalerKollega(String bruker, String dato){
 		this.bruker = bruker;
-		System.out.println("kollega dato: " + dato);
 		ResultSet rs = db.readQuery("SELECT distinct beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale natural join erinviterttil WHERE erinviterttil.brukernavn != '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {
 			while (rs.next()){
@@ -49,7 +48,6 @@ public class HentAvtaler {
 	
 	public void AvtalerBruker(String bruker, String dato){ // find funksjonen
 		this.bruker = bruker;
-		System.out.println("bruker dato" + dato);
 		
 		ResultSet rs2 = db2.readQuery("SELECT distinct beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale natural join erinviterttil WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {

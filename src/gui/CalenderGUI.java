@@ -13,7 +13,10 @@ import java.util.Date;
 
 import javax.swing.*;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import logikk.AvtaleLogic;
+import logikk.AvtaleOversikt;
 import logikk.CalenderLogic;
 
 public class CalenderGUI extends JPanel implements ActionListener{
@@ -60,6 +63,7 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	int month = calend.get(Calendar.MONTH) + 1;
 	String bruker;
 	HentAvtaleGUI avt;
+	AvtaleOversikt oversikt;
 
 
 	CalenderLogic cal = new CalenderLogic();
@@ -75,7 +79,15 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	public void printDays(int[][] days) {
 		setBounds(10, 10, 300, 300);
 		setLayout(null); // kanskje inne i for løkke, for hver gang vi adder
+		
+		
+		String måned = "" + month;
 
+		if (month < 10) {
+			måned = "0" + month;
+		}
+		
+		
 		int y = 70;
 		for (int i = 0; i < 6; i++) {
 			int x = 0;
@@ -87,13 +99,30 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date1.setBackground(Color.white);
 					add(date1);
 					date1.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "01" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date1.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date1.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date1.setBackground(Color.green);					
 					break;
+					
 				case 2:
 					date2 = new JButton("02");
 					date2.setBounds(x, y, 50, 50);
 					date2.setBackground(Color.white);
 					add(date2);
 					date2.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "02" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date2.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date2.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date2.setBackground(Color.green);
 					break;
 				case 3:
 					date3 = new JButton("03");
@@ -101,6 +130,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date3.setBackground(Color.white);
 					add(date3);
 					date3.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "03" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date3.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date3.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date3.setBackground(Color.green);
 					break;
 				case 4:
 					date4 = new JButton("04");
@@ -108,6 +145,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date4.setBackground(Color.white);
 					add(date4);
 					date4.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "04" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date4.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date4.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date4.setBackground(Color.green);
 					break;
 				case 5:
 					date5 = new JButton("05");
@@ -115,13 +160,30 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date5.setBackground(Color.white);
 					add(date5);
 					date5.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "05" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date5.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date5.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date5.setBackground(Color.green);
 					break;
+	
 				case 6:
 					date6 = new JButton("06");
 					date6.setBounds(x, y, 50, 50);
 					date6.setBackground(Color.white);
 					add(date6);
 					date6.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "06" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date6.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date6.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date6.setBackground(Color.green);
 					break;
 				case 7:
 					date7 = new JButton("07");
@@ -129,6 +191,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date7.setBackground(Color.white);
 					add(date7);
 					date7.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "07" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date7.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date7.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date7.setBackground(Color.green);
 					break;
 				case 8:
 					date8 = new JButton("08");
@@ -136,6 +206,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date8.setBackground(Color.white);
 					add(date8);
 					date8.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "08" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date8.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date8.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date8.setBackground(Color.green);
 					break;
 				case 9:
 					date9 = new JButton("09");
@@ -143,6 +221,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date9.setBackground(Color.white);
 					add(date9);
 					date9.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "09" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date9.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date9.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date9.setBackground(Color.green);
 					break;
 				case 10:
 					date10 = new JButton("10");
@@ -150,6 +236,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date10.setBackground(Color.white);
 					add(date10);
 					date10.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "10" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date10.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date10.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date10.setBackground(Color.green);
 					break;
 				case 11:
 					date11 = new JButton("11");
@@ -157,6 +251,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date11.setBackground(Color.white);
 					add(date11);
 					date11.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "11" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date11.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date11.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date11.setBackground(Color.green);
 					break;
 				case 12:
 					date12 = new JButton("12");
@@ -164,6 +266,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date12.setBackground(Color.white);
 					add(date12);
 					date12.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "12" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date12.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date12.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date12.setBackground(Color.green);
 					break;
 				case 13:
 					date13 = new JButton("13");
@@ -171,6 +281,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date13.setBackground(Color.white);
 					add(date13);
 					date13.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "13" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date13.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date13.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date13.setBackground(Color.green);
 					break;
 				case 14:
 					date14 = new JButton("14");
@@ -178,6 +296,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date14.setBackground(Color.white);
 					add(date14);
 					date14.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "14" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date14.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date14.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date14.setBackground(Color.green);
 					break;
 				case 15:
 					date15 = new JButton("15");
@@ -185,6 +311,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date15.setBackground(Color.white);
 					add(date15);
 					date15.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "15" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date15.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date15.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date15.setBackground(Color.green);
 					break;
 				case 16:
 					date16 = new JButton("16");
@@ -192,6 +326,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date16.setBackground(Color.white);
 					add(date16);
 					date16.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "16" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date16.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date16.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date16.setBackground(Color.green);
 					break;
 				case 17:
 					date17 = new JButton("17");
@@ -199,6 +341,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date17.setBackground(Color.white);
 					add(date17);
 					date17.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "17" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date17.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date17.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date17.setBackground(Color.green);
 					break;
 				case 18:
 					date18 = new JButton("18");
@@ -206,6 +356,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date18.setBackground(Color.white);
 					add(date18);
 					date18.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "18" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date18.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date18.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date18.setBackground(Color.green);
 					break;
 				case 19:
 					date19 = new JButton("19");
@@ -213,6 +371,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date19.setBackground(Color.white);
 					add(date19);
 					date19.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "19" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date19.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date19.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date19.setBackground(Color.green);
 					break;
 				case 20:
 					date20 = new JButton("20");
@@ -220,6 +386,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date20.setBackground(Color.white);
 					add(date20);
 					date20.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "20" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date20.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date20.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date20.setBackground(Color.green);
 					break;
 				case 21:
 					date21 = new JButton("21");
@@ -227,6 +401,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date21.setBackground(Color.white);
 					add(date21);
 					date21.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "21" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date21.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date21.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date21.setBackground(Color.green);
 					break;
 				case 22:
 					date22 = new JButton("22");
@@ -234,6 +416,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date22.setBackground(Color.white);
 					add(date22);
 					date22.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "22" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date22.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date22.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date22.setBackground(Color.green);
 					break;
 				case 23:
 					date23 = new JButton("23");
@@ -241,6 +431,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date23.setBackground(Color.white);
 					add(date23);
 					date23.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "23" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date23.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date23.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date23.setBackground(Color.green);
 					break;
 				case 24:
 					date24 = new JButton("24");
@@ -248,6 +446,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date24.setBackground(Color.white);
 					add(date24);
 					date24.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "24" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date24.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date24.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date24.setBackground(Color.green);
 					break;
 				case 25:
 					date25 = new JButton("25");
@@ -255,6 +461,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date25.setBackground(Color.white);
 					add(date25);
 					date25.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "25" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date25.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date25.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date25.setBackground(Color.green);
 					break;
 				case 26:
 					date26 = new JButton("26");
@@ -262,6 +476,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date26.setBackground(Color.white);
 					add(date26);
 					date26.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "26" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date26.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date26.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date26.setBackground(Color.green);
 					break;
 				case 27:
 					date27 = new JButton("27");
@@ -269,6 +491,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date27.setBackground(Color.white);
 					add(date27);
 					date27.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "27" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date27.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date27.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date27.setBackground(Color.green);
 					break;
 				case 28:
 					date28 = new JButton("28");
@@ -276,6 +506,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date28.setBackground(Color.white);
 					add(date28);
 					date28.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "28" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date28.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date28.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date28.setBackground(Color.green);
 					break;
 				case 29:
 					date29 = new JButton("29");
@@ -283,6 +521,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date29.setBackground(Color.white);
 					add(date29);
 					date29.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "29" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date29.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date29.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date29.setBackground(Color.green);
 					break;
 				case 30:
 					date30 = new JButton("30");
@@ -290,6 +536,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date30.setBackground(Color.white);
 					add(date30);
 					date30.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "30" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date30.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date30.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date30.setBackground(Color.green);
 					break;
 				case 31:
 					date31 = new JButton("31");
@@ -297,6 +551,14 @@ public class CalenderGUI extends JPanel implements ActionListener{
 					date31.setBackground(Color.white);
 					add(date31);
 					date31.addActionListener(this);
+					
+					oversikt = new AvtaleOversikt(bruker, "31" + måned + year );
+					if(oversikt.kollega && oversikt.user)
+						date31.setBackground(Color.orange);
+					else if(oversikt.kollega)
+						date31.setBackground(Color.cyan);
+					else if (oversikt.user)
+						date31.setBackground(Color.green);
 					break;
 
 					//	default:	//trenger ikke defualt		

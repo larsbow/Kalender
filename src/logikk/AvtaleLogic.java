@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.joda.time.DateTime;
+
 import database.Database;
 
 public class AvtaleLogic {
@@ -31,13 +33,22 @@ public class AvtaleLogic {
 			ResultSet rs = db.readQuery("SELECT avtaleid FROM avtale ORDER BY avtaleid DESC");
 			rs.next();
 			int avtaleid = rs.getInt(1);
-			
+			int varselid;
 			for(int i = 0; i < deltakere.length; i++) {
 				db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
 				ResultSet rs2 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
 				rs2.next();
-				int varselid = rs2.getInt(1);
+				varselid = rs2.getInt(1);
 				db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '" + deltakere[i] + "', null, true)");
+				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+				
+				String[] datoklokke = datoklokke();
+
+				String endring = "Du ble invitert til ny avtale av "+ansatt+".";
+				db.updateQuery("INSERT INTO varsel VALUES (null, '"+endring+"', '"+datoklokke[0]+"', '"+datoklokke[1]+"')");
+				ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+				rs3.next();
+				varselid = rs3.getInt(1);
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
 		} catch (Exception e) {
@@ -46,6 +57,47 @@ public class AvtaleLogic {
 		return true;		
 	}
 
+	public String[] datoklokke(){
+		DateTime dtg = new DateTime();
+		String time = Integer.toString(dtg.getHourOfDay());
+		if (dtg.getHourOfDay()<10){
+			time = "0"+time;
+			if (dtg.getHourOfDay() == 0){
+				time = "0"+time;
+			}
+		}
+		String minutt = Integer.toString(dtg.getMinuteOfHour());
+		if (dtg.getMinuteOfHour() < 10){
+			minutt = "0"+minutt;
+			if (dtg.getMinuteOfHour() == 0){
+				minutt = "0"+minutt;
+			}
+		}
+		String dag = Integer.toString(dtg.getDayOfMonth());
+		if (dtg.getDayOfMonth()<10){
+			dag = "0"+dag;
+		}
+		String maaned = Integer.toString(dtg.getMonthOfYear());
+		if (dtg.getMonthOfYear() < 10){
+			maaned = "0"+maaned;
+		}
+		String aar = Integer.toString(dtg.getYear());
+		if (dtg.getYear() < 1000){
+			aar = "0"+aar;
+			if(dtg.getYear() < 100){
+				aar = "0"+aar;
+				if (dtg.getYear() < 10){
+					aar = "0"+aar;
+					if (dtg.getYear() == 0){
+						aar = "0"+aar;
+					}
+				}
+			}
+		}
+		String[] klokkedato = {time+minutt, dag+maaned+aar};
+		return klokkedato;
+	}
+	
 	public String[] getAnsatte() {
 		try {
 			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt");

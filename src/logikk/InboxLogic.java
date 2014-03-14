@@ -25,11 +25,12 @@ public class InboxLogic {
 	}
 
 	public void findVarsel(){
-		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato, haravtale.brukernavn FROM ansatt, haravtale, varsel WHERE haravtale.brukernavn = '"+this.bruker+"'");
+		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato, brukernavn"
+				+ " FROM ansatt NATURAL JOIN haravtale NATURAL JOIN varsel WHERE brukernavn = '"+this.bruker+"'");
 		try {
 			while (rs.next()){
 				if (!(rs.getString(1).equals("alarm"))) {
-					varsel.add("Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " skjedde " + Integer.toString(rs.getInt(3))+" "+Integer.toString(rs.getInt(4)));
+					varsel.add("Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " Endringen skjedde " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));
 
 				}
 			}

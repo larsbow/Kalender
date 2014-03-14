@@ -38,6 +38,7 @@ public class Avtale extends JPanel implements ActionListener {
 	private JList j;
 	private AvtaleLogic al;
 	private String bruker;
+	private Rom r;
 
 	public Avtale(String bruker) {
 		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
@@ -172,7 +173,11 @@ public class Avtale extends JPanel implements ActionListener {
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
-			new Rom(dato, starttid, sluttid);
+			r = new Rom(dato, starttid, sluttid);
+			r.b1.addActionListener(this);
+		} else if (e.getSource() == r.b1 ) {
+			String s = (String) r.j.getSelectedValue();
+			textField5.setText(s.substring(4,5));
 		} else {
 			
 		al = new AvtaleLogic();

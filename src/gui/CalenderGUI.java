@@ -51,6 +51,8 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	JButton date29;
 	JButton date30;
 	JButton date31;
+	JButton lastMonth;
+	JButton nextMonth;
 
 	Date date;
 	Calendar calend = Calendar.getInstance();
@@ -325,59 +327,70 @@ public class CalenderGUI extends JPanel implements ActionListener{
 		setBounds(10, 10, 300, 300);
 		setLayout(null);
 		JButton currentMonth = new JButton(cal.getMonthName(month));
+		lastMonth = new JButton("<--");
+		nextMonth = new JButton("-->");
 		JButton currentYear = new JButton("" + year);
 		JLabel dager = new JLabel("     MA              TI             ON            TO              FR             LØ            SØ  ");
 
-		currentMonth.setBounds(0, 0, 100, 30);
-		currentYear.setBounds(280, 0, 100, 30);
+		currentMonth.setBounds(62, 0, 160, 30);
+		currentYear.setBounds(286, 0, 94, 30);
 		dager.setBounds(0, 35, 380, 30);
+		lastMonth.setBounds(0, 0, 60, 30);
+		nextMonth.setBounds(224, 0, 60, 30);
 
 
 		add(currentMonth);
 		add(currentYear);
+		add(nextMonth);
+		add(lastMonth);
 		add(dager);
+
+		nextMonth.addActionListener(this);
+		lastMonth.addActionListener(this);
+		
+		updateUI();
 
 	}
 	@Override
-	
-	
+
+
 	public void actionPerformed(ActionEvent event) {
 		String måned = "" + month;
-		
+
 		if (month < 10) {
 			måned = "0" + month;
 		}
-		
+
 		if(event.getSource() == date1)
 			changeToDato("01" + måned + year);
-		
+
 		if(event.getSource() == date2)
 			changeToDato("02" + måned + year);
-		
+
 		if(event.getSource() == date3)
 			changeToDato("03" + måned + year);
-		
+
 		if(event.getSource() == date4)
 			changeToDato("04" + måned + year);
-		
+
 		if(event.getSource() == date5)
 			changeToDato("05" + måned + year);
-		
+
 		if(event.getSource() == date6)
 			changeToDato("06" + måned + year);
-		
+
 		if(event.getSource() == date7)
 			changeToDato("07" + måned + year);
-		
+
 		if(event.getSource() == date8)
 			changeToDato("08" + måned + year);
-		
+
 		if(event.getSource() == date9)
 			changeToDato("09" + måned + year);
-		
+
 		if(event.getSource() == date10)
 			changeToDato("10" + month + year);
-		
+
 		if(event.getSource() == date11)
 			changeToDato("" + 11 + month + year);
 		if(event.getSource() == date12)
@@ -420,6 +433,28 @@ public class CalenderGUI extends JPanel implements ActionListener{
 			changeToDato("" + 30 + month + year);
 		if(event.getSource() == date31)
 			changeToDato("" + 31 + month + year);
+
+		if(event.getSource() == lastMonth) {
+			if (month == 1) {
+				this.month = 12;
+				this.year = year - 1;
+			}
+			else
+				this.month = month - 1;
+			this.removeAll();
+			printCalender(year,month);
+		}
+
+		if(event.getSource() == nextMonth) {
+			if (this.month == 12) {
+				this.month = 1;
+				this.year = year + 1;
+			}
+			else
+				this.month = month + 1;
+			this.removeAll();
+			printCalender(year,month);
+		}
 	}
 
 	private void changeToDato(String dato) {
@@ -428,5 +463,6 @@ public class CalenderGUI extends JPanel implements ActionListener{
 		add(avt, BorderLayout.CENTER);
 		setSize(800,300);
 		setVisible(true);
+		avt.updateUI();
 	}
 }

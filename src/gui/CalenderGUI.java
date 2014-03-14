@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.swing.*;
 
+import logikk.AvtaleLogic;
 import logikk.CalenderLogic;
 
 public class CalenderGUI extends JPanel implements ActionListener{
@@ -53,19 +54,20 @@ public class CalenderGUI extends JPanel implements ActionListener{
     Calendar calend = Calendar.getInstance();
     int year = calend.get(Calendar.YEAR);
     int month = calend.get(Calendar.MONTH);
-  
+    String bruker;
+    HentAvtaleGUI avt;
    
 
 	CalenderLogic cal = new CalenderLogic();
 
 
-	public CalenderGUI() {
+	public CalenderGUI(String bruker) {
 		//addKeyListeners();
 		//addMouseListeners();
 		//setSize(400, 350);
 
 		// blankArea.addMouseListener(this)
-		
+		this.bruker= bruker;
 		printCalender(year,month+1);
 		
 	}
@@ -363,7 +365,7 @@ public class CalenderGUI extends JPanel implements ActionListener{
 	@Override
     public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == date1)
-      //  	getAvtaler(String "" + 01 + month + year);
+			avt = new HentAvtaleGUI(bruker,  "" + 01 + month + year);
 			System.out.println("det fungerer");
         if(event.getSource() == date2)
         	System.out.println("det fungerer");

@@ -91,7 +91,7 @@ public void changeToAvtale(){
 
 	private void changeToKalender() {
 		clearFrame();
-		kalender = new CalenderGUI();
+		kalender = new CalenderGUI(bruker);
 		add(kalender, BorderLayout.CENTER);
 		setSize(550, 440);
 		setVisible(true);

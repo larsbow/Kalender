@@ -51,7 +51,6 @@ public class Inbox extends JPanel {
 		alarmlabe = new JLabel("Alarmer");
 		this.add(alarmlabe);
 		
-		System.out.println(alarmlist);
 		alarmvis = new JList(alarmlist);
 		JScrollPane scrollalarm = new JScrollPane(alarmvis);
 		scrollalarm.setPreferredSize(new Dimension(400,100));

@@ -22,6 +22,12 @@ public class EndreAvtaleLogic {
 			rs.next();
 			String bruker = rs.getString(1);
 
+			int varseltid = Integer.parseInt(start)-100;
+			String varselstring = Integer.toString(varseltid);
+			while (varselstring.length() < 4){
+				varselstring = "0" + varselstring;
+			}
+			
 			if(bruker.equals(ansatt)){ 
 
 				db.updateQuery("UPDATE avtale "
@@ -29,8 +35,19 @@ public class EndreAvtaleLogic {
 						+ slutt + "', beskrivelse = '" + beskrivelse + "', romid = " + romid + ", sted = '" + sted + "'"
 						+ " WHERE avtaleid =" + avtaleid );
 				db.updateQuery("DELETE FROM erinviterttil WHERE avtaleid = "+avtaleid);
+				ResultSet rs2 = db.readQuery("SELECT varselid, brukernavn, avtaleid "
+						+ "FROM haravtale NATURAL JOIN varsel WHERE avtaleid = "+avtaleid);
+				while(rs2.next()){
+					db.updateQuery("DELETE FROM varsel WHERE varselid = "+rs2.getInt(1));
+				}
 				for (int i= 0; i < deltakere.length; i++){
 					db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '"+deltakere[i]+"', null, true)");
+					
+					db.updateQuery("INSERT INTO varsel VALUES (null, 'alarm', '"+varselstring+"', '"+dato+"')");
+					ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+					rs3.next();
+					int varselid = rs3.getInt(1);
+					db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 				}
 				return true;
 			}	

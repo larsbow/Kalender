@@ -140,11 +140,12 @@ public class Avtale extends JPanel implements ActionListener {
 		});
 		
 		//Lag-avtale knapp	
-		JLabel l8 = new JLabel(" ");
+		b2 = new JButton("Finn Rom");
 		JButton b1 = new JButton("Opprett Avtale");
-		p2.add(l8);
+		p2.add(b2);
 		p2.add(b1);
 		b1.addActionListener(this);
+		b2.addActionListener(this);
 		
 		//Sett sammen liste og label
 		SpringUtilities.makeCompactGrid(p2,
@@ -167,6 +168,13 @@ public class Avtale extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == b2) {
+			String dato = textField1.getText();
+			String starttid = textField2.getText();
+			String sluttid = textField3.getText();
+			new Rom(dato, starttid, sluttid);
+		} else {
+			
 		al = new AvtaleLogic();
 
 		String dato = textField1.getText();
@@ -190,5 +198,6 @@ public class Avtale extends JPanel implements ActionListener {
 
 		boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
 		al.printAvtale(success);
+		}
 	}
 }

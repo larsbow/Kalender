@@ -56,8 +56,9 @@ public class InboxLogic {
 				rsvarsel.next();
 				rsavtale.next();
 				if (hasBeen(rsvarsel.getString(3), rsvarsel.getString(4)) && (rsvarsel.getString(2).equals("alarm"))){
-					
-					alarm.add("ALARM: AvtaleID "+avtaleid+" starter klokken "+rsavtale.getString(3)+" ved dato(DDMMYYYY) "+rsavtale.getString(2));
+					String dato = rsavtale.getString(2);
+					String klokke = rsavtale.getString(3);
+					alarm.add("ALARM: AvtaleID "+avtaleid+" starter klokken "+klokke.substring(0, 2) + ":" + klokke.substring(2) +" ved dato "+ dato.substring(0,2) + "." + dato.substring(2,4) + "." + dato.substring(4));
 					if (hasBeen(rsvarsel.getString(3), rsvarsel.getString(4)) && rsavtale.getObject(6) == null){
 						alarm.set(count, alarm.get(count)+ " i "+ rsavtale.getString(7) + "\n");
 					} else {

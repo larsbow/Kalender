@@ -35,8 +35,8 @@ public class Avtale extends JPanel implements ActionListener {
 	private JTextField textField6;
 	private JTextField textField7;
 	private JButton b1;
-	private JButton b2;
-	private JList j;
+	private JButton b5;
+	JList j;
 	private AvtaleLogic al;
 	private String bruker;
 	private Rom r;
@@ -83,14 +83,6 @@ public class Avtale extends JPanel implements ActionListener {
 		p.add(textField4);
 		textField4.addActionListener(this); 
 
-		// RomID
-		JLabel l5 = new JLabel(labels[4], JLabel.TRAILING);
-		p.add(l5);
-		textField5 = new JTextField(10);
-		l5.setLabelFor(textField5);
-		p.add(textField5);
-		textField5.addActionListener(this); 
-
 		// Sted
 		JLabel l6 = new JLabel(labels[5], JLabel.TRAILING);
 		p.add(l6);
@@ -98,6 +90,14 @@ public class Avtale extends JPanel implements ActionListener {
 		l6.setLabelFor(textField6);
 		p.add(textField6);
 		textField6.addActionListener(this); 
+
+		// RomID
+		b5 = new JButton("Finn Rom");
+		p.add(b5);
+		textField5 = new JTextField(10);
+		p.add(textField5);
+		textField5.addActionListener(this); 
+		textField5.setEditable(false);
 
 		// Deltakere
 		JLabel l7 = new JLabel(labels[6], JLabel.TRAILING);
@@ -142,12 +142,12 @@ public class Avtale extends JPanel implements ActionListener {
 		});
 
 		//Lag-avtale knapp	
-		b2 = new JButton("Finn Rom");
+		JLabel b2 = new JLabel(" ");
 		b1 = new JButton("Opprett Avtale");
 		p2.add(b2);
 		p2.add(b1);
 		b1.addActionListener(this);
-		b2.addActionListener(this);
+		b5.addActionListener(this);
 
 		//Sett sammen liste og label
 		SpringUtilities.makeCompactGrid(p2,
@@ -170,13 +170,14 @@ public class Avtale extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == b2) {
+		if(e.getSource() == b5) {
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
 			int deltakere = textField7.getText().split(", ").length;
 			r = new Rom(dato, starttid, sluttid, deltakere);
 			r.b1.addActionListener(this);
+			r.b2.addActionListener(this);
 
 
 		} else if (e.getSource() == b1){
@@ -207,6 +208,9 @@ public class Avtale extends JPanel implements ActionListener {
 				textField5.setText(s.substring(4,8).replaceAll("\\D+",""));
 				r.frame.setVisible(false);
 			}
+		} else if (e.getSource() == r.b2 ) {
+			textField5.setText("");
+			r.frame.setVisible(false);
 		}
 	}
 }

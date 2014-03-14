@@ -31,7 +31,6 @@ public class RomLogikk {
 			}
 			
 			while (rs1.next()) {
-				System.out.println(Integer.parseInt(rs1.getString(4)));
 				if ((Integer.parseInt(sluttid) > Integer.parseInt(rs1.getString(1))) && (Integer.parseInt(starttid) < Integer.parseInt(rs1.getString(2)))) {
 					ledige.remove("" + rs1.getInt(3));
 					kap.remove("" + rs1.getInt(4));

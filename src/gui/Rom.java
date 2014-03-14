@@ -24,6 +24,7 @@ public class Rom extends JFrame {
 	protected JFrame frame;
 	RomLogikk rl;
 	JButton b1;
+	JButton b2;
 
 	public Rom(String dato, String starttid, String sluttid, int deltakere) {
 
@@ -40,9 +41,12 @@ public class Rom extends JFrame {
 
 		b1 = new JButton("Godkjenn");
 		p.add(b1);
+		
+		b2 = new JButton("Fjern valg");
+		p.add(b2);
 
 		SpringUtilities.makeCompactGrid(p,
-				2, 1, 		 //rows, cols
+				3, 1, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 

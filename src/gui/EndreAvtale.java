@@ -36,6 +36,8 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private JLabel alisthead;
 	private JLabel dlisthead;
 	JButton b2;
+	JButton b5;
+	Rom r;
 	private EndreAvtaleLogic eal;
 	private String bruker;
 	private JButton b1;
@@ -91,12 +93,13 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		textField4.addActionListener(this); 
 
 		// RomID
-		JLabel l5 = new JLabel(labels[5], JLabel.TRAILING);
-		tekstbokser.add(l5);
+		b5 = new JButton("Finn Rom");
+		tekstbokser.add(b5);
 		textField5 = new JTextField(10);
-		l5.setLabelFor(textField5);
 		tekstbokser.add(textField5);
 		textField5.addActionListener(this); 
+		textField5.setEditable(false);
+		b5.addActionListener(this); 
 
 		// Sted
 		JLabel l6 = new JLabel(labels[6], JLabel.TRAILING);
@@ -105,7 +108,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		l6.setLabelFor(textField6);
 		tekstbokser.add(textField6);
 		textField6.addActionListener(this);
-		
+
 		// Deltakere
 		JLabel l7 = new JLabel(labels[7], JLabel.TRAILING);
 		tekstbokser.add(l7);
@@ -125,10 +128,10 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		avtaleliste.add(alisthead);
 
 		createAlist(false);
-		
+
 		dlisthead = new JLabel("Brukere");
 		avtaleliste.add(dlisthead);
-		
+
 		createDlist();
 
 		SpringUtilities.makeCompactGrid(tekstbokser,
@@ -150,12 +153,12 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private void createDlist() {
 		al = new AvtaleLogic();
 		String[] s = al.getAnsatte();
-		
+
 		dlist = new JList(s);
 		JScrollPane listScroller = new JScrollPane(dlist);
 		listScroller.setPreferredSize(new Dimension(300, 100));
 		avtaleliste.add(listScroller);
-		
+
 		dlist.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -164,7 +167,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 					textField7.setText(textField7.getText() + dlist.getSelectedValue().toString() + ", ");
 				}
 			}
-			
+
 		});
 	}
 
@@ -228,6 +231,26 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 			boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker, deltakere);
 			eal.printAvtale(success);
+		} 
+		else if(e.getSource() == b5) {
+			String dato = textField1.getText();
+			String starttid = textField2.getText();
+			String sluttid = textField3.getText();
+			int deltakere = textField7.getText().split(", ").length;
+			r = new Rom(dato, starttid, sluttid, deltakere);
+			r.b1.addActionListener(this);
+			r.b2.addActionListener(this);
+		}
+		else if (e.getSource() == r.b1 ) {
+
+			String s = (String) r.j.getSelectedValue();
+			if(!(s == null)) {
+				textField5.setText(s.substring(4,8).replaceAll("\\D+",""));
+				r.frame.setVisible(false);
+			}
+		} else if (e.getSource() == r.b2 ) {
+			textField5.setText("");
+			r.frame.setVisible(false);
 		}
 	}
 

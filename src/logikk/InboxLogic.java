@@ -124,19 +124,21 @@ public class InboxLogic {
 		db.updateQuery("DELETE FROM varsel WHERE varselid = "+Integer.parseInt(varselid));
 	}
 
-	public void endreAlarm() {
+	public String[] endreAlarm() {
 		ArrayList<String> temp = new ArrayList<String>();
-		ResultSet rs = db.readQuery("SELECT varselid, avtale.dato, starttid, brukernavn, beskjed FROM harvatale"
+		ResultSet rs = db.readQuery("SELECT varselid, avtale.dato, starttid, brukernavn, beskjed FROM haravtale "
 				+ "NATURAL JOIN avtale NATURAL JOIN varsel WHERE (brukernavn = '"+this.bruker+"' AND beskjed = 'alarm')");
 		try {
-			if ((rs.getString(5).equals("alarm")) && (!hasBeen(rs.getString(3), rs.getString(2)))){
-				temp.add(rs.getString(1));
+			while (rs.next()){
+				if ((rs.getString(5).equals("alarm")) && (!hasBeen(rs.getString(3), rs.getString(2)))){
+					temp.add(rs.getString(1));
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		String[] AvtalerSomHarVaert = new String[temp.size()];
 		temp.toArray(AvtalerSomHarVaert);
-		endrealarmbox = new EndreAlarm(AvtalerSomHarVaert);
+		return AvtalerSomHarVaert;
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import logikk.EndreAlarmLogic;
 import logikk.EndreAvtaleLogic;
 import logikk.InboxLogic;
 import logikk.LoginLogic;
@@ -24,6 +25,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	EndreAvtaleLogic eal;
 	InboxLogic il;
 	EndreAlarm endrealarmbox;
+	EndreAlarmLogic ealarml;
 	String bruker;
 	
 	
@@ -76,10 +78,14 @@ public class Hovedside extends JFrame implements ActionListener{
 			}
 		changeToInbox();
 		} else if (arg0.getSource() == inbox.endrealarm){
-			il.endreAlarm();
+			String[] AvtalerSomHarVaert = il.endreAlarm();
+			endrealarmbox = new EndreAlarm(AvtalerSomHarVaert);
 			endrealarmbox.but.addActionListener(this);
 		} else if (arg0.getSource() == endrealarmbox.but){
-			
+			ealarml = new EndreAlarmLogic();
+			ealarml.updateAlarm(endrealarmbox.alarmtidtf.getText(), endrealarmbox.alarmid, endrealarmbox.info);
+			endrealarmbox.dispose();
+			changeToInbox();
 		}
 	}
 	
@@ -107,6 +113,7 @@ public void changeToAvtale(){
 
 	private void changeToInbox() {
 		clearFrame();
+		inbox = new Inbox(this.bruker);
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);
 		inbox.endrealarm.addActionListener(this);

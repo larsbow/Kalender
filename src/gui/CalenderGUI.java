@@ -347,6 +347,8 @@ public class CalenderGUI extends JPanel implements ActionListener{
 
 		nextMonth.addActionListener(this);
 		lastMonth.addActionListener(this);
+		
+		updateUI();
 
 	}
 	@Override
@@ -461,5 +463,6 @@ public class CalenderGUI extends JPanel implements ActionListener{
 		add(avt, BorderLayout.CENTER);
 		setSize(800,300);
 		setVisible(true);
+		avt.updateUI();
 	}
 }

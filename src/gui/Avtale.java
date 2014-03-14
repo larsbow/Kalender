@@ -133,7 +133,7 @@ public class Avtale extends JPanel implements ActionListener {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting() && !textField7.getText().contains(j.getSelectedValue().toString())) {
+				if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), j.getSelectedValue().toString())) {
 					textField7.setText(textField7.getText() + j.getSelectedValue().toString() + ", ");
 				}
 			}

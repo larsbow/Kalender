@@ -22,20 +22,14 @@ public class RomLogikk {
 				kap.add(rs2.getString(2));
 			}
 			
-			System.out.println(kap.get(0));
-			System.out.println(kap.get(1));
-			System.out.println(kap.get(2));
-			
 			for(int j = 0; j < ledige.size(); j++) {
 				if(deltakere > Integer.parseInt(kap.get(j))) {
-					ledige.set(j, "feil");
-					kap.set(j, "feil");
+					ledige.remove(j);
+					kap.remove(j);
+					j = j - 1; 
 				}
 			}
 			
-			ledige.remove("feil");
-			kap.remove("feil");
- 
 			while (rs1.next()) {
 				System.out.println(Integer.parseInt(rs1.getString(4)));
 				if ((Integer.parseInt(sluttid) > Integer.parseInt(rs1.getString(1))) && (Integer.parseInt(starttid) < Integer.parseInt(rs1.getString(2)))) {

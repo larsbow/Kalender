@@ -125,7 +125,7 @@ public class EndreAvtaleLogic {
 						for (String user : deltakere){
 							if (temp.size() > 0){
 								db.updateQuery("INSERT INTO haravtale VALUES (1, '"+user+"', "+temp.get(0)+")");
-								temp.remove(0);
+								temp.clear();
 							} else {
 								db.updateQuery("INSERT INTO haravtale VALUES (1, '"+user+"', "+rs3.getInt(1)+")");
 							}

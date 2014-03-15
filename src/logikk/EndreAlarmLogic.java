@@ -14,8 +14,8 @@ public class EndreAlarmLogic {
 	EndreAlarm ea;
 	
 	
-	public EndreAlarmLogic(){
-		db = new Database();
+	public EndreAlarmLogic(Database db){
+		this.db = db;
 	}
 
 	public String[] getAlarmer(String[] varselid) {

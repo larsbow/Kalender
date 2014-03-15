@@ -20,9 +20,9 @@ public class InboxLogic {
 	Database db;
 	EndreAlarm endrealarmbox;
 
-	public InboxLogic(String bruker){
+	public InboxLogic(String bruker, Database db){
 		this.bruker = bruker;
-		db = new Database();
+		this.db = db;
 		findVarsel();
 		findAlarm();
 	}

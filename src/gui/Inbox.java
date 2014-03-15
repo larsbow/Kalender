@@ -32,11 +32,11 @@ public class Inbox extends JPanel {
 	JButton slettvarsel;
 	JButton endrealarm;
 	
-	public Inbox(String bruker){
+	public Inbox(InboxLogic il){
 		setLayout(new SpringLayout());
 		setSize(400,400);
 		
-		il = new InboxLogic(bruker);
+		this.il = il;
 //		varsel = il.getVarsel();
 //		alarm = il.getAlarm();
 		

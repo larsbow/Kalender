@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import database.Database;
+import logikk.AvtaleLogic;
 import logikk.EndreAlarmLogic;
 import logikk.EndreAvtaleLogic;
 import logikk.InboxLogic;
@@ -26,10 +28,11 @@ public class Hovedside extends JFrame implements ActionListener{
 	InboxLogic il;
 	EndreAlarm endrealarmbox;
 	EndreAlarmLogic ealarml;
+	AvtaleLogic al;
 	String bruker;
 	
 	
-	public Hovedside(String bruker) {
+	public Hovedside(String bruker, Database db) {
 		setSize(500,250);
 		setTitle("Kalender");
 		menu = new Menu(bruker);
@@ -40,9 +43,9 @@ public class Hovedside extends JFrame implements ActionListener{
 		menu.endreavtale.addActionListener(this);
 		menu.loggut.addActionListener(this);
 		this.bruker = bruker;
-		endreAvtale = new EndreAvtale(bruker);
-		il = new InboxLogic(this.bruker);
-		inbox = new Inbox(this.bruker);
+		il = new InboxLogic(this.bruker, db);
+		ealarml = new EndreAlarmLogic(db);
+		al = new AvtaleLogic(bruker, db);
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
@@ -82,7 +85,6 @@ public class Hovedside extends JFrame implements ActionListener{
 			endrealarmbox = new EndreAlarm(AvtalerSomHarVaert);
 			endrealarmbox.but.addActionListener(this);
 		} else if (arg0.getSource() == endrealarmbox.but){
-			ealarml = new EndreAlarmLogic();
 			ealarml.updateAlarm(endrealarmbox.alarmtidtf.getText(), endrealarmbox.alarmid, endrealarmbox.info);
 			endrealarmbox.dispose();
 			changeToInbox();
@@ -91,7 +93,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	
 public void changeToAvtale(){
 		clearFrame();
-		avtale = new Avtale(this.bruker);
+		avtale = new Avtale(this.bruker, al);
 		add(avtale, BorderLayout.CENTER);
 		setSize(500,400);
 		setVisible(true);
@@ -104,7 +106,7 @@ public void changeToAvtale(){
 
 	private void changeToEndreavtale() {
 		clearFrame();
-		endreAvtale = new EndreAvtale(bruker);
+		endreAvtale = new EndreAvtale(bruker, al);
 		add(endreAvtale,  BorderLayout.CENTER);
 		endreAvtale.b2.addActionListener(this);
 		setSize(500,600);
@@ -113,7 +115,7 @@ public void changeToAvtale(){
 
 	private void changeToInbox() {
 		clearFrame();
-		inbox = new Inbox(this.bruker);
+		inbox = new Inbox(il);
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);
 		inbox.endrealarm.addActionListener(this);

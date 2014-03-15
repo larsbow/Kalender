@@ -10,11 +10,12 @@ public class LoginLogic {
 	
 	private String pw;
 	private String user;
-	Database db = new Database();
+	Database db;
 	
 	
 	
 	public LoginLogic(String username){
+		db = new Database();
 		setUser(username);
 		setPw();
 	}
@@ -84,5 +85,9 @@ public class LoginLogic {
 		} catch (SQLException e) {
 			db.updateQuery("INSERT INTO avtale VALUES (1, '11111111', '1111', '2222', 'Tom avtale for å binde slettevarsel', null, 'a', '"+this.user+"')");
 		}
+	}
+	
+	public Database getDB() {
+		return this.db;
 	}
 }

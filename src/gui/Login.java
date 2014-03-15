@@ -98,7 +98,7 @@ public class Login extends JFrame implements ActionListener {
 					//new CalenderGUI();
 					//new Avtale(getBruker());
 					ll.createNullAvtale();
-					new Hovedside(getBruker());
+					new Hovedside(getBruker(), ll.getDB());
 				} else {
 					Component frame = null;
 					JOptionPane.showMessageDialog(frame,"Feil brukernavn/passord!","Feil",JOptionPane.WARNING_MESSAGE);

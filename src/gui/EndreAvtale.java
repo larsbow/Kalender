@@ -45,7 +45,8 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	String[] avtaler;
 	AvtaleLogic al;
 
-	public EndreAvtale(String bruker) {
+	public EndreAvtale(String bruker, AvtaleLogic al) {
+		this.al = al;
 		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
 
@@ -151,7 +152,6 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	}
 
 	private void createDlist() {
-		al = new AvtaleLogic();
 		String[] s = al.getAnsatte();
 
 		dlist = new JList(s);

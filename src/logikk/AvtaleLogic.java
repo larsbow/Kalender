@@ -15,7 +15,11 @@ import database.Database;
 
 public class AvtaleLogic {
 
-	Database db = new Database();
+	Database db;
+	
+	public AvtaleLogic(String bruker, Database db){
+		this.db = db;
+	}
 
 	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String[] deltakere, String ansatt) {
 		if (dato.length() != 8 || start.length() != 4){

@@ -44,8 +44,9 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	JPanel avtaleliste;
 	String[] avtaler;
 	AvtaleLogic al;
-
+	
 	public EndreAvtale(String bruker, AvtaleLogic al) {
+		eal = new EndreAvtaleLogic();
 		this.al = al;
 		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
@@ -125,8 +126,6 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 		alisthead = new JLabel("Dine Avtaler");
 		avtaleliste.add(alisthead);
-
-		eal = new EndreAvtaleLogic();
 		
 		createAlist(false);
 
@@ -257,7 +256,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	public void slettAvtale() {
 		int avtaleid = Integer.parseInt(alist.getSelectedValue().toString().substring(3, 7));
 		String[] deltakere = textField7.getText().split(", ");
-		eal.slettAvtale(avtaleid, this.bruker, deltakere);
+		eal.slettAvtale(avtaleid, this.bruker, deltakere, al);
 	}
 
 }

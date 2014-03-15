@@ -93,23 +93,48 @@ public class EndreAvtaleLogic {
 		return false;
 	}
 
-	public void slettAvtale(int avtaleid, String bruker, String[] deltakere) {
+	public void slettAvtale(int avtaleid, String bruker, String[] deltakere, AvtaleLogic al) {
 		try {
-			ResultSet rs = db.readQuery("SELECT opprettetav, dato, starttid, beskrivelse FROM avtale WHERE avtaleid =" + avtaleid);
+			System.out.println(avtaleid);
+			ResultSet rs = db.readQuery("SELECT opprettetav, dato, starttid, beskrivelse, avtaleid FROM avtale WHERE avtaleid =" + avtaleid);
 			rs.next();
 			String bruker2 = rs.getString(1);
 			String dato = rs.getString(2).substring(0, 2) + "." + rs.getString(2).substring(2, 4)+"."+rs.getString(2).substring(4);
 			
 
 			if(bruker2.equals(bruker)){ 
+				ResultSet rs2 = db.readQuery("SELECT varselid, avtaleid FROM varsel NATURAL JOIN haravtale WHERE avtaleid = "+avtaleid);
+				ArrayList<Integer> temp = new ArrayList<Integer>();
+				while (rs2.next()) {
+					temp.add(rs2.getInt(1));
+					db.updateQuery("DELETE FROM varsel WHERE varselid = "+rs2.getInt(1));
+				}
 				db.updateQuery("DELETE FROM avtale WHERE avtaleid = " + avtaleid);
 				try{
-					db.updateQuery("INSERT INTO varsel VALUES (1, 'AvtaleID "+avtaleid+" "+rs.getString(4)+", som skulle"
-							+ " være "+dato+" klokken "+rs.getString(3)+" er slettet.', '"+al.datoklokke()[0]+"',"
-							+ " '"+al.datoklokke()[1]+"')");
+					if (temp.size() > 0){
+						db.updateQuery("INSERT INTO varsel VALUES ("+temp.get(0)+", 'AvtaleID "+avtaleid+" "+rs.getString(4)+", som skulle"
+								+ " være "+dato+" klokken "+rs.getString(3)+" er slettet.', '"+al.datoklokke()[0]+"',"
+								+ " '"+al.datoklokke()[1]+"')");
+					} else {
+						db.updateQuery("INSERT INTO varsel VALUES (null, 'AvtaleID "+avtaleid+" "+rs.getString(4)+", som skulle"
+								+ " være "+dato+" klokken "+rs.getString(3)+" er slettet.', '"+al.datoklokke()[0]+"',"
+								+ " '"+al.datoklokke()[1]+"')");
+					}
+					ResultSet rs3 = db.readQuery("SELECT varselid FROM varsel ORDER BY varselid DESC");
+					rs3.next();
+						for (String user : deltakere){
+							if (temp.size() > 0){
+								db.updateQuery("INSERT INTO haravtale VALUES (1, '"+user+"', "+temp.get(0)+")");
+								temp.remove(0);
+							} else {
+								db.updateQuery("INSERT INTO haravtale VALUES (1, '"+user+"', "+rs3.getInt(1)+")");
+							}
+						}
+					
 					Component frame = null;
 					JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
+					e.printStackTrace();
 					Component frame = null;
 					JOptionPane.showMessageDialog(frame,"Avtalen ble slettet, \n men varsel kom ikke fra til alle deltakere.","Feil",JOptionPane.INFORMATION_MESSAGE);
 				}

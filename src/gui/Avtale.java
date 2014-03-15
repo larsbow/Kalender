@@ -40,10 +40,11 @@ public class Avtale extends JPanel implements ActionListener {
 	private AvtaleLogic al;
 	private String bruker;
 	private Rom r;
+	private JTextField textField8;
 
 	public Avtale(String bruker, final AvtaleLogic al) {
 		this.al = al;
-		String[] labels = {"Dato: (DDMM≈≈≈≈) ", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
+		String[] labels = {"Dato: (DDMM≈≈≈≈)*", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
 
 		JPanel p = new JPanel(new SpringLayout());
@@ -99,6 +100,14 @@ public class Avtale extends JPanel implements ActionListener {
 		p.add(textField5);
 		textField5.addActionListener(this); 
 		textField5.setEditable(false);
+		
+		// Eksterne mail
+		JLabel l8 = new JLabel("Ekstern brukeremail**:", JLabel.TRAILING);
+		p.add(l8);
+		textField8 = new JTextField(10);
+		l8.setLabelFor(textField8);
+		p.add(textField8);
+		textField8.addActionListener(this);
 
 		// Deltakere
 		JLabel l7 = new JLabel(labels[6], JLabel.TRAILING);
@@ -107,10 +116,12 @@ public class Avtale extends JPanel implements ActionListener {
 		l7.setLabelFor(textField7);
 		p.add(textField7);
 		textField7.addActionListener(this);
+		
+		
 
 		//Lag ¯verste rutenett
 		SpringUtilities.makeCompactGrid(p,
-				7, 2, 		 //rows, cols
+				8, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 
@@ -154,10 +165,23 @@ public class Avtale extends JPanel implements ActionListener {
 				2, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
+		
+		JPanel p3 = new JPanel(new SpringLayout());
+		this.add(p3);
+		p3.setVisible(true);
+		JLabel l1p3 = new JLabel("*  MÂ fylles ut!");
+		JLabel l2p3 = new JLabel("** Skriv inn mail til eksterne brukere du vil invitere. Skill med mellomrom");
+		p3.add(l1p3);
+		p3.add(l2p3);
+		
+		SpringUtilities.makeCompactGrid(p3,
+				2, 1, 		 //rows, cols
+				6, 6,        //initX, initY
+				6, 6);       //xPad, yPad
 
 		//Sett sammen alt
 		SpringUtilities.makeCompactGrid(this,
-				2, 1, 		 //rows, cols
+				3, 1, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 
@@ -197,8 +221,9 @@ public class Avtale extends JPanel implements ActionListener {
 			String[] deltakere; 
 			deltakere = al.extractDeltakere(bruker, textField7.getText());
 
-
-			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker );
+			String[] eksternmail = textField8.getText().split(" ");
+		
+			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker, eksternmail );
 			al.printAvtale(success);
 		} else if (e.getSource() == r.b1 ) {
 

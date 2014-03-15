@@ -21,7 +21,7 @@ public class AvtaleLogic {
 		this.db = db;
 	}
 
-	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String[] deltakere, String ansatt) {
+	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String[] deltakere, String ansatt, String[] eksternmail) {
 		if (dato.length() != 8 || start.length() != 4){
 			return false;
 		}
@@ -54,6 +54,9 @@ public class AvtaleLogic {
 				rs3.next();
 				varselid = rs3.getInt(1);
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+			}
+			for (int i = 0; i < eksternmail.length; i++){
+				db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -174,4 +177,5 @@ public class AvtaleLogic {
 		}
 		return false;
 	}
+
 }

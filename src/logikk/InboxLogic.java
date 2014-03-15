@@ -127,7 +127,7 @@ public class InboxLogic {
 	}
 
 	public void slettVarsel(String varselid) {
-		db.updateQuery("DELETE FROM varsel WHERE varselid = "+Integer.parseInt(varselid));
+		db.updateQuery("DELETE FROM haravtale WHERE varselid = "+Integer.parseInt(varselid)+" AND brukernavn = '"+bruker+"'");
 	}
 
 	public String[] endreAlarm() {

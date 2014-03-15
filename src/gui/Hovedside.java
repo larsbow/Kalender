@@ -98,7 +98,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		clearFrame();
 		avtale = new Avtale(this.bruker, al);
 		add(avtale, BorderLayout.CENTER);
-		setSize(500,400);
+		setSize(570,500);
 		setVisible(true);
 	}
 

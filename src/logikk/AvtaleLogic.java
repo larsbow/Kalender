@@ -144,14 +144,12 @@ public class AvtaleLogic {
 	
 	private String bruker;
 	private ArrayList<String> avtaler = new ArrayList<String>();
-	Database db2;
 
 
 	public void getAvtaler(String bruker, String dato){
 		this.bruker = bruker;
-		db2 = new Database();
 		
-		ResultSet rs = db2.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, haravtale WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
+		ResultSet rs = db.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, haravtale WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {
 			while (rs.next()){
 					avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1) + " skjedde ");

@@ -30,9 +30,11 @@ public class Hovedside extends JFrame implements ActionListener{
 	EndreAlarmLogic ealarml;
 	AvtaleLogic al;
 	String bruker;
+	Database db;
 	
 	
 	public Hovedside(String bruker, Database db) {
+		this.db = db;
 		setSize(500,250);
 		setTitle("Kalender");
 		menu = new Menu(bruker);
@@ -46,6 +48,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		il = new InboxLogic(this.bruker, db);
 		ealarml = new EndreAlarmLogic(db);
 		al = new AvtaleLogic(bruker, db);
+		endreAvtale = new EndreAvtale(bruker, al);
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
@@ -82,7 +85,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		changeToInbox();
 		} else if (arg0.getSource() == inbox.endrealarm){
 			String[] AvtalerSomHarVaert = il.endreAlarm();
-			endrealarmbox = new EndreAlarm(AvtalerSomHarVaert);
+			endrealarmbox = new EndreAlarm(AvtalerSomHarVaert, ealarml);
 			endrealarmbox.but.addActionListener(this);
 		} else if (arg0.getSource() == endrealarmbox.but){
 			ealarml.updateAlarm(endrealarmbox.alarmtidtf.getText(), endrealarmbox.alarmid, endrealarmbox.info);
@@ -91,7 +94,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		}
 	}
 	
-public void changeToAvtale(){
+	public void changeToAvtale(){
 		clearFrame();
 		avtale = new Avtale(this.bruker, al);
 		add(avtale, BorderLayout.CENTER);
@@ -101,6 +104,7 @@ public void changeToAvtale(){
 
 	private void changeToLoggut() {
 		this.dispose();
+		db.close();
 		new Login();
 	}
 
@@ -115,6 +119,7 @@ public void changeToAvtale(){
 
 	private void changeToInbox() {
 		clearFrame();
+		il = new InboxLogic(bruker, db);
 		inbox = new Inbox(il);
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);

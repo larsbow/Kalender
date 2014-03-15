@@ -50,8 +50,6 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		String[] labels = {"AvtaleID: ", "Dato: (DDMM≈≈≈≈)", "Starttid: (TTMM)", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
 
-		eal = new EndreAvtaleLogic();
-
 		setLayout(new SpringLayout());
 		setSize(400,400);
 
@@ -128,6 +126,8 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		alisthead = new JLabel("Dine Avtaler");
 		avtaleliste.add(alisthead);
 
+		eal = new EndreAvtaleLogic();
+		
 		createAlist(false);
 
 		dlisthead = new JLabel("Brukere");

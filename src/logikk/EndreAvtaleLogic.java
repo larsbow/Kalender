@@ -14,12 +14,14 @@ import database.Database;
 public class EndreAvtaleLogic {
 
 	Database db = new Database();
-	AvtaleLogic al = new AvtaleLogic();
+	AvtaleLogic al;
 
 	public boolean endreAvtale(int avtaleid, String dato, String start,
 			String slutt, String beskrivelse, Object romid, String sted,
 			String ansatt, String[] deltakere){
 
+		al = new AvtaleLogic(ansatt, db);
+		
 		try {
 			ResultSet rs = db.readQuery("SELECT opprettetav FROM avtale WHERE avtaleid =" + avtaleid);
 			rs.next();

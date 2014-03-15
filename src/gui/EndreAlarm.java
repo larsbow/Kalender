@@ -40,7 +40,7 @@ public class EndreAlarm extends JFrame{
 	String alarmid;
 	String[] info;
 	
-	public EndreAlarm(String[] varselid){
+	public EndreAlarm(String[] varselid, final EndreAlarmLogic eal){
 		this.setSize(500, 350);
 		this.setTitle("Endre Alarm");
 		pane1 = new JPanel(new SpringLayout());
@@ -48,7 +48,7 @@ public class EndreAlarm extends JFrame{
 		this.add(pane1, BorderLayout.NORTH);
 		this.add(pane2, BorderLayout.CENTER);
 		
-		eal = new EndreAlarmLogic();
+		this.eal = eal;
 		
 		JLabel labe = new JLabel("Alarmer");
 		pane1.add(labe);

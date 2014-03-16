@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  */
 public class GridButtonPanel {
 
-    private static final int N = 5;
+    private static final int N = 6;
     private final List<JButton> list = new ArrayList<JButton>();
 
     private JButton getGridButton(int r, int c) {
@@ -24,23 +24,23 @@ public class GridButtonPanel {
     }
 
     private JButton createGridButton(final int row, final int col) {
-        final JButton b = new JButton("r" + row + ",c" + col);
+        final JButton b = new JButton("" + row + col);
         b.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
             	JButton gb = GridButtonPanel.this.getGridButton(row, col);
-                System.out.println("r" + row + ",c" + col + " " + (b == gb) + " " + (b.equals(gb)));
+                System.out.println("" + row + col + " " + (b == gb) + " " + (b.equals(gb)));
             }
         });
         return b;
     }
 
     private JPanel createGridPanel() {
-        JPanel p = new JPanel(new GridLayout(N, N));
-        for (int i = 0; i < N * N; i++) {
-            int row = i / N;
-            int col = i % N;
+        JPanel p = new JPanel(new GridLayout(6, 7));
+        for (int i = 0; i < 6 * 7; i++) {
+            int row = i / 7;
+            int col = i % 7;
             JButton gb = createGridButton(row, col);
             list.add(gb);
             p.add(gb);

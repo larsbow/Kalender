@@ -20,6 +20,7 @@ public class CalenderLogic {
 		this.db = db;
 	}
 
+
 	public int daysInMonth(int year, int month) {
 		int days;
 		switch (month) {
@@ -87,14 +88,17 @@ public class CalenderLogic {
 		int diff = (year - 1900);
 		startDay = (diff%7) + 1;
 
-		for (int i = 1900; i== year; i++) {
-			if (isLeapYear(i - 1) == true)
-				startDay = startDay + 1;
-		}
 
-		startDay = (startDay%7);
-		if (startDay == 0)
-			startDay = 7;
+		for (int i = 1900; i < year + 1; i++) {
+			int x = i - 1;
+			if (isLeapYear(x) == true) {
+				startDay = startDay + 1;
+			}
+			startDay = (startDay%7);
+			if (startDay == 0) {
+				startDay = 7;
+			}
+		}
 		return startDay;
 	}
 
@@ -136,6 +140,8 @@ public class CalenderLogic {
 		return tid.getYear();
 	}
 
+	
+	// er ikke benyttet for øyeblikket...!!!
 	public String getMonthName(int month) {	
 		String monthString;
 
@@ -172,19 +178,20 @@ public class CalenderLogic {
 
 	public boolean isLeapYear(int year) {
 		boolean skuddaar = false;
-		if ((year%4) != 0)
+		if ((year%4) != 0) {
 			skuddaar = false;
-
-		else if ((year%400) == 0)
+		}
+		else if ((year%400) == 0) {
 			skuddaar = true;
-
+		}
 		else if((year%4) == 0) {
 
-			if ((year&100) == 0)
+			if ((year%100) == 0){
 				skuddaar = false;
-
-			else 
+			}
+			else {
 				skuddaar = true;
+			}
 		}
 		return skuddaar;
 	}

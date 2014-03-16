@@ -3,11 +3,10 @@ package logikk;
 import gui.HentAvtaleGUI;
 
 public class AvtaleOversikt {
-	HentAvtaler hentAvt1;
-	HentAvtaler hentAvt2;
-	
+
 	private String dato;
 	private String bruker;
+	HentAvtaler hentAvt;
 	public boolean user;
 	public boolean kollega;
 	
@@ -21,21 +20,14 @@ public class AvtaleOversikt {
 	}
 	
 	public boolean brukerHarAvtale() {
-		hentAvt1 = new HentAvtaler(bruker, dato);
-				
-		if (hentAvt1.getAvtaleBruker().length == 0)
-			return false;
-		else 
-			return true;
+		hentAvt = new HentAvtaler(bruker, dato);
+		return (hentAvt.getAvtaleBruker().length != 0);
 	}
 	
 	public boolean kollegaHarAvtale() {
-		hentAvt2 = new HentAvtaler(bruker, dato);
-				
-		if (hentAvt2.getAvtaleKollega().length == 0)
-			return false;
-		else 
-			return true;
+		hentAvt = new HentAvtaler(bruker, dato);
+		return (hentAvt.getAvtaleKollega().length != 0);
+
 	}
 
 }

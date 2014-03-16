@@ -95,7 +95,6 @@ public class EndreAvtaleLogic {
 
 	public void slettAvtale(int avtaleid, String bruker, String[] deltakere, AvtaleLogic al) {
 		try {
-			System.out.println(avtaleid);
 			ResultSet rs = db.readQuery("SELECT opprettetav, dato, starttid, beskrivelse, avtaleid FROM avtale WHERE avtaleid =" + avtaleid);
 			rs.next();
 			String bruker2 = rs.getString(1);
@@ -198,10 +197,11 @@ public class EndreAvtaleLogic {
 					}
 				}
 				info.add(rs.getString(9));
+				info.add(rs.getString(8));
 				while (rs.next()){
 					info.set(6, info.get(6)+", "+rs.getString(9));
 				}
-
+				
 
 			} catch (SQLException e) {
 				e.printStackTrace();

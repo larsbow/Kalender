@@ -43,4 +43,20 @@ public class InviteSvarLogic {
 		}
 		return dms;
 	}
+
+	public void synlig(boolean b, int id) {
+		if (b){
+			db.updateQuery("UPDATE erinviterttil SET synlig = true WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+		} else {
+			db.updateQuery("UPDATE erinviterttil SET synlig = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+		}
+	}
+
+	public void kommer(boolean b, int id) {
+		if (b) {
+			db.updateQuery("UPDATE erinviterttil SET kommer = true WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+		} else {
+			db.updateQuery("UPDATE erinviterttil SET kommer = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+		}
+	}
 }

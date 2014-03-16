@@ -54,6 +54,10 @@ public class InviteSvar extends JPanel implements ActionListener {
 		isl = new InviteSvarLogic(bruker, avtaleid, db);
 		info = eal.getInfo(Integer.toString(this.id));
 		
+		printPanel();
+	}
+	
+	public void printPanel(){
 		setLayout(new SpringLayout());
 		
 		opprettetav = new JLabel("Opprettet av: ");
@@ -116,8 +120,29 @@ public class InviteSvar extends JPanel implements ActionListener {
 		dtf.setEditable(false);
 		this.add(dtf);
 		
+		svar = new JLabel("Svar på invitasjon");
+		this.add(svar);
+		
+		tom = new JLabel(" ");
+		this.add(tom);
+		
+		ja = new JButton("Ja");
+		ja.addActionListener(this);
+		this.add(ja);
+		
+		nei = new JButton("Nei");
+		nei.addActionListener(this);
+		this.add(nei);
+		
+		skjul = new JLabel("Skjul avslåtte avtaler:");
+		this.add(skjul);
+		
+		s = new JButton("Skjul");
+		s.addActionListener(this);
+		this.add(s);
+		
 		SpringUtilities.makeCompactGrid(this,
-				7, 2, 		 //rows, cols
+				10, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 		
@@ -125,9 +150,14 @@ public class InviteSvar extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == ja){
+			isl.kommer(true, this.id);
+		} else if (e.getSource() == nei) {
+			isl.kommer(false, this.id);
+		} else if (e.getSource() == s) {
+			isl.synlig(false, this.id);
+		}
 	}
 	
 }

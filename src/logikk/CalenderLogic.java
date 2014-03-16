@@ -302,7 +302,8 @@ public class CalenderLogic {
 
 	public boolean harAvtale(int day, int maaned, int aar) {
 		ResultSet rs = db.readQuery("SELECT count(avtaleid) FROM avtale NATURAL JOIN erinviterttil"
-				+ " WHERE dato = '"+datoAsString(day, maaned, aar)+"' AND brukernavn = '"+this.bruker+"'");
+				+ " WHERE dato = '"+datoAsString(day, maaned, aar)+"' AND brukernavn = '"+this.bruker+"' "
+						+ "AND synlig = 1");
 		int count = 0;
 		try {
 			rs.next();

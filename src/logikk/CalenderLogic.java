@@ -1,7 +1,24 @@
 package logikk;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.ListModel;
+
+import org.joda.time.DateTime;
+
+import database.Database;
+
 public class CalenderLogic {
 	int startDay;
+	Database db;
+	String bruker;
+	
+	public CalenderLogic(Database db, String bruker) {
+		this.bruker = bruker;
+		this.db = db;
+	}
 
 	public int daysInMonth(int year, int month) {
 		int days;
@@ -81,7 +98,7 @@ public class CalenderLogic {
 		return startDay;
 	}
 
-	public int[][] getCalender(int year, int month) {
+	public int[][] getCalender(int month, int year) {
 		startDay = getMonthStartDay(year, month);
 		startDay = startDay - 1;
 		int numDays = daysInMonth(year, month);
@@ -107,6 +124,16 @@ public class CalenderLogic {
 		}
 		return kalender;            
 
+	}
+	
+	public int getMonth(){
+		DateTime tid = new DateTime();
+		return tid.getMonthOfYear();
+	}
+	
+	public int getYear() {
+		DateTime tid = new DateTime();
+		return tid.getYear();
 	}
 
 	public String getMonthName(int month) {	
@@ -160,5 +187,108 @@ public class CalenderLogic {
 				skuddaar = true;
 		}
 		return skuddaar;
+	}
+
+	public String[] getDineAvtaler(int d, int m, int a) {
+		String dato = datoAsString(d, m, a);
+		ArrayList<String> temp = new ArrayList<String>();
+		ResultSet rs = db.readQuery("SELECT avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, kommer "
+				+ "FROM avtale NATURAL JOIN erinviterttil "
+				+ "WHERE synlig = 1 AND dato = '"+dato+"' AND brukernavn = '"+ bruker + "'");
+		try {
+			int count = 0;
+			while (rs.next()){
+				String avtaleid = Integer.toString(rs.getInt(1));
+				while (avtaleid.length() < 4){
+					avtaleid = "0"+avtaleid;
+				}
+				temp.add(avtaleid + ": " + rs.getString(2).substring(0, 2)+"."+rs.getString(2).substring(2, 4)+ "."
+						+ rs.getString(2).substring(4)+ " " + rs.getString(3)+" - "+rs.getString(4)+": "+rs.getString(5)+ " i ");
+				if (rs.getString(6) == null){
+					temp.set(count, temp.get(count) + rs.getString(7) + ".");
+				} else {
+					temp.set(count, temp.get(count) + rs.getInt(6) + ".");
+				}
+				if (rs.getString(8) == null){
+					temp.set(count, temp.get(count) + " Du har ikke svart på invitasjonen.");
+				} else if (rs.getBoolean(8)) {
+					temp.set(count, temp.get(count) + " Du har svart ja.");
+				} else {
+					temp.set(count, temp.get(count) + " Du har svart nei.");
+				}
+				count++;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] dineavtaler = new String[temp.size()];
+		temp.toArray(dineavtaler);
+		return dineavtaler;
+	}
+
+	public String[] getAlleAvtaler(int d, int m, int a) {
+		String dato = datoAsString(d, m, a);
+		ArrayList<String> temp = new ArrayList<String>();
+		ArrayList<Integer> ja = new ArrayList<Integer>();
+		ArrayList<Integer> nei = new ArrayList<Integer>();
+		ArrayList<Integer> ikkesvart = new ArrayList<Integer>();
+		ResultSet rs = db.readQuery("SELECT avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, kommer "
+				+ "FROM avtale NATURAL JOIN erinviterttil "
+				+ "WHERE dato = '"+dato+"' ORDER BY avtaleid");
+		try {
+			int count = -1;
+			while (rs.next()){
+				String avtaleid = Integer.toString(rs.getInt(1));
+				while (avtaleid.length() < 4){
+					avtaleid = "0"+avtaleid;
+				}
+				if (temp.size() == 0 || !(avtaleid.equals(temp.get(count).substring(0, 4)))){
+					count++;
+					temp.add(avtaleid + ": " + rs.getString(2).substring(0, 2)+"."+rs.getString(2).substring(2, 4)+ "."
+							+ rs.getString(2).substring(4)+ " " + rs.getString(3)+" - "+rs.getString(4)+": "+rs.getString(5)+ " i ");
+					ikkesvart.add(0);
+					ja.add(0);
+					nei.add(0);
+					if (rs.getString(6) == null){
+						temp.set(count, temp.get(count) + rs.getString(7) + ". ");
+					} else {
+						temp.set(count, temp.get(count) + rs.getInt(6) + ". ");
+					}
+				}
+				if (rs.getString(8) == null){
+					ikkesvart.set(count, ikkesvart.get(count)+1);
+				} else if (rs.getBoolean(8)) {
+					ja.set(count, ja.get(count)+1);
+				} else {
+					nei.set(count, nei.get(count)+1);
+				}
+			}
+			for (int i = 0; i < temp.size(); i++){
+				temp.set(i, temp.get(i) + ja.get(i) +" har svart ja, "+nei.get(i)+" har svart nei, "+ ikkesvart.get(i)+"har ikke svart.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] alleavtaler = new String[temp.size()];
+		temp.toArray(alleavtaler);
+		return alleavtaler;
+	}
+	
+	public String datoAsString(int d, int m, int a) {
+		String dag = Integer.toString(d);
+		String maaned = Integer.toString(m);
+		String aar = Integer.toString(a);
+		if (dag.length() < 2){
+			dag = "0"+dag;
+		}
+		if (maaned.length() < 2){
+			maaned = "0"+maaned;
+		}
+		while (aar.length() < 4){
+			aar = "0"+aar;
+		}
+		return dag + maaned + aar;
 	}
 }

@@ -23,7 +23,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	Avtale avtale;
 	Inbox inbox;
 	EndreAvtale endreAvtale;
-	CalenderGUI kalender;
+	Kalender kalender;
 	EndreAvtaleLogic eal;
 	InboxLogic il;
 	EndreAlarm endrealarmbox;
@@ -31,6 +31,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	AvtaleLogic al;
 	String bruker;
 	Database db;
+	InviteSvar invitesvar;
 	
 	
 	public Hovedside(String bruker, Database db) {
@@ -91,6 +92,8 @@ public class Hovedside extends JFrame implements ActionListener{
 			ealarml.updateAlarm(endrealarmbox.alarmtidtf.getText(), endrealarmbox.alarmid, endrealarmbox.info);
 			endrealarmbox.dispose();
 			changeToInbox();
+		} else if (arg0.getSource() == kalender.svar) {
+			invitesvar = new InviteSvar(bruker, kalender.dineavtaler.getSelectedValue().toString(), db);
 		}
 	}
 	
@@ -113,7 +116,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		endreAvtale = new EndreAvtale(bruker, al);
 		add(endreAvtale,  BorderLayout.CENTER);
 		endreAvtale.b2.addActionListener(this);
-		setSize(500,600);
+		setSize(570,600);
 		setVisible(true);
 	}
 
@@ -124,22 +127,23 @@ public class Hovedside extends JFrame implements ActionListener{
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);
 		inbox.endrealarm.addActionListener(this);
-		setSize(800,300);
+		setSize(800,500);
 		setVisible(true);
 	}
 
 	private void changeToKalender() {
 		clearFrame();
-		kalender = new CalenderGUI(bruker);
+		kalender = new Kalender(bruker, db);
+		kalender.svar.addActionListener(this);
 		add(kalender, BorderLayout.CENTER);
-		setSize(550, 440);
+		setSize(800, 700);
 		setVisible(true);
 	}	
 	
 	public void clearFrame(){
 		Component[] comp = this.getContentPane().getComponents();
 		for (int i=0; i<comp.length; i++){
-			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox) || (comp[i] instanceof EndreAvtale) || (comp[i] instanceof CalenderGUI)){
+			if((comp[i] instanceof Avtale) || (comp[i] instanceof Inbox) || (comp[i] instanceof EndreAvtale) || (comp[i] instanceof Kalender)){
 				this.remove(comp[i]);
 			}
 		}

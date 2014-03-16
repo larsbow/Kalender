@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import database.Database;
 import logikk.LoginLogic;
 import logikk.SpringUtilities;
 
@@ -19,6 +20,8 @@ public class Login extends JFrame implements ActionListener {
 	JButton b2;
 
 	public Login() {
+		Database db = new Database();
+//		Kalender k = new Kalender("lol", db);
 		String[] labels = {"Brukernavn: ", "Passord: "};
 
 		JPanel p = new JPanel(new SpringLayout());
@@ -53,6 +56,7 @@ public class Login extends JFrame implements ActionListener {
 				6, 6);       //xPad, yPad
 
 		frame = new JFrame("Login");
+		frame.add(p);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p.setOpaque(true); 
 		frame.setContentPane(p);

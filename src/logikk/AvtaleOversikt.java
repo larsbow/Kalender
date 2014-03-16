@@ -6,7 +6,7 @@ public class AvtaleOversikt {
 
 	private String dato;
 	private String bruker;
-	HentAvtaler hentAvt = new HentAvtaler(bruker, dato);
+	HentAvtaler hentAvt;
 	public boolean user;
 	public boolean kollega;
 	
@@ -20,11 +20,13 @@ public class AvtaleOversikt {
 	}
 	
 	public boolean brukerHarAvtale() {
-		return (hentAvt.getAvtaleBruker().length == 0);
+		hentAvt = new HentAvtaler(bruker, dato);
+		return (hentAvt.getAvtaleBruker().length != 0);
 	}
 	
 	public boolean kollegaHarAvtale() {
-		return (hentAvt.getAvtaleKollega().length == 0);
+		hentAvt = new HentAvtaler(bruker, dato);
+		return (hentAvt.getAvtaleKollega().length != 0);
 
 	}
 

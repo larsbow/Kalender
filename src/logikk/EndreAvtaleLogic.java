@@ -201,7 +201,7 @@ public class EndreAvtaleLogic {
 				while (rs.next()){
 					info.set(6, info.get(6)+", "+rs.getString(9));
 				}
-				
+
 
 			} catch (SQLException e) {
 				e.printStackTrace();

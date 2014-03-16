@@ -31,7 +31,6 @@ public class Hovedside extends JFrame implements ActionListener{
 	AvtaleLogic al;
 	String bruker;
 	Database db;
-	InviteSvar invitesvar;
 	
 	
 	public Hovedside(String bruker, Database db) {
@@ -50,6 +49,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		ealarml = new EndreAlarmLogic(db);
 		al = new AvtaleLogic(bruker, db);
 		endreAvtale = new EndreAvtale(bruker, al);
+		inbox = new Inbox(il);
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
@@ -88,15 +88,13 @@ public class Hovedside extends JFrame implements ActionListener{
 			String[] AvtalerSomHarVaert = il.endreAlarm();
 			endrealarmbox = new EndreAlarm(AvtalerSomHarVaert, ealarml);
 			endrealarmbox.but.addActionListener(this);
-		} else if (arg0.getSource() == endrealarmbox.but){
+		}else if (arg0.getSource() == endrealarmbox.but){
 			ealarml.updateAlarm(endrealarmbox.alarmtidtf.getText(), endrealarmbox.alarmid, endrealarmbox.info);
 			endrealarmbox.dispose();
 			changeToInbox();
-		} else if (arg0.getSource() == kalender.svar) {
-			invitesvar = new InviteSvar(bruker, kalender.dineavtaler.getSelectedValue().toString(), db);
 		}
 	}
-	
+
 	public void changeToAvtale(){
 		clearFrame();
 		avtale = new Avtale(this.bruker, al);
@@ -123,7 +121,6 @@ public class Hovedside extends JFrame implements ActionListener{
 	private void changeToInbox() {
 		clearFrame();
 		il = new InboxLogic(bruker, db);
-		inbox = new Inbox(il);
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);
 		inbox.endrealarm.addActionListener(this);
@@ -134,7 +131,6 @@ public class Hovedside extends JFrame implements ActionListener{
 	private void changeToKalender() {
 		clearFrame();
 		kalender = new Kalender(bruker, db);
-		kalender.svar.addActionListener(this);
 		add(kalender, BorderLayout.CENTER);
 		setSize(800, 700);
 		setVisible(true);

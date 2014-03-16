@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
@@ -31,10 +34,12 @@ public class Kalender extends JPanel implements ActionListener {
 	JPanel avtaleliste;
 	JButton svar;
 	JList dineavtaler;
+	InviteSvar is;
 	
 	public Kalender(String bruker, Database db){
 		this.bruker = bruker;
 		this.setLayout(new SpringLayout());
+		this.db = db;
 		cl = new CalenderLogic(db, bruker);
 		maaned = cl.getMonth();
 		aar = cl.getYear();
@@ -81,6 +86,11 @@ public class Kalender extends JPanel implements ActionListener {
 					knapper.add(tom);
 				} else {
 					JButton dagbut = new JButton(Integer.toString(day));
+					if (cl.harAvtale(day, maaned, aar)){
+						dagbut.setBackground(Color.CYAN);
+					} else if (cl.harAnsattAvtale(day, maaned, aar)) {
+						dagbut.setBackground(Color.ORANGE);
+					}
 					knapper.add(dagbut);
 					dagbut.addActionListener(new ActionListener() {
 
@@ -114,6 +124,7 @@ public class Kalender extends JPanel implements ActionListener {
 		avtaleliste.add(scrollda);
 		
 		svar = new JButton("Svar på invitasjon");
+		svar.addActionListener(this);
 		avtaleliste.add(svar);
 		
 		JLabel aa = new JLabel("Ansattes avtaler:");
@@ -160,8 +171,32 @@ public class Kalender extends JPanel implements ActionListener {
 			}
 			printCalender(dag, maaned, aar);
 			this.updateUI();
+		} else if (e.getSource() == svar) {
+			String id = getSelectedAvtale();
+			if (id.equals("-1")){
+				Component frame = null;
+				JOptionPane.showMessageDialog(frame,"Du må velge en \n av dine avtaler.","Feil",JOptionPane.WARNING_MESSAGE);
+			} else {
+				this.removeAll();
+				this.updateUI();
+				is = new InviteSvar(this.bruker, id, this.db);
+				this.add(is);
+
+				SpringUtilities.makeCompactGrid(this,
+						1, 1, 		 //rows, cols
+						6, 6,        //initX, initY
+						6, 6);       //xPad, yPad
+				this.setVisible(true);
+			}
 		}
-		
+
+	}
+
+	public String getSelectedAvtale() {
+		if (dineavtaler.getSelectedValue() == null){
+			return "-1";
+		}
+		return dineavtaler.getSelectedValue().toString().substring(0,4);
 	}
 	
 }

@@ -298,4 +298,37 @@ public class CalenderLogic {
 		}
 		return dag + maaned + aar;
 	}
+
+
+	public boolean harAvtale(int day, int maaned, int aar) {
+		ResultSet rs = db.readQuery("SELECT count(avtaleid) FROM avtale NATURAL JOIN erinviterttil"
+				+ " WHERE dato = '"+datoAsString(day, maaned, aar)+"' AND brukernavn = '"+this.bruker+"'");
+		int count = 0;
+		try {
+			rs.next();
+			count = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+
+	public boolean harAnsattAvtale(int day, int maaned, int aar) {
+		ResultSet rs = db.readQuery("SELECT count(avtaleid) FROM avtale WHERE dato = '"+datoAsString(day, maaned, aar)+"'");
+		int count = 0;
+		try {
+			rs.next();
+			count = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
 }

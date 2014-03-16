@@ -1,9 +1,10 @@
 package logikk;
 
 public class CalenderLogic {
-	static int startDay;
+	int startDay;
 
-	public static int daysInMonth(int year, int month) {
+
+	public int daysInMonth(int year, int month) {
 		int days;
 		switch (month) {
 		case 1:
@@ -53,7 +54,7 @@ public class CalenderLogic {
 
 	}
 
-	public static int getMonthStartDay(int year, int month) {
+	public int getMonthStartDay(int year, int month) {
 		if (month == 1)
 			startDay = getYearStartDay(year);
 		else if (month < 1 || month > 12)
@@ -66,7 +67,7 @@ public class CalenderLogic {
 		return startDay;
 	}
 
-	public static int getYearStartDay(int year) {
+	public int getYearStartDay(int year) {
 		int diff = (year - 1900);
 		startDay = (diff%7) + 1;
 
@@ -84,7 +85,7 @@ public class CalenderLogic {
 		return startDay;
 	}
 
-	public static int[][] getCalender(int year, int month) {
+	public int[][] getCalender(int year, int month) {
 		startDay = getMonthStartDay(year, month);
 		startDay = startDay - 1;
 		int numDays = daysInMonth(year, month);
@@ -114,7 +115,7 @@ public class CalenderLogic {
 
 	
 	// er ikke benyttet for øyeblikket...!!!
-	public static String getMonthName(int month) {	
+	public String getMonthName(int month) {	
 		String monthString;
 
 		switch (month) {
@@ -148,7 +149,7 @@ public class CalenderLogic {
 		return monthString;
 	}
 
-	public static boolean isLeapYear(int year) {
+	public boolean isLeapYear(int year) {
 		boolean skuddaar = false;
 		if ((year%4) != 0) {
 			skuddaar = false;

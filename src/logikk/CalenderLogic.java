@@ -1,7 +1,13 @@
 package logikk;
 
 public class CalenderLogic {
-	int startDay;
+	static int startDay;
+
+	public static void main(String[] args) {
+		getYearStartDay(2012);
+		System.out.println("Skuddår: " + isLeapYear(1920));;
+		//System.out.println("start dag i året: " + getYearStartDay(2012));
+	}
 
 	public int daysInMonth(int year, int month) {
 		int days;
@@ -66,18 +72,22 @@ public class CalenderLogic {
 		return startDay;
 	}
 
-	public int getYearStartDay(int year) {
+	public static int getYearStartDay(int year) {
 		int diff = (year - 1900);
 		startDay = (diff%7) + 1;
 
-		for (int i = 1900; i== year; i++) {
-			if (isLeapYear(i - 1) == true)
-				startDay = startDay + 1;
-		}
 
-		startDay = (startDay%7);
-		if (startDay == 0)
-			startDay = 7;
+		for (int i = 1900; i < year + 1; i++) {
+			int x = i - 1;
+			if (isLeapYear(x) == true) {
+				startDay = startDay + 1;
+			//	System.out.println("" + x);
+			}
+			startDay = (startDay%7);
+			if (startDay == 0) {
+				startDay = 7;
+			}
+		}
 		return startDay;
 	}
 
@@ -143,21 +153,23 @@ public class CalenderLogic {
 		return monthString;
 	}
 
-	public boolean isLeapYear(int year) {
+	public static boolean isLeapYear(int year) {
 		boolean skuddaar = false;
-		if ((year%4) != 0)
+		if ((year%4) != 0) {
 			skuddaar = false;
-
-		else if ((year%400) == 0)
+		}
+		else if ((year%400) == 0) {
 			skuddaar = true;
-
+		}
 		else if((year%4) == 0) {
+			System.out.println("vi kom så langt");
 
-			if ((year&100) == 0)
+			if ((year&100) == 0){
 				skuddaar = false;
-
-			else 
+			}
+			else {
 				skuddaar = true;
+			}
 		}
 		return skuddaar;
 	}

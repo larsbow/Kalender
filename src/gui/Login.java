@@ -59,6 +59,7 @@ public class Login extends JFrame implements ActionListener {
 		frame.add(p);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		p.setOpaque(true); 
+		frame.setLocationRelativeTo(null);
 		frame.setContentPane(p);
 		frame.pack();
 		frame.setVisible(true);

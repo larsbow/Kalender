@@ -52,6 +52,7 @@ public class Hovedside extends JFrame implements ActionListener{
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
+		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(true);	
 	}

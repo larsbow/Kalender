@@ -44,7 +44,7 @@ public class Avtale extends JPanel implements ActionListener {
 
 	public Avtale(String bruker, final AvtaleLogic al) {
 		this.al = al;
-		String[] labels = {"Dato: (DDMM≈≈≈≈)*", "Starttid: (TTMM)*", "Sluttid: (TTMM)", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
+		String[] labels = {"Dato: (DDMM≈≈≈≈)*", "Starttid: (TTMM)*", "Sluttid: (TTMM)*", "Beskrivelse: ", "RomID: ", "Sted: ", "Deltakere: "};
 		setBruker(bruker);
 
 		JPanel p = new JPanel(new SpringLayout());
@@ -100,7 +100,7 @@ public class Avtale extends JPanel implements ActionListener {
 		p.add(textField5);
 		textField5.addActionListener(this); 
 		textField5.setEditable(false);
-		
+
 		// Eksterne mail
 		JLabel l8 = new JLabel("Ekstern brukeremail**:", JLabel.TRAILING);
 		p.add(l8);
@@ -116,8 +116,8 @@ public class Avtale extends JPanel implements ActionListener {
 		l7.setLabelFor(textField7);
 		p.add(textField7);
 		textField7.addActionListener(this);
-		
-		
+
+
 
 		//Lag ¯verste rutenett
 		SpringUtilities.makeCompactGrid(p,
@@ -147,6 +147,13 @@ public class Avtale extends JPanel implements ActionListener {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), j.getSelectedValue().toString())) {
 					textField7.setText(textField7.getText() + j.getSelectedValue().toString() + ", ");
+					if(!textField5.getText().equals("")){
+						if(al.sjekkPlass(textField5.getText(), textField7.getText().split(", ").length)) {
+							textField5.setText("");
+							Component c = null;
+							JOptionPane.showMessageDialog(c,"For mange deltagere, velg et annet rom !","Feil",JOptionPane.WARNING_MESSAGE);
+						}
+					}
 				}
 			}
 
@@ -165,7 +172,7 @@ public class Avtale extends JPanel implements ActionListener {
 				2, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
-		
+
 		JPanel p3 = new JPanel(new SpringLayout());
 		this.add(p3);
 		p3.setVisible(true);
@@ -173,7 +180,7 @@ public class Avtale extends JPanel implements ActionListener {
 		JLabel l2p3 = new JLabel("** Skriv inn mail til eksterne brukere du vil invitere. Skill med mellomrom");
 		p3.add(l1p3);
 		p3.add(l2p3);
-		
+
 		SpringUtilities.makeCompactGrid(p3,
 				2, 1, 		 //rows, cols
 				6, 6,        //initX, initY
@@ -198,11 +205,15 @@ public class Avtale extends JPanel implements ActionListener {
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
-			int deltakere = textField7.getText().split(", ").length;
-			r = new Rom(dato, starttid, sluttid, deltakere);
-			r.b1.addActionListener(this);
-			r.b2.addActionListener(this);
-
+			if(dato.length() == 8 && starttid.length() == 4 && sluttid.length() == 4) {
+				int deltakere = textField7.getText().split(", ").length;
+				r = new Rom(dato, starttid, sluttid, deltakere);
+				r.b1.addActionListener(this);
+				r.b2.addActionListener(this);
+			} else {
+				Component c = null;
+				JOptionPane.showMessageDialog(c, "Du mÂ fylle inn alle *-feltene!", "Feil", JOptionPane.INFORMATION_MESSAGE);
+			}
 
 		} else if (e.getSource() == b1){
 
@@ -222,7 +233,7 @@ public class Avtale extends JPanel implements ActionListener {
 			deltakere = al.extractDeltakere(bruker, textField7.getText());
 
 			String[] eksternmail = textField8.getText().split(" ");
-		
+
 			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker, eksternmail );
 			al.printAvtale(success);
 			if(success) {
@@ -235,7 +246,7 @@ public class Avtale extends JPanel implements ActionListener {
 				textField7.setText("");
 				textField8.setText("");
 			}
-			
+
 		} else if (e.getSource() == r.b1 ) {
 
 			String s = (String) r.j.getSelectedValue();

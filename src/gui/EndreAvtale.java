@@ -45,7 +45,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	JPanel avtaleliste;
 	String[] avtaler;
 	AvtaleLogic al;
-	
+
 	public EndreAvtale(String bruker, AvtaleLogic al) {
 		eal = new EndreAvtaleLogic();
 		this.al = al;
@@ -92,7 +92,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		l4.setLabelFor(textField4);
 		tekstbokser.add(textField4);
 		textField4.addActionListener(this); 
-		
+
 		// Sted
 		JLabel l6 = new JLabel(labels[6], JLabel.TRAILING);
 		tekstbokser.add(l6);
@@ -100,7 +100,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		l6.setLabelFor(textField6);
 		tekstbokser.add(textField6);
 		textField6.addActionListener(this);
-		
+
 		// RomID
 		b5 = new JButton("Finn Rom");
 		tekstbokser.add(b5);
@@ -109,7 +109,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		textField5.addActionListener(this); 
 		textField5.setEditable(false);
 		b5.addActionListener(this); 
-		
+
 		JLabel l8 = new JLabel("Ekstern brukeremail**:", JLabel.TRAILING);
 		tekstbokser.add(l8);
 		textField8 = new JTextField(10);
@@ -134,7 +134,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 
 		alisthead = new JLabel("Dine Avtaler");
 		avtaleliste.add(alisthead);
-		
+
 		createAlist(false);
 
 		dlisthead = new JLabel("Brukere");
@@ -172,6 +172,13 @@ public class EndreAvtale extends JPanel implements ActionListener{
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), dlist.getSelectedValue().toString())) {
 					textField7.setText(textField7.getText() + dlist.getSelectedValue().toString() + ", ");
+					if(!textField5.getText().equals("")){
+						if(al.sjekkPlass(textField5.getText(), textField7.getText().split(", ").length)) {
+							textField5.setText("");
+							Component c = null;
+							JOptionPane.showMessageDialog(c,"For mange deltagere, velg et annet rom !","Feil",JOptionPane.WARNING_MESSAGE);
+						}
+					}
 				}
 			}
 
@@ -244,10 +251,15 @@ public class EndreAvtale extends JPanel implements ActionListener{
 			String dato = textField1.getText();
 			String starttid = textField2.getText();
 			String sluttid = textField3.getText();
-			int deltakere = textField7.getText().split(", ").length;
-			r = new Rom(dato, starttid, sluttid, deltakere);
-			r.b1.addActionListener(this);
-			r.b2.addActionListener(this);
+			if(dato.length() == 8 && starttid.length() == 4 && sluttid.length() == 4) {
+				int deltakere = textField7.getText().split(", ").length;
+				r = new Rom(dato, starttid, sluttid, deltakere);
+				r.b1.addActionListener(this);
+				r.b2.addActionListener(this);
+			} else {
+				Component c = null;
+				JOptionPane.showMessageDialog(c, "Du må fylle inn alle *-feltene!", "Feil", JOptionPane.INFORMATION_MESSAGE);
+			} 
 		}
 		else if (e.getSource() == r.b1 ) {
 

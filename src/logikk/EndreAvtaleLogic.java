@@ -94,7 +94,7 @@ public class EndreAvtaleLogic {
 						em.add(rs.getString(1));
 					}
 					String[] eksm = new String[em.size()];
-					varselEkstern(em.toArray(eksm), avtaleid);
+					se.varselEkstern(em.toArray(eksm), avtaleid);
 				} catch (Exception e){
 					e.printStackTrace();
 				}
@@ -110,10 +110,12 @@ public class EndreAvtaleLogic {
 				} catch (Exception e) {
 					return false;
 				}
+			}
 			} catch (Exception e) {
 				return false;
 			}
 		return false;
+		
 	}
 
 	public void slettAvtale(int avtaleid, String bruker, String[] deltakere, AvtaleLogic al) {

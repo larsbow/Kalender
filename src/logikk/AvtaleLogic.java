@@ -16,6 +16,7 @@ import database.Database;
 public class AvtaleLogic {
 
 	Database db;
+	SendEmail se;
 	
 	public AvtaleLogic(String bruker, Database db){
 		this.db = db;
@@ -55,25 +56,35 @@ public class AvtaleLogic {
 				varselid = rs3.getInt(1);
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
-			if (eksternmail.length > 0){
-				SendEmail se = new SendEmail();
-				for (int i = 0; i < eksternmail.length; i++){
-					try {
-						if (!eksternmail[1].equals("")){
-							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
-							se.inviterEkstern(eksternmail[i]);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
+			try {
+				ArrayList<String> em = new ArrayList<String>();
+				while (rs3.next()){
+					se = new SendEmail(this.db);
+					em.add(rs.getString(1));
 				}
+				String[] eksm = new String[em.size()];
+				se.varselEkstern(em.toArray(eksm), avtaleid);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			try {
+				if (eksternmail.length > 0 && !eksternmail[1].equals("")) {
+					se = new SendEmail(this.db);
+					for (int i = 0; i < eksternmail.length; i++){
+						db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+					}
+					se.inviterEkstern(eksternmail, avtaleid);
+				}
+			return true;
+			} catch (Exception e) {
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		}
-		return true;		
-	}
+		}		
+}
 
 	public String[] datoklokke(){
 		DateTime dtg = new DateTime();

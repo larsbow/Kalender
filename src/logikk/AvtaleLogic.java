@@ -25,6 +25,10 @@ public class AvtaleLogic {
 	public boolean lagAvtale(String dato, String start, String slutt, String beskrivelse, Object romid, String sted, String[] deltakere, String ansatt, String[] eksternmail) {
 		if (dato.length() != 8 || start.length() != 4){
 			return false;
+		} else if (Integer.parseInt(dato.substring(0, 2)) > 31 || Integer.parseInt(dato.substring(2, 4)) > 12){
+			return false;
+		} else if (Integer.parseInt(start.substring(2, 3)) > 5 || Integer.parseInt(start.substring(0, 2)) > 23){
+			return false;
 		}
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");

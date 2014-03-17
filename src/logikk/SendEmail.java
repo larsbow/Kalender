@@ -31,9 +31,9 @@ public class SendEmail {
 		String subject = "Invitasjon til avtale: " + avtaleID;
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
 
-		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse "
 				+ "FROM avtale "
-				+ "WHERE avtaleID = "+avtaleID);
+				+ "WHERE avtaleid = "+avtaleID);
 		try {
 			rs.next();
 			
@@ -52,10 +52,6 @@ public class SendEmail {
 		String[] to = participants; // list of recipient email addresses
 		String subject = "Forandring i avtale: " + avtaleID;
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
-		
-		System.out.println("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
-				+ "FROM avtale "
-				+ "WHERE avtaleid = "+avtaleID);
 
 		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse "
 				+ "FROM avtale "
@@ -79,7 +75,7 @@ public class SendEmail {
 		String subject = "Avtalen: " + avtaleID + "er kansellert";
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
 
-		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse "
 				+ "FROM avtale "
 				+ "WHERE avtaleID = '"+avtaleID+"'");
 		try {

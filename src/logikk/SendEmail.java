@@ -1,24 +1,97 @@
 package logikk;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
+
 import javax.mail.*;
 import javax.mail.internet.*;
+
+import database.Database;
 
 
 public class SendEmail {
 
-
+	private static Database db;
 	private static String USER_NAME = "fellesprosjekt44@gmail.com";  // GMail user name (just the part before "@gmail.com")
 	private static String PASSWORD = "gruppe44"; // GMail password
 	private static String RECIPIENT = "benval@live.no";
 	private static String RECIPIENT2 = "kslindso@gmail.com";
+	String from;
+	String pass;
 
-	public static void main(String[] args) {
-		String from = USER_NAME;
-		String pass = PASSWORD;
-		String[] to = { RECIPIENT, RECIPIENT2 }; // list of recipient email addresses
-		String subject = "Java mail testing";
-		String body = "Welcome to JavaMail!, vet ikke hva mer jeg skal skrive";
+	public SendEmail(Database db) {
+		this.db = db;
+		from = USER_NAME;
+		pass = PASSWORD;
+
+	}
+
+	private void inviterEkstern(String[] participants, int avtaleID) {
+		String[] to = participants; // list of recipient email addresses
+		String subject = "Invitasjon til avtale: " + avtaleID;
+		String body = "ERROR: Feil ved henting av avtale informasjon:";
+
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+				+ "FROM avtale "
+				+ "WHERE avatleID = '"+avtaleID+"'");
+		try {
+			int count = 0;
+			rs.next();
+			
+			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
+					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		sendFromGMail(from, pass, to, subject, body);
+	}
+
+	private void varselEkstern(String[] participants, int avtaleID) {
+		String[] to = participants; // list of recipient email addresses
+		String subject = "Forandring i avtale: " + avtaleID;
+		String body = "ERROR: Feil ved henting av avtale informasjon:";
+
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+				+ "FROM avtale "
+				+ "WHERE avatleID = '"+avtaleID+"'");
+		try {
+			int count = 0;
+			rs.next();
+			
+			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
+					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		sendFromGMail(from, pass, to, subject, body);
+	}
+
+	private void slettEkstern(String[] participants, int avtaleID) {
+		String[] to = participants; // list of recipient email addresses
+		String subject = "Avtalen: " + avtaleID + "er kansellert";
+		String body = "ERROR: Feil ved henting av avtale informasjon:";
+
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+				+ "FROM avtale "
+				+ "WHERE avatleID = '"+avtaleID+"'");
+		try {
+			int count = 0;
+			rs.next();
+			
+			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
+					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		sendFromGMail(from, pass, to, subject, body);
 	}

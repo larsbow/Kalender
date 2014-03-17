@@ -56,7 +56,13 @@ public class AvtaleLogic {
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
 			for (int i = 0; i < eksternmail.length; i++){
-				db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+				try {
+					if (!eksternmail[1].equals("")){
+						db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

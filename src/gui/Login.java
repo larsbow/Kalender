@@ -43,7 +43,7 @@ public class Login extends JFrame implements ActionListener {
 		textField2.addActionListener(this);
 
 		//Logg-inn knapp
-		JButton b1 = new JButton("Log inn");
+		JButton b1 = new JButton("Logg inn");
 		b2 = new JButton("Registrer bruker");
 		p.add(b1);
 		p.add(b2);

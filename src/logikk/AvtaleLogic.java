@@ -55,13 +55,17 @@ public class AvtaleLogic {
 				varselid = rs3.getInt(1);
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
-			for (int i = 0; i < eksternmail.length; i++){
-				try {
-					if (!eksternmail[1].equals("")){
-						db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+			if (eksternmail.length > 0){
+				SendEmail se = new SendEmail();
+				for (int i = 0; i < eksternmail.length; i++){
+					try {
+						if (!eksternmail[1].equals("")){
+							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+							se.inviterEkstern(eksternmail[i]);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {

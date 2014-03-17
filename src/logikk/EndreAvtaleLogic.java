@@ -15,10 +15,11 @@ public class EndreAvtaleLogic {
 
 	Database db = new Database();
 	AvtaleLogic al;
+	SendEmail se;
 
 	public boolean endreAvtale(int avtaleid, String dato, String start,
 			String slutt, String beskrivelse, Object romid, String sted,
-			String ansatt, String[] deltakere){
+			String ansatt, String[] deltakere, String[] eksterne){
 
 		al = new AvtaleLogic(ansatt, db);
 		
@@ -83,6 +84,28 @@ public class EndreAvtaleLogic {
 						rs3.next();
 						int varselid = rs3.getInt(1);
 						db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
+					}
+				}
+				ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
+				try {
+					while (rs3.next()){
+						se = new SendEmail();
+						varsleEkstern(rs.getString(1), avtaleid);
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+				if (eksterne.length > 0){
+					se = new SendEmail();
+					for (int i = 0; i < eksterne.length; i++){
+						try {
+							if (!eksterne[1].equals("")){
+								db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksterne[i]+"', "+avtaleid+")");
+								se.inviterEkstern(eksterne[i], avtaleid);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				return true;

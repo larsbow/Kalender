@@ -31,6 +31,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	private JTextField textField5;
 	private JTextField textField6;
 	private JTextField textField7;
+	private JTextField textField8;
 	JList alist;
 	private JList dlist;
 	private JLabel alisthead;
@@ -91,7 +92,15 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		l4.setLabelFor(textField4);
 		tekstbokser.add(textField4);
 		textField4.addActionListener(this); 
-
+		
+		// Sted
+		JLabel l6 = new JLabel(labels[6], JLabel.TRAILING);
+		tekstbokser.add(l6);
+		textField6 = new JTextField(10);
+		l6.setLabelFor(textField6);
+		tekstbokser.add(textField6);
+		textField6.addActionListener(this);
+		
 		// RomID
 		b5 = new JButton("Finn Rom");
 		tekstbokser.add(b5);
@@ -100,14 +109,13 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		textField5.addActionListener(this); 
 		textField5.setEditable(false);
 		b5.addActionListener(this); 
-
-		// Sted
-		JLabel l6 = new JLabel(labels[6], JLabel.TRAILING);
-		tekstbokser.add(l6);
-		textField6 = new JTextField(10);
-		l6.setLabelFor(textField6);
-		tekstbokser.add(textField6);
-		textField6.addActionListener(this);
+		
+		JLabel l8 = new JLabel("Ekstern brukeremail**:", JLabel.TRAILING);
+		tekstbokser.add(l8);
+		textField8 = new JTextField(10);
+		l8.setLabelFor(textField8);
+		tekstbokser.add(textField8);
+		textField8.addActionListener(this);
 
 		// Deltakere
 		JLabel l7 = new JLabel(labels[7], JLabel.TRAILING);
@@ -135,7 +143,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 		createDlist();
 
 		SpringUtilities.makeCompactGrid(tekstbokser,
-				8, 2, 		 //rows, cols
+				9, 2, 		 //rows, cols
 				6, 6,        //initX, initY
 				6, 6);       //xPad, yPad
 
@@ -227,8 +235,9 @@ public class EndreAvtale extends JPanel implements ActionListener{
 			}
 			String sted = textField6.getText();
 			String[] deltakere = textField7.getText().split(", ");
+			String[] eksterne = textField8.getText().split(" ");
 
-			boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker, deltakere);
+			boolean success = eal.endreAvtale(avtaleid, dato, starttid, sluttid, beskrivelse, romid, sted, bruker, deltakere, eksterne);
 			eal.printAvtale(success);
 		} 
 		else if(e.getSource() == b5) {

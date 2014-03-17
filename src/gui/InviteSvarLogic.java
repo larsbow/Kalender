@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import org.joda.time.DateTime;
+
 import database.Database;
 
 public class InviteSvarLogic {
@@ -71,13 +73,58 @@ public class InviteSvarLogic {
 
 	public void kommer(boolean b, int id) {
 		if (b) {
+			String[] tid = datoklokke();
 			db.updateQuery("UPDATE erinviterttil SET kommer = true WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+			db.updateQuery("INSERT INTO varsel VALUES (null, 'jainvitevarsel "+this.bruker+"', '"+tid[0]+"', '"+tid[1]+"')");
 			Component frame = null;
 			JOptionPane.showMessageDialog(frame,"Du har nå svart ja på invitasjonen.","Svar",JOptionPane.INFORMATION_MESSAGE);
 		} else {
+			String[] tid = datoklokke();
 			db.updateQuery("UPDATE erinviterttil SET kommer = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+			db.updateQuery("INSERT INTO varsel VALUES (null, 'neiinvitevarsel "+this.bruker+"', '"+tid[0]+"', '"+tid[1]+"')");
 			Component frame = null;
 			JOptionPane.showMessageDialog(frame,"Du har nå svart nei på invitasjonen","Svar",JOptionPane.INFORMATION_MESSAGE);
 		}
+		ResultSet rs = db.readQuery("SELECT varselid FROM varsel ORDER by varselid DESC");
+		ResultSet rs2 = db.readQuery("SELECT opprettetav FROM avtale WHERE avtaleid = "+id);
+		try {
+			rs.next();
+			rs2.next();
+			db.updateQuery("INSERT INTO haravtale VALUES ("+id+", '"+rs2.getString(1)+"', "+rs.getInt(1)+")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String[] datoklokke() {
+		DateTime dtg = new DateTime();
+		String time = Integer.toString(dtg.getHourOfDay());
+		if (dtg.getHourOfDay()<10){
+			time = "0"+time;
+		}
+		String minutt = Integer.toString(dtg.getMinuteOfHour());
+		if (dtg.getMinuteOfHour() < 10){
+			minutt = "0"+minutt;
+		}
+		String dag = Integer.toString(dtg.getDayOfMonth());
+		if (dtg.getDayOfMonth()<10){
+			dag = "0"+dag;
+		}
+		String maaned = Integer.toString(dtg.getMonthOfYear());
+		if (dtg.getMonthOfYear() < 10){
+			maaned = "0"+maaned;
+		}
+		String aar = Integer.toString(dtg.getYear());
+		if (dtg.getYear() < 1000){
+			aar = "0"+aar;
+			if(dtg.getYear() < 100){
+				aar = "0"+aar;
+				if (dtg.getYear() < 10){
+					aar = "0"+aar;
+				}
+			}
+		}
+		String[] klokkedato = {time+minutt, dag+maaned+aar};
+		return klokkedato;
 	}
 }

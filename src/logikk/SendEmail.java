@@ -33,7 +33,7 @@ public class SendEmail {
 
 		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
 				+ "FROM avtale "
-				+ "WHERE avatleID = '"+avtaleID+"'");
+				+ "WHERE avtaleID = '"+avtaleID+"'");
 		try {
 			rs.next();
 			
@@ -55,7 +55,7 @@ public class SendEmail {
 
 		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
 				+ "FROM avtale "
-				+ "WHERE avatleID = '"+avtaleID+"'");
+				+ "WHERE avtaleid = '"+avtaleID+"'");
 		try {
 			rs.next();
 			
@@ -77,7 +77,7 @@ public class SendEmail {
 
 		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
 				+ "FROM avtale "
-				+ "WHERE avatleID = '"+avtaleID+"'");
+				+ "WHERE avtaleID = '"+avtaleID+"'");
 		try {
 			rs.next();
 			

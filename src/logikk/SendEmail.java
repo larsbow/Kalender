@@ -12,11 +12,10 @@ import database.Database;
 
 public class SendEmail {
 
-	private static Database db;
+	private Database db;
 	private static String USER_NAME = "fellesprosjekt44@gmail.com";  // GMail user name (just the part before "@gmail.com")
 	private static String PASSWORD = "gruppe44"; // GMail password
-	private static String RECIPIENT = "benval@live.no";
-	private static String RECIPIENT2 = "kslindso@gmail.com";
+
 	String from;
 	String pass;
 
@@ -36,7 +35,6 @@ public class SendEmail {
 				+ "FROM avtale "
 				+ "WHERE avatleID = '"+avtaleID+"'");
 		try {
-			int count = 0;
 			rs.next();
 			
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
@@ -59,7 +57,6 @@ public class SendEmail {
 				+ "FROM avtale "
 				+ "WHERE avatleID = '"+avtaleID+"'");
 		try {
-			int count = 0;
 			rs.next();
 			
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
@@ -82,7 +79,6 @@ public class SendEmail {
 				+ "FROM avtale "
 				+ "WHERE avatleID = '"+avtaleID+"'");
 		try {
-			int count = 0;
 			rs.next();
 			
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "

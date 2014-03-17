@@ -43,7 +43,7 @@ public class InboxLogic {
 						varsel.add(varselid+": "+rs.getString(1));
 					} else if (rs.getString(1).contains("jainvitevarsel")) {
 						varsel.add(varselid+": "+rs.getString(1).split(" ")[1]+" har svart ja til avtale "+rs.getInt(2));
-					} else if (rs.getString(1).contains("jainvitevarsel")) {
+					} else if (rs.getString(1).contains("neiinvitevarsel")) {
 						varsel.add(varselid+": "+rs.getString(1).split(" ")[1]+" har svart nei til avtale "+rs.getInt(2));
 					} else {
 						varsel.add(varselid+": Endring i avtale" +rs.getString(2) + ": " + rs.getString(1) + " Endringen skjedde " + rs.getString(3)+" "+rs.getString(4).substring(0,2)+"."+rs.getString(4).substring(2,4)+"."+rs.getString(4).substring(4));

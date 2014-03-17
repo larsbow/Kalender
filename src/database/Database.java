@@ -4,11 +4,11 @@ import java.sql.*;
 
 public class Database {
 	private static Connection conn = null;
-	private static String url = "jdbc:mysql://localhost:3306/";
-	private static String dbName = "prosjekt";
+	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
+	private static String dbName = "test";
 	private static String driver = "com.mysql.jdbc.Driver";
-	private static String userName = "root";
-	private static String password = "passord";
+	private static String userName = "simenha_admin";
+	private static String password = "gruppe44";
 	
 	public Database() {
 		try {

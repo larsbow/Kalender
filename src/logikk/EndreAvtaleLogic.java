@@ -88,31 +88,31 @@ public class EndreAvtaleLogic {
 				}
 				ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
 				try {
+					ArrayList<String> em = new ArrayList<String>();
 					while (rs3.next()){
-						se = new SendEmail();
-						varsleEkstern(rs.getString(1), avtaleid);
+						se = new SendEmail(this.db);
+						em.add(rs.getString(1));
 					}
+					String[] eksm = new String[em.size()];
+					varselEkstern(em.toArray(eksm), avtaleid);
 				} catch (Exception e){
 					e.printStackTrace();
 				}
-				if (eksterne.length > 0){
-					se = new SendEmail();
-					for (int i = 0; i < eksterne.length; i++){
-						try {
-							if (!eksterne[1].equals("")){
-								db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksterne[i]+"', "+avtaleid+")");
-								se.inviterEkstern(eksterne[i], avtaleid);
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
+				try {
+					if (eksterne.length > 0 && !eksterne[1].equals("")) {
+						se = new SendEmail(this.db);
+						for (int i = 0; i < eksterne.length; i++){
+							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksterne[i]+"', "+avtaleid+")");
 						}
+						se.inviterEkstern(eksterne, avtaleid);
 					}
-				}
 				return true;
-			}	
-		} catch (Exception e) {
-			return false;
-		}
+				} catch (Exception e) {
+					return false;
+				}
+			} catch (Exception e) {
+				return false;
+			}
 		return false;
 	}
 

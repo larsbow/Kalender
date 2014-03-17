@@ -195,4 +195,16 @@ public class AvtaleLogic {
 		return false;
 	}
 
+	public boolean sjekkPlass(String romid, int påmeldte) {
+		try {
+			ResultSet rs = db.readQuery("SELECT kapasitet FROM rom WHERE romid = " + romid);
+			rs.next();
+			return (rs.getInt(1) - 1 < påmeldte);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

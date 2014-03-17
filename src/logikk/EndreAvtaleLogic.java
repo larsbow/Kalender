@@ -91,7 +91,9 @@ public class EndreAvtaleLogic {
 					se = new SendEmail(this.db);
 					ArrayList<String> em = new ArrayList<String>();
 					while (rs3.next()){
-						em.add(rs.getString(1));
+						if (!rs.getString(1).equals("")){
+							em.add(rs.getString(1));
+						}
 					}
 					String[] eksm = new String[em.size()];
 					se.varselEkstern(em.toArray(eksm), avtaleid);
@@ -99,7 +101,7 @@ public class EndreAvtaleLogic {
 					e.printStackTrace();
 				}
 				try {
-					if (eksterne.length > 0 && !eksterne[1].equals("")) {
+					if (eksterne.length > 0 && !eksterne[0].equals("")) {
 						se = new SendEmail(this.db);
 						for (int i = 0; i < eksterne.length; i++){
 							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksterne[i]+"', "+avtaleid+")");

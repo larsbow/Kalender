@@ -58,26 +58,16 @@ public class AvtaleLogic {
 			}
 			ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
 			try {
-				se = new SendEmail(this.db);
-				ArrayList<String> em = new ArrayList<String>();
-				while (rs3.next()){
-					em.add(rs.getString(1));
-				}
-				String[] eksm = new String[em.size()];
-				se.varselEkstern(em.toArray(eksm), avtaleid);
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-			try {
-				if (eksternmail.length > 0 && !eksternmail[1].equals("")) {
+				if (eksternmail.length > 0 && !eksternmail[0].equals("")) {
 					se = new SendEmail(this.db);
 					for (int i = 0; i < eksternmail.length; i++){
 						db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
 					}
 					se.inviterEkstern(eksternmail, avtaleid);
 				}
-			return true;
+				return true;
 			} catch (Exception e) {
+				e.printStackTrace();
 				return false;
 			}
 		} catch (Exception e) {

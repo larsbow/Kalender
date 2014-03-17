@@ -52,8 +52,12 @@ public class SendEmail {
 		String[] to = participants; // list of recipient email addresses
 		String subject = "Forandring i avtale: " + avtaleID;
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
+		
+		System.out.println("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+				+ "FROM avtale "
+				+ "WHERE avtaleid = "+avtaleID);
 
-		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse"
+		ResultSet rs = db.readQuery("SELECT dato, starttid, sluttid, sted, romid, beskrivelse "
 				+ "FROM avtale "
 				+ "WHERE avtaleid = "+avtaleID);
 		try {

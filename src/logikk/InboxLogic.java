@@ -29,7 +29,8 @@ public class InboxLogic {
 
 	public void findVarsel(){
 		ResultSet rs = db.readQuery("SELECT beskjed, avtaleid, tidspunkt, dato, brukernavn, varselid"
-				+ " FROM ansatt NATURAL JOIN haravtale NATURAL JOIN varsel WHERE brukernavn = '"+this.bruker+"'");
+				+ " FROM ansatt NATURAL JOIN haravtale NATURAL JOIN varsel WHERE brukernavn = '"+this.bruker+"' "
+						+ "ORDER BY varselid DESC");
 		try {
 			while (rs.next()){
 				if (!(rs.getString(1).equals("alarm"))) {

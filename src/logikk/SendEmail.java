@@ -27,7 +27,7 @@ public class SendEmail {
 
 	}
 
-	private void inviterEkstern(String[] participants, int avtaleID) {
+	protected void inviterEkstern(String[] participants, int avtaleID) {
 		String[] to = participants; // list of recipient email addresses
 		String subject = "Invitasjon til avtale: " + avtaleID;
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
@@ -50,7 +50,7 @@ public class SendEmail {
 		sendFromGMail(from, pass, to, subject, body);
 	}
 
-	private void varselEkstern(String[] participants, int avtaleID) {
+	protected void varselEkstern(String[] participants, int avtaleID) {
 		String[] to = participants; // list of recipient email addresses
 		String subject = "Forandring i avtale: " + avtaleID;
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
@@ -73,7 +73,7 @@ public class SendEmail {
 		sendFromGMail(from, pass, to, subject, body);
 	}
 
-	private void slettEkstern(String[] participants, int avtaleID) {
+	protected void slettEkstern(String[] participants, int avtaleID) {
 		String[] to = participants; // list of recipient email addresses
 		String subject = "Avtalen: " + avtaleID + "er kansellert";
 		String body = "ERROR: Feil ved henting av avtale informasjon:";
@@ -96,7 +96,7 @@ public class SendEmail {
 		sendFromGMail(from, pass, to, subject, body);
 	}
 
-	private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+	protected static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
 		Properties props = System.getProperties();
 		String host = "smtp.gmail.com";
 		props.put("mail.smtp.starttls.enable", "true");

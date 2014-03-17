@@ -107,7 +107,7 @@ public class InviteSvar extends JPanel implements ActionListener {
 		if (info.get(4) == null){
 			stedtf.setText(info.get(5));
 		} else {
-			stedtf.setText(info.get(4));
+			stedtf.setText("Rom " + info.get(4));
 		}
 		stedtf.setEditable(false);
 		this.add(stedtf);

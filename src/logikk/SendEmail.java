@@ -36,10 +36,10 @@ public class SendEmail {
 				+ "WHERE avtaleid = "+avtaleID);
 		try {
 			rs.next();
-			
+
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
 					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
-			
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,10 +58,10 @@ public class SendEmail {
 				+ "WHERE avtaleid = "+avtaleID);
 		try {
 			rs.next();
-			
+
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
 					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
-			
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,10 +80,10 @@ public class SendEmail {
 				+ "WHERE avtaleID = '"+avtaleID+"'");
 		try {
 			rs.next();
-			
+
 			body = "Dato: " + rs.getString(1) + "\n Sted: " +rs.getString(4) +  "/romid: "
 					+ rs.getString(5) + ", \n Start tid:  " + rs.getString(2) + "    Slutt tid: " + rs.getString(3) + " \n Beskrivelse: " + rs.getString(6);
-			
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,24 +106,34 @@ public class SendEmail {
 		MimeMessage message = new MimeMessage(session);
 
 		try {
-			message.setFrom(new InternetAddress(from));
-			InternetAddress[] toAddress = new InternetAddress[to.length];
-
-			// To get the array of addresses
+			ArrayList<String> something = new ArrayList<String>();
 			for( int i = 0; i < to.length; i++ ) {
-				toAddress[i] = new InternetAddress(to[i]);
+				if(to[i].contains("@")) {
+					something.add(to[i]);
+				}
 			}
 
-			for( int i = 0; i < toAddress.length; i++) {
-				message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-			}
+			if(something.size() > 0) {
+				message.setFrom(new InternetAddress(from));
+				InternetAddress[] toAddress = new InternetAddress[something.size()];
 
-			message.setSubject(subject);
-			message.setText(body);
-			Transport transport = session.getTransport("smtp");
-			transport.connect(host, from, pass);
-			transport.sendMessage(message, message.getAllRecipients());
-			transport.close();
+				// To get the array of addresses
+				for( int i = 0; i < something.size(); i++ ) {
+					toAddress[i] = new InternetAddress(something.get(i));
+				}
+
+
+				for( int i = 0; i < toAddress.length; i++) {
+					message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+				}
+
+				message.setSubject(subject);
+				message.setText(body);
+				Transport transport = session.getTransport("smtp");
+				transport.connect(host, from, pass);
+				transport.sendMessage(message, message.getAllRecipients());
+				transport.close();
+			}
 		}
 		catch (AddressException ae) {
 			ae.printStackTrace();

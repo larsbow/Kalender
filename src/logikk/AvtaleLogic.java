@@ -17,7 +17,7 @@ public class AvtaleLogic {
 
 	Database db;
 	SendEmail se;
-	
+
 	public AvtaleLogic(String bruker, Database db){
 		this.db = db;
 	}
@@ -32,7 +32,7 @@ public class AvtaleLogic {
 		}
 		try {
 			db.updateQuery("INSERT INTO avtale VALUES (null, '" + dato + "','" + start + "','" + slutt + "','" + beskrivelse + "'," + romid + ",'" + sted + "','" + ansatt + "')");
-		 
+
 			int varseltid = Integer.parseInt(start)-100;
 			String varselstring = Integer.toString(varseltid);
 			while (varselstring.length() < 4){
@@ -50,8 +50,8 @@ public class AvtaleLogic {
 				varselid = rs2.getInt(1);
 				db.updateQuery("INSERT INTO erinviterttil VALUES ("+avtaleid+", '" + deltakere[i] + "', null, true)");
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
-				
-				
+
+
 				String[] datoklokke = datoklokke();
 				String endring = "Du ble invitert til ny avtale av "+ansatt+".";
 				db.updateQuery("INSERT INTO varsel VALUES (null, '"+endring+"', '"+datoklokke[0]+"', '"+datoklokke[1]+"')");
@@ -65,7 +65,9 @@ public class AvtaleLogic {
 				if (eksternmail.length > 0 && !eksternmail[0].equals("")) {
 					se = new SendEmail(this.db);
 					for (int i = 0; i < eksternmail.length; i++){
-						db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+						if(eksternmail[i].contains("@")) {
+							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternmail[i]+"', "+avtaleid+")");
+						}
 					}
 					se.inviterEkstern(eksternmail, avtaleid);
 				}
@@ -78,7 +80,7 @@ public class AvtaleLogic {
 			e.printStackTrace();
 			return false;
 		}		
-}
+	}
 
 	public String[] datoklokke(){
 		DateTime dtg = new DateTime();
@@ -111,7 +113,7 @@ public class AvtaleLogic {
 		String[] klokkedato = {time+minutt, dag+maaned+aar};
 		return klokkedato;
 	}
-	
+
 	public String[] getAnsatte() {
 		try {
 			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt");
@@ -131,7 +133,7 @@ public class AvtaleLogic {
 		}
 
 	}
-	
+
 	public String[] extractDeltakere (String bruker, String deltakere) {
 		String[] temp = deltakere.split(", ");
 		int count = 0;
@@ -148,7 +150,7 @@ public class AvtaleLogic {
 			return temp;
 		}
 	}
- 
+
 	public void printAvtale(boolean success) {
 		if (success) {
 			Component frame = null;
@@ -159,18 +161,18 @@ public class AvtaleLogic {
 			JOptionPane.showMessageDialog(frame,"Avtale ikke opprettet!","Feil",JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 	private String bruker;
 	private ArrayList<String> avtaler = new ArrayList<String>();
 
 
 	public void getAvtaler(String bruker, String dato){
 		this.bruker = bruker;
-		
+
 		ResultSet rs = db.readQuery("SELECT beskrivelse, starttid, sted, erinviterttil.brukernavn FROM avtale, haravtale WHERE erinviterttil.brukernavn = '"+this.bruker+"' and dato = '" + dato + "'" );
 		try {
 			while (rs.next()){
-					avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1) + " skjedde ");
+				avtaler.add("Avtaler for" +rs.getString(4) + ": Tid: " + rs.getString(2) + " Sted: " + rs.getString(3) + " Beskrivelse: " + rs.getString(1) + " skjedde ");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,7 +181,7 @@ public class AvtaleLogic {
 
 	public String[] getVarsel(){
 		String[] avtalestring = new String[this.avtaler.size()];
-		
+
 		return this.avtaler.toArray(avtalestring);
 	}
 

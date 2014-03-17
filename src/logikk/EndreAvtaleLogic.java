@@ -88,9 +88,9 @@ public class EndreAvtaleLogic {
 				}
 				ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
 				try {
+					se = new SendEmail(this.db);
 					ArrayList<String> em = new ArrayList<String>();
 					while (rs3.next()){
-						se = new SendEmail(this.db);
 						em.add(rs.getString(1));
 					}
 					String[] eksm = new String[em.size()];

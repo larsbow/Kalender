@@ -225,6 +225,17 @@ public class Avtale extends JPanel implements ActionListener {
 		
 			boolean success = al.lagAvtale(dato, starttid, sluttid, beskrivelse, romid, sted, deltakere, bruker, eksternmail );
 			al.printAvtale(success);
+			if(success) {
+				textField1.setText("");
+				textField2.setText("");
+				textField3.setText("");
+				textField4.setText("");
+				textField5.setText("");
+				textField6.setText("");
+				textField7.setText("");
+				textField8.setText("");
+			}
+			
 		} else if (e.getSource() == r.b1 ) {
 
 			String s = (String) r.j.getSelectedValue();

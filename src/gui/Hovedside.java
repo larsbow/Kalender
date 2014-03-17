@@ -49,7 +49,6 @@ public class Hovedside extends JFrame implements ActionListener{
 		ealarml = new EndreAlarmLogic(db);
 		al = new AvtaleLogic(bruker, db);
 		endreAvtale = new EndreAvtale(bruker, al);
-		inbox = new Inbox(il);
 		
 		//avtale = new Avtale(bruker);
 		//add(avtale, BorderLayout.CENTER);
@@ -121,6 +120,7 @@ public class Hovedside extends JFrame implements ActionListener{
 	private void changeToInbox() {
 		clearFrame();
 		il = new InboxLogic(bruker, db);
+		inbox = new Inbox(il);
 		add(inbox, BorderLayout.CENTER);
 		inbox.slettvarsel.addActionListener(this);
 		inbox.endrealarm.addActionListener(this);

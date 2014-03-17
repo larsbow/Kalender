@@ -1,7 +1,10 @@
 package gui;
 
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 import database.Database;
 
@@ -48,15 +51,33 @@ public class InviteSvarLogic {
 		if (b){
 			db.updateQuery("UPDATE erinviterttil SET synlig = true WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
 		} else {
-			db.updateQuery("UPDATE erinviterttil SET synlig = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+			ResultSet rs = db.readQuery("SELECT kommer FROM erinviterttil WHERE brukernavn = '"+this.bruker+"' "
+					+ "AND avtaleid = "+id);
+			try {
+				rs.next();
+				if(!rs.getBoolean(1)){
+					db.updateQuery("UPDATE erinviterttil SET synlig = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Avtalen er nå skjult.","Success",JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					Component frame = null;
+					JOptionPane.showMessageDialog(frame,"Kunne ikke skjule avtale., \n Du må avslå avtalen for å skjule den.","Feil",JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void kommer(boolean b, int id) {
 		if (b) {
 			db.updateQuery("UPDATE erinviterttil SET kommer = true WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Du har nå svart ja på invitasjonen.","Svar",JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			db.updateQuery("UPDATE erinviterttil SET kommer = false WHERE avtaleid = "+id+" AND brukernavn = '"+this.bruker+"'");
+			Component frame = null;
+			JOptionPane.showMessageDialog(frame,"Du har nå svart nei på invitasjonen","Svar",JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

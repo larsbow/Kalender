@@ -214,7 +214,7 @@ public class CalenderLogic {
 				if (rs.getString(6) == null){
 					temp.set(count, temp.get(count) + rs.getString(7) + ".");
 				} else {
-					temp.set(count, temp.get(count) + rs.getInt(6) + ".");
+					temp.set(count, temp.get(count) + "romnr " + rs.getInt(6) + ".");
 				}
 				if (rs.getString(8) == null){
 					temp.set(count, temp.get(count) + " Du har ikke svart på invitasjonen.");
@@ -260,7 +260,7 @@ public class CalenderLogic {
 					if (rs.getString(6) == null){
 						temp.set(count, temp.get(count) + rs.getString(7) + ". ");
 					} else {
-						temp.set(count, temp.get(count) + rs.getInt(6) + ". ");
+						temp.set(count, temp.get(count) +"romnr "+ rs.getInt(6) + ". ");
 					}
 				}
 				if (rs.getString(8) == null){

@@ -87,29 +87,40 @@ public class EndreAvtaleLogic {
 					}
 				}
 				ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
+
+				ArrayList<String> e = new ArrayList<String>();
 				try {
 					se = new SendEmail(this.db);
 					ArrayList<String> em = new ArrayList<String>();
+					for (String mail : eksterne) {
+						e.add(mail);
+					}
 					while (rs3.next()){
-						if (!rs.getString(1).equals("")){
-							em.add(rs.getString(1));
-						}
+							em.add(rs3.getString(1));
+							for (int i = 0; i < e.size(); i++){
+								if (e.get(i).equals(rs3.getString(1))){
+									e.remove(i);
+								}
+							}
 					}
 					String[] eksm = new String[em.size()];
 					se.varselEkstern(em.toArray(eksm), avtaleid);
-				} catch (Exception e){
-					e.printStackTrace();
+				} catch (Exception ex){
+					ex.printStackTrace();
 				}
 				try {
-					if (eksterne.length > 0 && !eksterne[0].equals("")) {
+					String[] eksternliste = new String[e.size()];
+					e.toArray(eksternliste);
+					if (eksternliste.length > 0 && !eksternliste[0].equals("")) {
 						se = new SendEmail(this.db);
-						for (int i = 0; i < eksterne.length; i++){
-							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksterne[i]+"', "+avtaleid+")");
+						for (int i = 0; i < eksternliste.length; i++){
+							db.updateQuery("INSERT INTO eksternbruker VALUES ('"+eksternliste[i]+"', "+avtaleid+")");
 						}
-						se.inviterEkstern(eksterne, avtaleid);
+						se.inviterEkstern(eksternliste, avtaleid);
 					}
 				return true;
-				} catch (Exception e) {
+				} catch (Exception ex) {
+					ex.printStackTrace();
 					return false;
 				}
 			}
@@ -156,9 +167,18 @@ public class EndreAvtaleLogic {
 								db.updateQuery("INSERT INTO haravtale VALUES (1, '"+user+"', "+rs3.getInt(1)+")");
 							}
 						}
-					
-					Component frame = null;
-					JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
+						ResultSet rs4 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
+						ArrayList<String> e = new ArrayList<String>();
+						while (rs4.next()){
+							e.add(rs4.getString(1));
+						}
+						if (e.size() > 0){
+							String[] eksterne = new String[e.size()];
+							e.toArray(eksterne);
+							se.slettEkstern(eksterne, avtaleid);
+						}
+						Component frame = null;
+						JOptionPane.showMessageDialog(frame,"Avtale slettet!","Suksess",JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
 					e.printStackTrace();
 					Component frame = null;

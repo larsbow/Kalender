@@ -60,7 +60,6 @@ public class AvtaleLogic {
 				varselid = rs3.getInt(1);
 				db.updateQuery("INSERT INTO haravtale VALUES ("+avtaleid+", '"+ deltakere[i] +"', "+varselid+")");
 			}
-			ResultSet rs3 = db.readQuery("SELECT email FROM eksternbruker WHERE inviterttil = "+avtaleid);
 			try {
 				if (eksternmail.length > 0 && !eksternmail[0].equals("")) {
 					se = new SendEmail(this.db);
@@ -114,9 +113,9 @@ public class AvtaleLogic {
 		return klokkedato;
 	}
 
-	public String[] getAnsatte() {
+	public String[] getAnsatte(String bruker) {
 		try {
-			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt");
+			ResultSet rs = db.readQuery("SELECT brukernavn FROM ansatt WHERE brukernavn != '"+bruker+"'");
 			ArrayList<String> ar = new ArrayList<String>();
 			int counter = 0;
 
@@ -199,7 +198,7 @@ public class AvtaleLogic {
 		try {
 			ResultSet rs = db.readQuery("SELECT kapasitet FROM rom WHERE romid = " + romid);
 			rs.next();
-			return (rs.getInt(1) - 1 < påmeldte);
+			return (rs.getInt(1) < påmeldte);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -76,7 +76,7 @@ public class InviteSvar extends JPanel implements ActionListener {
 		datotf.setEditable(false);
 		this.add(datotf);
 		
-		start = new JLabel("Starttidspunkt:");
+		start = new JLabel("Starttid:");
 		this.add(start);
 		
 		starttf = new JTextField();
@@ -92,7 +92,7 @@ public class InviteSvar extends JPanel implements ActionListener {
 		slutttf.setEditable(false);
 		this.add(slutttf);
 		
-		beskrivelse = new JLabel("beskrivelse:");
+		beskrivelse = new JLabel("Beskrivelse:");
 		this.add(beskrivelse);
 		
 		btf = new JTextField();

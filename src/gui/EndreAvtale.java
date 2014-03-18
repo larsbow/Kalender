@@ -159,7 +159,7 @@ public class EndreAvtale extends JPanel implements ActionListener{
 	}
 
 	private void createDlist() {
-		String[] s = al.getAnsatte();
+		String[] s = al.getAnsatte(bruker);
 
 		dlist = new JList(s);
 		JScrollPane listScroller = new JScrollPane(dlist);

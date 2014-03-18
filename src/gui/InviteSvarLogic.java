@@ -31,12 +31,12 @@ public class InviteSvarLogic {
 					+ "AND avtaleid = "+this.avtaleid);
 			try {
 				rs.next();
-				if (rs.getBoolean(1)){
-					dms = dms + deltaker + "(kommer), ";
+				if (rs.getObject(1) == null){
+					dms = dms + deltaker + " har ikke svart, ";
 				} else if (!rs.getBoolean(1)){
-					dms = dms + deltaker + "(kommer ikke), ";
+					dms = dms + deltaker + " kommer ikke, ";
 				} else {
-					dms = dms + deltaker + "(ikke svart), ";
+					dms = dms + deltaker + " kommer, ";
 				}
 				if (dms.length() > 70*n) {
 					dms = dms + "\n";

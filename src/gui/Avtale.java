@@ -113,6 +113,8 @@ public class Avtale extends JPanel implements ActionListener {
 		JLabel l7 = new JLabel(labels[6], JLabel.TRAILING);
 		p.add(l7);
 		textField7 = new JTextField(10);
+		textField7.setText(bruker + ", ");
+		textField7.setEditable(false);
 		l7.setLabelFor(textField7);
 		p.add(textField7);
 		textField7.addActionListener(this);
@@ -135,17 +137,21 @@ public class Avtale extends JPanel implements ActionListener {
 
 		//Liste med ansatte
 
-		String[] s = al.getAnsatte();
+		final String[] s = al.getAnsatte(bruker);
 
 		j = new JList(s);	
+		j.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		JScrollPane listScroller = new JScrollPane(j);
 		listScroller.setPreferredSize(new Dimension(300, 80));
 		p2.add(listScroller);
 		j.addListSelectionListener(new ListSelectionListener() {
+		String str = null;
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), j.getSelectedValue().toString())) {
+				if(j.getSelectedValue() == null) {
+					return;
+				} else if (!e.getValueIsAdjusting() && !al.textContains(textField7.getText(), j.getSelectedValue().toString())) {
 					textField7.setText(textField7.getText() + j.getSelectedValue().toString() + ", ");
 					if(!textField5.getText().equals("")){
 						if(al.sjekkPlass(textField5.getText(), textField7.getText().split(", ").length)) {
@@ -154,6 +160,11 @@ public class Avtale extends JPanel implements ActionListener {
 							JOptionPane.showMessageDialog(c,"For mange deltagere, velg et annet rom !","Feil",JOptionPane.WARNING_MESSAGE);
 						}
 					}
+					j.removeSelectionInterval(0, s.length);
+				} else if (!e.getValueIsAdjusting() && al.textContains(textField7.getText(), j.getSelectedValue().toString())) {
+					str = textField7.getText().replace(j.getSelectedValue().toString() + ", ", "");
+					textField7.setText(str);
+					j.removeSelectionInterval(0, s.length);
 				}
 			}
 
